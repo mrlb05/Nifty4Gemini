@@ -11,7 +11,7 @@ Nifty
    :alt: Nifty uses Astropy! Here is a link to the project webpage:
    :target: http://www.astropy.org/
 
-
+TEST
 *Now in Beta status! Please let us know of any bugs you find on the issues page.*
 
 A Python Data Reduction Pipeline for the Gemini-North Near-Infrared Integral
