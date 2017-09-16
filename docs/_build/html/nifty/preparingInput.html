@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Preparing the .json Input File &mdash; nifty 1.0.0.dev1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="nifty 1.0.0.dev1 documentation" href="../index.html"/>
+        <link rel="up" title="Introduction" href="introduction.html"/>
+        <link rel="next" title="Running Nifty" href="runningNifty.html"/>
+        <link rel="prev" title="Introduction" href="introduction.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> nifty
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="introduction.html">Introduction</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Preparing the .json Input File</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#capitalization-of-booleans">Capitalization of Booleans</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#trailing-commas">Trailing Commas</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#none-vs-null">None vs null</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="runningNifty.html">Running Nifty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html">Example of Directory Modifications Through Nifty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html#nifssort">nifsSort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html#nifsbaselinecalibration">nifsBaselineCalibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html#nifsreduce-tellurics">nifsReduce(tellurics)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html#nifsreduce-science">nifsReduce(science)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hlineRemoval.html">H Line Removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merging.html">Merging Data Cubes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="knownissues.html">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html">Maintaining Nifty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#updates">Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#code-conventions">Code Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#future-work">Future Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#nifty-structure">Nifty Structure</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nifty</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="introduction.html">Introduction</a> &raquo;</li>
+        
+      <li>Preparing the .json Input File</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/nifty/preparingInput.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="preparing-the-json-input-file">
+<h1>Preparing the .json Input File<a class="headerlink" href="#preparing-the-json-input-file" title="Permalink to this headline">¶</a></h1>
+<p><strong>NOTE: This document is out of date. We are now using .cfg files. See
+http://www.voidspace.org.uk/python/configobj.html for instructions on preparing the
+new config format.</strong></p>
+<p>For now we’re using .json files to provide input to <em>Nifty</em>. This may not be an
+optimal solution, my main worries being lack of comments in .json files and that
+.json files can be difficult to edit by hand.</p>
+<p>When preparing input files by hand there are a few things you should keep in mind:</p>
+<div class="section" id="capitalization-of-booleans">
+<h2>Capitalization of Booleans<a class="headerlink" href="#capitalization-of-booleans" title="Permalink to this headline">¶</a></h2>
+<p>In Python, the Boolean values are <strong>True</strong> and <strong>False</strong> with <em>Capital T and Capital F</em>.
+In JSON the Boolean values are <em>true</em> and <em>false</em> with <em>lower case t and lower case f</em></p>
+</div>
+<div class="section" id="trailing-commas">
+<h2>Trailing Commas<a class="headerlink" href="#trailing-commas" title="Permalink to this headline">¶</a></h2>
+<p>The last parameter in a .json file <strong>SHOULD NOT</strong> be followed by a comma!</p>
+</div>
+<div class="section" id="none-vs-null">
+<h2>None vs null<a class="headerlink" href="#none-vs-null" title="Permalink to this headline">¶</a></h2>
+<p>If you’re trying to use None in a .json file… That will not work. Use <strong>none</strong>
+instead, with a lowercase t.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="runningNifty.html" class="btn btn-neutral float-right" title="Running Nifty" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Nat Comeau.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0.dev1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

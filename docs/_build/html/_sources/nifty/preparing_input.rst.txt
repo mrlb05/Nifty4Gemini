@@ -1,0 +1,76 @@
+Preparing the .cfg Input File
+=============================
+
+Nifty reads data reduction parameters with a config parser developed by Michael Foord. See
+http://www.voidspace.org.uk/python/configobj.html for full documentation on the parser.
+
+Interactive Input Preparation
+=============================
+
+The best way to learn about what each config file parameter does is to populate an input file interactively by typing:
+
+.. code-block:: text
+
+  runNifty nifsPipeline -i
+
+This will, for each parameter, print an explanation and supply a default parameter that you can accept by pressing enter. The output file
+is named "config.cfg".
+
+Example Input File
+==================
+
+Nifty includes a default configuration file in the runtimeData/ directory. As of v1.0b2, It looks like this:
+.. TODO(nat): This is out of data! Update this!
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  merge = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
+
+  [nifsPipelineConfig]
+  sort = True
+  calibrationReduction = True
+  telluricReduction = True
+  scienceReduction = True
+
+  [sortConfig]
+  rawPath = ''
+  program = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  date = ''
+  copy = ''
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 6
+  telluricSkySubtraction = True
+  spectemp = ''
+  mag = ''
+  hline_method = 'vega'
+  hlineinter = False
+  continuuminter = False
+
+  [scienceReductionConfig]
+  sciStart = 1
+  sciStop = 6
+  scienceSkySubtraction = True
+  telluricCorrectionMethod = ''
+  telinter = False
+  fluxCalibrationMethod = ''
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!

@@ -1,0 +1,339 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Maintaining Nifty &mdash; nifty 1.0.0.dev1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="nifty 1.0.0.dev1 documentation" href="../index.html"/>
+        <link rel="up" title="Introduction" href="introduction.html"/>
+        <link rel="next" title="Future Work" href="future_work.html"/>
+        <link rel="prev" title="Known Issues" href="known_issues.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> nifty
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="introduction.html">Introduction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="running_nifty.html">Running from the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_nifty.html#examples-of-running-from-the-command-line">Examples of Running from the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preparing_input.html">Preparing the .cfg Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preparing_input.html#interactive-input-preparation">Interactive Input Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preparing_input.html#example-input-file">Example Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html">H Line Removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#merging-data-cubes">Merging Data Cubes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html#linearpipeline-py">nifsPipeline.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html#nifssort-py">nifsSort.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html#nifsbaselinecalibration-py">nifsBaselineCalibration.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html#nifsreduce-py">nifsReduce.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html#nifsmerge-py">nifsMerge.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="known_issues.html#nifsutils-py">nifsUtils.py</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Maintaining Nifty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#paper">Paper</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#readme-rst">README.rst</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#manual">Manual</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#rst-files-in-the-docs-directory">.rst Files in the docs/ directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#comments-and-docstrings-in-source-code">Comments and DocStrings in Source Code</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#pipeline-structure">Pipeline Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updates">Updates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#version-numbers">Version Numbers</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#code-conventions">Code Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="future_work.html">Future Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nifty</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="introduction.html">Introduction</a> &raquo;</li>
+        
+      <li>Maintaining Nifty</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/nifty/maintenance_and_package_structure.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="maintaining-nifty">
+<h1>Maintaining Nifty<a class="headerlink" href="#maintaining-nifty" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="documentation">
+<h1>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h1>
+<p>Right now there exists five forms of documentation.</p>
+<div class="section" id="paper">
+<h2>Paper<a class="headerlink" href="#paper" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="readme-rst">
+<h2>README.rst<a class="headerlink" href="#readme-rst" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="manual">
+<h2>Manual<a class="headerlink" href="#manual" title="Permalink to this headline">¶</a></h2>
+<p>Nifty’s manual gives a broad overview of how the code functions. It is included as
+a pdf.</p>
+</div>
+<div class="section" id="rst-files-in-the-docs-directory">
+<h2>.rst Files in the docs/ directory<a class="headerlink" href="#rst-files-in-the-docs-directory" title="Permalink to this headline">¶</a></h2>
+<p>This file, others like it in the docs/ directory and the README are written in
+reStructuredText. This markup language integrates well with Python’s automatic
+documentation builder (we used Sphinx) and Github as well as being human readable. You can
+read more about reStructuredText <a href="#id1"><span class="problematic" id="id2">`here.&lt;http://www.sphinx-doc.org/en/stable/rest.html&gt;`_</span></a></p>
+</div>
+<div class="section" id="comments-and-docstrings-in-source-code">
+<h2>Comments and DocStrings in Source Code<a class="headerlink" href="#comments-and-docstrings-in-source-code" title="Permalink to this headline">¶</a></h2>
+<p>Nifty uses the Google docstring style. Examples of docstrings can be found
+<a href="#id3"><span class="problematic" id="id4">`here.&lt;http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html&gt;`_</span></a></p>
+<p>Other Python comments use the following convention:</p>
+<ul class="simple">
+<li>A # is followed by a space and a capital letter.</li>
+<li>All comments end in a period where possible.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="pipeline-structure">
+<h1>Pipeline Structure<a class="headerlink" href="#pipeline-structure" title="Permalink to this headline">¶</a></h1>
+<p>See the Nifty paper for a high level overview. Nifty general runs with the following procedure:</p>
+<ul class="simple">
+<li>A script in the scripts/ directory is called from the command line.</li>
+<li>This script imports the relevant pipeline and steps from the nifty/pipeline/ and nifty/pipeline/steps/directories.</li>
+<li>The script then launches the appropriate pipeline,</li>
+<li>This pipeline launches the appropriate steps,</li>
+<li>These steps launch the appropriate routines, and</li>
+<li>These routines launch the appropriate sub-routines.</li>
+</ul>
+<p>Nifty is built at the lowest level from Python and IRAF subroutines. It is built so that it is relatively easy to change the implentation of the underlying task.</p>
+</div>
+<div class="section" id="updates">
+<h1>Updates<a class="headerlink" href="#updates" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="version-numbers">
+<h2>Version Numbers<a class="headerlink" href="#version-numbers" title="Permalink to this headline">¶</a></h2>
+<p>Nifty uses semantic versioning(see <a class="reference external" href="http://semver.org/">http://semver.org/</a>). This means version numbers come in</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>MAJOR.MINOR.PATCH
+</pre></div>
+</div>
+<p>In brief, when releasing a version of Nifty that is not backward-compatible with old test recipes,
+or changes break the public API, it is time to increment the MAJOR version number.</p>
+<p>..TODO(nat): maybe make this a little clearer.</p>
+</div>
+</div>
+<div class="section" id="code-conventions">
+<h1>Code Conventions<a class="headerlink" href="#code-conventions" title="Permalink to this headline">¶</a></h1>
+<p>Nifty was partly written using <a href="#id5"><span class="problematic" id="id6">`atom.&lt;https://atom.io/&gt;`_</span></a> Error messages,
+warnings and updates were written using templates in the included snippets.cson file.</p>
+<p>Where possible, nat used 2D (and higher) dimensional lists to implement error
+checking flags. These are particularly prominent in sort.</p>
+<p>Variables and functions were named using conventions in the
+<a href="#id7"><span class="problematic" id="id8">`Python Style Guide.&lt;https://www.python.org/dev/peps/pep-0008/#descriptive-naming-styles&gt;`_</span></a>
+Specifically a mix of camelCase and lower_case_with_underscores was used.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="future_work.html" class="btn btn-neutral float-right" title="Future Work" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="known_issues.html" class="btn btn-neutral" title="Known Issues" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Nat Comeau.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0.dev1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+# Nifty configuration file.
+#
+# Each section lists parameters required by a pipeline step.
+
+manualMode = False
+over = False
+merge = True
+scienceDirectoryList = ['/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20120927/Z/obs120', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20120930/Z/obs135', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121001/J/obs128', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121006/J/obs144', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121029/J/obs151']
+telluricDirectoryList = ['/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20120927/Z/Tellurics/obs122', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20120930/Z/Tellurics/obs138', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20120930/Z/Tellurics/obs143', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121001/J/Tellurics/obs130', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121006/J/Tellurics/obs126', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121029/J/Tellurics/obs153', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121029/J/Tellurics/obs147']
+calibrationDirectoryList = ['/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20120927/Calibrations_Z', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20120930/Calibrations_Z', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121001/Calibrations_J', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121006/Calibrations_J', '/Users/nat/tests/core/nifsPipelineTest/UGPS0722/20121029/Calibrations_J']
+
+[nifsPipelineConfig]
+sort = False
+calibrationReduction = False
+telluricReduction = False
+scienceReduction = True
+
+[sortConfig]
+rawPath = '/Users/nat/tests/core/nifsPipelineTest/rawData'
+program = ''
+skyThreshold = 2.0
+telluricTimeThreshold = 5400
+sortTellurics = True
+date = ''
+copy = ''
+
+[calibrationReductionConfig]
+baselineCalibrationStart = 1
+baselineCalibrationStop = 4
+
+[telluricReductionConfig]
+telStart = 1
+telStop = 6
+telluricSkySubtraction = True
+spectemp = ''
+mag = ''
+hline_method = 'vega'
+hlineinter = False
+continuuminter = False
+
+[scienceReductionConfig]
+sciStart = 6
+sciStop = 6
+scienceSkySubtraction = True
+telluricCorrectionMethod = 'gnirs'
+telinter = False
+fluxCalibrationMethod = 'gnirs'
+use_pq_offsets = True
+im3dtran = True
+
+# Good luck with your Science!

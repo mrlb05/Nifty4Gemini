@@ -1,0 +1,892 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Introduction &mdash; nifty 1.0.0.dev1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="nifty 1.0.0.dev1 documentation" href="../index.html"/>
+        <link rel="prev" title="Welcome to Nifty’s documentation!" href="../index.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> nifty
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#running-from-the-command-line">Running from the Command Line</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#examples-of-running-from-the-command-line">Examples of Running from the Command Line</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#preparing-the-cfg-input-file">Preparing the .cfg Input File</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#interactive-input-preparation">Interactive Input Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#an-example-input-file">An Example Input File</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#data-reduction-examples">Data Reduction Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#observations-of-titan">Observations of Titan</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#observations-of-a-moderate-redshift-galaxy">Observations of a Moderate Redshift Galaxy</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#tutorials">Tutorials</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#h-line-removal">H Line Removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#merging-data-cubes">Merging Data Cubes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#known-issues">Known Issues</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#linearpipeline-py">nifsPipeline.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifssort-py">nifsSort.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifsbaselinecalibration-py">nifsBaselineCalibration.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifsreduce-py">nifsReduce.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifsmerge-py">nifsMerge.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifsutils-py">nifsUtils.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#general-issues">General Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#maintaining-nifty">Maintaining Nifty</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pipeline-structure">Pipeline Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#updates">Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#code-conventions">Code Conventions</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#future-work">Future Work</a></li>
+<li class="toctree-l1"><a class="reference internal" href="#changelog">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#unreleased">Unreleased</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#b1-2017-09-08">1.0b1 - 2017-09-08</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#a1-2017-08-31">1.0a1 - 2017-08-31</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="#api">API</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nifty</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Introduction</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/nifty/introduction.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="introduction">
+<h1>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="running-from-the-command-line">
+<h1>Running from the Command Line<a class="headerlink" href="#running-from-the-command-line" title="Permalink to this headline">¶</a></h1>
+<p>Nifty is started with the runNifty command by specifying a pipeline or step with arguments and options.</p>
+<p>The syntax used to start Nifty is:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty &lt;Pipeline or Step Name&gt; &lt;arguments&gt;
+</pre></div>
+</div>
+<p>To get help or list the available options, type the runNifty command without any arguments.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty
+</pre></div>
+</div>
+<div class="section" id="examples-of-running-from-the-command-line">
+<h2>Examples of Running from the Command Line<a class="headerlink" href="#examples-of-running-from-the-command-line" title="Permalink to this headline">¶</a></h2>
+<p>Starting a Data Reduction from the Beginning</p>
+<p>To start the NIFS pipeline, populating a configuration file interactively:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline -i
+</pre></div>
+</div>
+<p>To start the NIFS pipeline from a pre-built configuration file:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline config.cfg
+</pre></div>
+</div>
+<p>To do a fully automatic data reduction, downloading raw data from the Gemini Public Archive (Eg: GN-2013A-Q-62):</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline -f GN-2013A-Q-62
+</pre></div>
+</div>
+<p>To do a fully automatic data reduction, using raw data from a local directory (Eg: /Users/ncomeau/data/TUTORIAL):</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline /Users/ncomeau/data/TUTORIAL
+</pre></div>
+</div>
+<p>Starting a Data Reduction from a Specified Point</p>
+<p>You can run each step, one at a time, from the command line like so. <em>You need a config.cfg file in your current working directory to run individual steps.
+Each step requires the general config section and its unique config section to be populated</em>.</p>
+<p>You can also run an individual step by turning them on or off in nifsPipeline config and running the nifsPipeline.</p>
+<p><strong>nifsSort:</strong> To only copy and sort NIFS raw data type:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsSort
+</pre></div>
+</div>
+<p>Or use a config.cfg file like this:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span># Nifty configuration file.
+#
+# Each section lists parameters required by a pipeline step.
+
+manualMode = False
+over = False
+merge = True
+scienceDirectoryList = []
+telluricDirectoryList = []
+calibrationDirectoryList = []
+
+[nifsPipelineConfig]
+sort = True
+calibrationReduction = False
+telluricReduction = False
+scienceReduction = False
+
+[sortConfig]
+rawPath = &#39;&#39;
+program = &#39;&#39;
+skyThreshold = 2.0
+sortTellurics = True
+date = &#39;&#39;
+copy = &#39;&#39;
+
+[calibrationReductionConfig]
+baselineCalibrationStart = 1
+baselineCalibrationStop = 4
+
+[telluricReductionConfig]
+telStart = 1
+telStop = 6
+telluricSkySubtraction = True
+spectemp = &#39;&#39;
+mag = &#39;&#39;
+hline_method = &#39;vega&#39;
+hlineinter = False
+continuuminter = False
+
+[scienceReductionConfig]
+sciStart = 1
+sciStop = 6
+scienceSkySubtraction = True
+telluricCorrectionMethod = &#39;&#39;
+telinter = False
+fluxCalibrationMethod = &#39;&#39;
+use_pq_offsets = True
+im3dtran = True
+
+# Good luck with your Science!
+</pre></div>
+</div>
+<p>And run the nifsPipeline with:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline config.cfg
+</pre></div>
+</div>
+<p><strong>nifsBaselineCalibration:</strong> To only reduce calibrations type:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsBaselineCalibration
+</pre></div>
+</div>
+<p>Or use a config.cfg file like this:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span># Nifty configuration file.
+#
+# Each section lists parameters required by a pipeline step.
+
+manualMode = False
+over = False
+merge = True
+scienceDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83&#39;]
+calibrationDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H&#39;]
+telluricDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85&#39;]
+
+[nifsPipelineConfig]
+sort = False
+calibrationReduction = True
+telluricReduction = False
+scienceReduction = False
+
+[sortConfig]
+rawPath = &#39;&#39;
+program = &#39;&#39;
+skyThreshold = 2.0
+sortTellurics = True
+date = &#39;&#39;
+copy = &#39;&#39;
+
+[calibrationReductionConfig]
+baselineCalibrationStart = 1
+baselineCalibrationStop = 4
+
+[telluricReductionConfig]
+telStart = 1
+telStop = 6
+telluricSkySubtraction = True
+spectemp = &#39;&#39;
+mag = &#39;&#39;
+hline_method = &#39;vega&#39;
+hlineinter = False
+continuuminter = False
+
+[scienceReductionConfig]
+sciStart = 1
+sciStop = 6
+scienceSkySubtraction = True
+telluricCorrectionMethod = &#39;&#39;
+telinter = False
+fluxCalibrationMethod = &#39;&#39;
+use_pq_offsets = True
+im3dtran = True
+
+# Good luck with your Science!
+</pre></div>
+</div>
+<p>And run the nifsPipeline with:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline config.cfg
+</pre></div>
+</div>
+<p><strong>nifsReduce Telluric:</strong> To only reduce telluric data type:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsReduce Telluric
+</pre></div>
+</div>
+<p>Or use a config.cfg file like this:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span># Nifty configuration file.
+#
+# Each section lists parameters required by a pipeline step.
+
+manualMode = False
+over = False
+merge = True
+scienceDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83&#39;]
+calibrationDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H&#39;]
+telluricDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85&#39;]
+
+[nifsPipelineConfig]
+sort = False
+calibrationReduction = False
+telluricReduction = True
+scienceReduction = False
+
+[sortConfig]
+rawPath = &#39;&#39;
+program = &#39;&#39;
+skyThreshold = 2.0
+sortTellurics = True
+date = &#39;&#39;
+copy = &#39;&#39;
+
+[calibrationReductionConfig]
+baselineCalibrationStart = 1
+baselineCalibrationStop = 4
+
+[telluricReductionConfig]
+telStart = 1
+telStop = 6
+telluricSkySubtraction = True
+spectemp = &#39;&#39;
+mag = &#39;&#39;
+hline_method = &#39;vega&#39;
+hlineinter = False
+continuuminter = False
+
+[scienceReductionConfig]
+sciStart = 1
+sciStop = 6
+scienceSkySubtraction = True
+telluricCorrectionMethod = &#39;&#39;
+telinter = False
+fluxCalibrationMethod = &#39;&#39;
+use_pq_offsets = True
+im3dtran = True
+
+# Good luck with your Science!
+</pre></div>
+</div>
+<p>And run the nifsPipeline with:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline config.cfg
+</pre></div>
+</div>
+<p><strong>nifsReduce Science:</strong> To only reduce science data type:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsReduce Science
+</pre></div>
+</div>
+<p>Or use a config.cfg file like this:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span># Nifty configuration file.
+#
+# Each section lists parameters required by a pipeline step.
+
+manualMode = False
+over = False
+merge = True
+scienceDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83&#39;]
+calibrationDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H&#39;]
+telluricDirectoryList = [&#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81&#39;, &#39;/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85&#39;]
+
+[nifsPipelineConfig]
+sort = False
+calibrationReduction = False
+telluricReduction = False
+scienceReduction = True
+
+[sortConfig]
+rawPath = &#39;&#39;
+program = &#39;&#39;
+skyThreshold = 2.0
+sortTellurics = True
+date = &#39;&#39;
+copy = &#39;&#39;
+
+[calibrationReductionConfig]
+baselineCalibrationStart = 1
+baselineCalibrationStop = 4
+
+[telluricReductionConfig]
+telStart = 1
+telStop = 6
+telluricSkySubtraction = True
+spectemp = &#39;&#39;
+mag = &#39;&#39;
+hline_method = &#39;vega&#39;
+hlineinter = False
+continuuminter = False
+
+[scienceReductionConfig]
+sciStart = 1
+sciStop = 6
+scienceSkySubtraction = True
+telluricCorrectionMethod = &#39;&#39;
+telinter = False
+fluxCalibrationMethod = &#39;&#39;
+use_pq_offsets = True
+im3dtran = True
+
+# Good luck with your Science!
+</pre></div>
+</div>
+<p>And run the nifsPipeline with:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline config.cfg
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="preparing-the-cfg-input-file">
+<h1>Preparing the .cfg Input File<a class="headerlink" href="#preparing-the-cfg-input-file" title="Permalink to this headline">¶</a></h1>
+<p>Nifty reads data reduction parameters with a config parser developed by Michael Foord. See
+<a class="reference external" href="http://www.voidspace.org.uk/python/configobj.html">http://www.voidspace.org.uk/python/configobj.html</a> for full documentation on the parser.</p>
+<div class="section" id="interactive-input-preparation">
+<h2>Interactive Input Preparation<a class="headerlink" href="#interactive-input-preparation" title="Permalink to this headline">¶</a></h2>
+<p>The best way to learn about what each config file parameter does is to populate an input file interactively by typing:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty nifsPipeline -i
+</pre></div>
+</div>
+<p>This will, for each parameter, print an explanation and supply a default parameter that you can accept by pressing enter. The output file
+is named “config.cfg”.</p>
+</div>
+<div class="section" id="an-example-input-file">
+<h2>An Example Input File<a class="headerlink" href="#an-example-input-file" title="Permalink to this headline">¶</a></h2>
+<p>Nifty includes a default configuration file in the runtimeData/ directory. As of v1.0b2, It looks like this:
+.. TODO(nat): This is out of data! Update this!</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span># Nifty configuration file.
+#
+# Each section lists parameters required by a pipeline step.
+
+manualMode = False
+over = False
+merge = True
+scienceDirectoryList = []
+telluricDirectoryList = []
+calibrationDirectoryList = []
+
+[nifsPipelineConfig]
+sort = True
+calibrationReduction = True
+telluricReduction = True
+scienceReduction = True
+
+[sortConfig]
+rawPath = &#39;&#39;
+program = &#39;&#39;
+skyThreshold = 2.0
+sortTellurics = True
+date = &#39;&#39;
+copy = &#39;&#39;
+
+[calibrationReductionConfig]
+baselineCalibrationStart = 1
+baselineCalibrationStop = 4
+
+[telluricReductionConfig]
+telStart = 1
+telStop = 6
+telluricSkySubtraction = True
+spectemp = &#39;&#39;
+mag = &#39;&#39;
+hline_method = &#39;vega&#39;
+hlineinter = False
+continuuminter = False
+
+[scienceReductionConfig]
+sciStart = 1
+sciStop = 6
+scienceSkySubtraction = True
+telluricCorrectionMethod = &#39;&#39;
+telinter = False
+fluxCalibrationMethod = &#39;&#39;
+use_pq_offsets = True
+im3dtran = True
+
+# Good luck with your Science!
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="data-reduction-examples">
+<h1>Data Reduction Examples<a class="headerlink" href="#data-reduction-examples" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="observations-of-titan">
+<h2>Observations of Titan<a class="headerlink" href="#observations-of-titan" title="Permalink to this headline">¶</a></h2>
+<p>Recipe used: defaultConfig.cfg</p>
+</div>
+<div class="section" id="observations-of-a-moderate-redshift-galaxy">
+<h2>Observations of a Moderate Redshift Galaxy<a class="headerlink" href="#observations-of-a-moderate-redshift-galaxy" title="Permalink to this headline">¶</a></h2>
+<p>Recipe used: defaultConfig.cfg</p>
+<p>Let’s reduce NIFS data of a moderate redshift galaxy, located at z ~ 1.284. This is a faint target, so after making
+individual cubes we use the reported telescope P and Q offsets to blindly merge our final cubes.</p>
+<p>As this program is out of its proprietary period and available on the Gemini Public Archive, we can use the defaultConfig.cfg configuration
+file and specify its program ID to reduce it.</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty -f GN-2013A-Q-62
+</pre></div>
+</div>
+<p>We could also launch the reduction from a provided configuration file.</p>
+<p>Contents of the configuration file:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>TODO(nat): When finalized fill this out!
+</pre></div>
+</div>
+<p>To launch the reduction:</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>runNifty &lt;configurationFile&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tutorials">
+<h1>Tutorials<a class="headerlink" href="#tutorials" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="h-line-removal">
+<h2>H Line Removal<a class="headerlink" href="#h-line-removal" title="Permalink to this headline">¶</a></h2>
+<p>The H-line removal can be done non-interactively, but it is advised that this be performed
+interactively and using the “vega_tweak” method in order to accurately scale the vega spectrum.
+In the interactive mode for the initial scaling and call to “telluric” these are the cursor keys
+and colon commands (from <a class="reference external" href="http://iraf.net/irafhelp.php?val=telluric&amp;help=Help+Page">http://iraf.net/irafhelp.php?val=telluric&amp;help=Help+Page</a>):</p>
+<ul class="simple">
+<li>? - print help</li>
+<li>a - automatic RMS minimization within sample regions</li>
+<li>c - toggle calibration spectrum display</li>
+<li>d - toggle data spectrum display</li>
+<li>e - expand (double) the step for the current selection</li>
+<li>q - quit</li>
+<li>r - redraw the graphs</li>
+<li>s - add or reset sample regions</li>
+<li>w - window commands (see :/help for additional information)</li>
+<li>x - graph and select from corrected shifted candidates</li>
+<li>y - graph and select from corrected scaled candidates</li>
+<li>:help           - print help</li>
+<li>:shift  [value] - print or reset the current shift</li>
+<li>:scale  [value] - print or reset the current scale</li>
+<li>:dshift [value] - print or reset the current shift step</li>
+<li>:dscale [value] - print or reset the current scale step</li>
+<li>:offset [value] - print or reset the current offset between spectra</li>
+<li>:sample [value] - print or reset the sample regions</li>
+<li>:smooth [value] - print or reset the smoothing box size</li>
+</ul>
+<p>To decrease the scale or shift value, the cursor must be under the spectrum and to increase
+these values the cursor must be above the spectrum. Occasionally, this will not work in which
+case the value can be designated with a colon command.</p>
+<p>If using the vega_tweak or other interactive line removal method, the lines can be removed
+in a splot environment (commands found here: <a class="reference external" href="http://stsdas.stsci.edu/cgi-bin/gethelp.cgi?splot.hlp">http://stsdas.stsci.edu/cgi-bin/gethelp.cgi?splot.hlp</a>).
+The most useful commands for this are:</p>
+<ul class="simple">
+<li>k + (g, l or v)</li>
+</ul>
+<p>Mark two continuum points and fit a single line profile. The second key selects the
+type of profile: g for gaussian, l for lorentzian, and v for voigt. Any other second key
+defaults to gaussian. The center, continuum at the center, core intensity, integrated flux,
+equivalent width, and FWHMs are printed and saved in the log file. See d for fitting multiple profiles and - to subtract the fit.</p>
+<ul class="simple">
+<li>w</li>
+</ul>
+<p>Window the graph. For further help type ? to the “window:” prompt or see help under gtools.
+To cancel the windowing use a.</p>
+<p>It is necessary to press ‘i’ before ‘q’ once the h-lines have been removed in order to save the changes.</p>
+</div>
+<div class="section" id="merging-data-cubes">
+<h2>Merging Data Cubes<a class="headerlink" href="#merging-data-cubes" title="Permalink to this headline">¶</a></h2>
+<p>Nifty offers a few ways to merge data cubes. These are all contained in the
+nifsMerge.py script.</p>
+<p><strong>Note:</strong> If cubes are not transposed each call to iraf.imcombine() can take
+25 minutes or more. The current implementation is much slower at combining when cubes
+have a y-offset.</p>
+<p>Cubes Were Shifted by Hand with QFitsView or Similar</p>
+<p>A user can shift cubes by hand and add the prefix “shift” to the cube name. The
+pipeline will automatically find these cubes and combine them with gemcube.</p>
+<p>If no “shift”-prefixed cubes exist the user has two more choices to make. The first is to
+generate offsets automatically or to provide an offsets file by hand.</p>
+<p>Generating an offsets.txt File</p>
+<p>If use_pq_offsets is True in the config.cfg file, <em>Nifty</em> will determine offsets automatically from the
+POFFSET and QOFFSET entry of each cubes .fits header. Otherwise, <em>Nifty</em> will pause
+and wait for you to provide a suitably formatted offsets.txt file in the
+scienceObjectName/Merged/date_obsid/ directory.</p>
+<p>Using iraf.im3dtran()</p>
+<p>Cubes have been found to combine ~50 times faster when the y and lambda axis are
+swapped with iraf.im3dtran(). In our tests we found it took ~25 minutes to merge
+cubes without transposition and ~0.5 minutes to merge cubes in a tranposed state.</p>
+<p>We have found the cubes produced with and without tranposition to be identical. We
+have made the default not to use transposition but we urge further testing.</p>
+</div>
+</div>
+<div class="section" id="known-issues">
+<h1>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="linearpipeline-py">
+<h2>nifsPipeline.py<a class="headerlink" href="#linearpipeline-py" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="nifssort-py">
+<h2>nifsSort.py<a class="headerlink" href="#nifssort-py" title="Permalink to this headline">¶</a></h2>
+<p>Object and Sky frame differentiation</p>
+<p>If the sorting script does not create a skylist in the object or telluric observation
+directories this means that the offsets between sky frames and object frames were smaller
+than expected. A skyframelist can be manually created and saved in the appropriate directory, or
+the limit placed on the offset can be changed. To lower the limit manually do a search in nifsSort.py
+for “skyframelist.append(entry)” and change the &lt;= &lt;value_in_arcseconds&gt; to something new.</p>
+</div>
+<div class="section" id="nifsbaselinecalibration-py">
+<h2>nifsBaselineCalibration.py<a class="headerlink" href="#nifsbaselinecalibration-py" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><strong>Long data file path names are not fed to IRAF tasks</strong>. It seems IRAF task parameters</li>
+</ul>
+<p>must be 99 characters or less. Nifty’s data files are stored in the Astroconda environment
+packages directory; for example, on my system it is “/Users/nat/miniconda2/envs/niftypip/lib/python2.7/site-packages/nifty/pipeline/”.
+If you have a long username, for example, this can cause the path name to be too long to
+be parsed by iraf.
+<em>Temporary fix:</em> I have made the names of all the data files short enough for it to work
+okay on my system. <strong>Please let me know if this seems to be
+causing you issues and I can come up with a better fix.</strong></p>
+</div>
+<div class="section" id="nifsreduce-py">
+<h2>nifsReduce.py<a class="headerlink" href="#nifsreduce-py" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>z-band data is not capable of a flux calibration (yet!).</li>
+<li>Seems to be missing the first peak of the ronchi slit when iraf.nfsdist() is run interactively.
+This does not seem to be a problem.</li>
+<li>We noticed that iraf.nfsdist() produced different results when run interactively and
+non-interactively. To test check the log for iraf.nfsdist() output and make sure it is
+identifying 8/8 or 9/9 peaks every time.</li>
+<li>iraf.nftelluric() was not built to be run automatically. A lightly tested modified
+version that allows an automatic telluric correction is included in the extras directory
+but more testing is needed. For now applyTelluricPython() is recommended.</li>
+</ul>
+</div>
+<div class="section" id="nifsmerge-py">
+<h2>nifsMerge.py<a class="headerlink" href="#nifsmerge-py" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="nifsutils-py">
+<h2>nifsUtils.py<a class="headerlink" href="#nifsutils-py" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="general-issues">
+<h2>General Issues<a class="headerlink" href="#general-issues" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>A longstanding bug (see <a href="#id1"><span class="problematic" id="id2">`astropy&lt;https://github.com/astropy/astropy/pull/960&gt;`_</span></a> ) in astropy has made it
+difficult to build Nifty as a binary executable.</li>
+<li>The conversion of print statements to logging.info() statements was messy. Some of these
+may still not be properly converted and will throw nasty tracebacks. However these seem to
+have no effect on the functionioning of the code.</li>
+<li>Logging is still not perfect. One or two iraf tasks are sending their log files to
+“nifs.log” instead of “Nifty.log”.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="maintaining-nifty">
+<h1>Maintaining Nifty<a class="headerlink" href="#maintaining-nifty" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="documentation">
+<h2>Documentation<a class="headerlink" href="#documentation" title="Permalink to this headline">¶</a></h2>
+<p>Right now there exists five forms of documentation.</p>
+<p>Paper</p>
+<p>README.rst</p>
+<p>Manual</p>
+<p>Nifty’s manual gives a broad overview of how the code functions. It is included as
+a pdf.</p>
+<p>.rst Files in the docs/ directory</p>
+<p>This file, others like it in the docs/ directory and the README are written in
+reStructuredText. This markup language integrates well with Python’s automatic
+documentation builder (we used Sphinx) and Github as well as being human readable. You can
+read more about reStructuredText <a href="#id3"><span class="problematic" id="id4">`here.&lt;http://www.sphinx-doc.org/en/stable/rest.html&gt;`_</span></a></p>
+<p>Comments and DocStrings in Source Code</p>
+<p>Nifty uses the Google docstring style. Examples of docstrings can be found
+<a href="#id5"><span class="problematic" id="id6">`here.&lt;http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html&gt;`_</span></a></p>
+<p>Other Python comments use the following convention:</p>
+<ul class="simple">
+<li>A # is followed by a space and a capital letter.</li>
+<li>All comments end in a period where possible.</li>
+</ul>
+</div>
+<div class="section" id="pipeline-structure">
+<h2>Pipeline Structure<a class="headerlink" href="#pipeline-structure" title="Permalink to this headline">¶</a></h2>
+<p>See the Nifty paper for a high level overview. Nifty general runs with the following procedure:</p>
+<ul class="simple">
+<li>A script in the scripts/ directory is called from the command line.</li>
+<li>This script imports the relevant pipeline and steps from the nifty/pipeline/ and nifty/pipeline/steps/directories.</li>
+<li>The script then launches the appropriate pipeline,</li>
+<li>This pipeline launches the appropriate steps,</li>
+<li>These steps launch the appropriate routines, and</li>
+<li>These routines launch the appropriate sub-routines.</li>
+</ul>
+<p>Nifty is built at the lowest level from Python and IRAF subroutines. It is built so that it is relatively easy to change the implentation of the underlying task.</p>
+</div>
+<div class="section" id="updates">
+<h2>Updates<a class="headerlink" href="#updates" title="Permalink to this headline">¶</a></h2>
+<p>Version Numbers</p>
+<p>Nifty uses semantic versioning(see <a class="reference external" href="http://semver.org/">http://semver.org/</a>). This means version numbers come in</p>
+<div class="highlight-text"><div class="highlight"><pre><span></span>MAJOR.MINOR.PATCH
+</pre></div>
+</div>
+<p>In brief, when releasing a version of Nifty that is not backward-compatible with old test recipes,
+or changes break the public API, it is time to increment the MAJOR version number.</p>
+<p>..TODO(nat): maybe make this a little clearer.</p>
+</div>
+<div class="section" id="code-conventions">
+<h2>Code Conventions<a class="headerlink" href="#code-conventions" title="Permalink to this headline">¶</a></h2>
+<p>Nifty was partly written using <a href="#id7"><span class="problematic" id="id8">`atom.&lt;https://atom.io/&gt;`_</span></a> Error messages,
+warnings and updates were written using templates in the included snippets.cson file.</p>
+<p>Where possible, nat used 2D (and higher) dimensional lists to implement error
+checking flags. These are particularly prominent in sort.</p>
+<p>Variables and functions were named using conventions in the
+<a href="#id9"><span class="problematic" id="id10">`Python Style Guide.&lt;https://www.python.org/dev/peps/pep-0008/#descriptive-naming-styles&gt;`_</span></a>
+Specifically a mix of camelCase and lower_case_with_underscores was used.</p>
+</div>
+</div>
+<div class="section" id="future-work">
+<h1>Future Work<a class="headerlink" href="#future-work" title="Permalink to this headline">¶</a></h1>
+<p>Throughout the code, I’ve placed MANY TODO(nat) notes. These are my top priorities for now.</p>
+<p>Some nice to haves:</p>
+<ul class="simple">
+<li></li>
+<li>Add Python 3 compatability(if possible)</li>
+<li>Ability to restart individual steps easily</li>
+<li>Add some sort of status indicators… Like progress</li>
+<li>Paralellisation?</li>
+<li>Analysis tools: automatic velocity field? Dispersion?</li>
+</ul>
+</div>
+<div class="section" id="changelog">
+<h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
+<p>All notable changes to this project will be documented in this file.</p>
+<p>The format is based on [Keep a Changelog](<a class="reference external" href="http://keepachangelog.com/en/1.0.0/">http://keepachangelog.com/en/1.0.0/</a>)
+and this project adheres to [Semantic Versioning](<a class="reference external" href="http://semver.org/spec/v2.0.0.html">http://semver.org/spec/v2.0.0.html</a>).</p>
+<div class="section" id="unreleased">
+<h2>Unreleased<a class="headerlink" href="#unreleased" title="Permalink to this headline">¶</a></h2>
+<p>All in-development changes will be tracked here.</p>
+<ul class="simple">
+<li>Fixing merge flip due to differences between NIFS + ALTAIR and NIFS w/o ALTAIR</li>
+</ul>
+<p>on the bottom port.
+- Adding remaining overwrite blocks.
+- Adding unit tests for each step and integration test for pipeline.
+- Fixing telluric correction and absolute flux calibration.</p>
+</div>
+<div class="section" id="b1-2017-09-08">
+<h2>1.0b1 - 2017-09-08<a class="headerlink" href="#b1-2017-09-08" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Preliminary Beta release. Syntax errors mean this version will not compile.</li>
+</ul>
+</div>
+<div class="section" id="a1-2017-08-31">
+<h2>1.0a1 - 2017-08-31<a class="headerlink" href="#a1-2017-08-31" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Preliminary Alpha release. .whl uploaded to PIP, docs uploaded to</li>
+</ul>
+<p>ReadTheDocs and preliminary DOI assigned.</p>
+</div>
+</div>
+<div class="section" id="api">
+<h1>API<a class="headerlink" href="#api" title="Permalink to this headline">¶</a></h1>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Welcome to Nifty’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Nat Comeau.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0.dev1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

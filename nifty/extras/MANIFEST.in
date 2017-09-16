@@ -1,0 +1,6 @@
+include README.rst
+include LICENSE
+include Nifty/docs/*
+include Nifty/extras/*
+include Nifty/runtimeData/*
+include Nifty/unit_tests/*

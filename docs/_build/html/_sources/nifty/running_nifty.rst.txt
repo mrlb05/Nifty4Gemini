@@ -1,0 +1,322 @@
+Running from the Command Line
+=============================
+
+Nifty is started with the runNifty command by specifying a pipeline or step with arguments and options.
+
+The syntax used to start Nifty is:
+
+.. code-block:: text
+
+  runNifty <Pipeline or Step Name> <arguments>
+
+To get help or list the available options, type the runNifty command without any arguments.
+
+.. code-block:: text
+
+   runNifty
+
+Examples of Running from the Command Line
+=========================================
+
+Starting a Data Reduction from the Beginning
+--------------------------------------------
+
+To start the NIFS pipeline, populating a configuration file interactively:
+
+.. code-block:: text
+
+  runNifty nifsPipeline -i
+
+To start the NIFS pipeline from a pre-built configuration file:
+
+.. code-block:: text
+
+  runNifty nifsPipeline config.cfg
+
+To do a fully automatic data reduction, downloading raw data from the Gemini Public Archive (Eg: GN-2013A-Q-62):
+
+.. code-block:: text
+
+   runNifty nifsPipeline -f GN-2013A-Q-62
+
+To do a fully automatic data reduction, using raw data from a local directory (Eg: /Users/ncomeau/data/TUTORIAL):
+
+.. code-block:: text
+
+  runNifty nifsPipeline /Users/ncomeau/data/TUTORIAL
+
+Starting a Data Reduction from a Specified Point
+------------------------------------------------
+
+You can run each step, one at a time, from the command line like so. *You need a config.cfg file in your current working directory to run individual steps.
+Each step requires the general config section and its unique config section to be populated*.
+
+You can also run an individual step by turning them on or off in nifsPipeline config and running the nifsPipeline.
+
+**nifsSort:** To only copy and sort NIFS raw data type:
+
+.. code-block:: text
+
+  runNifty nifsSort
+
+Or use a config.cfg file like this:
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  merge = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
+
+  [nifsPipelineConfig]
+  sort = True
+  calibrationReduction = False
+  telluricReduction = False
+  scienceReduction = False
+
+  [sortConfig]
+  rawPath = ''
+  program = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  date = ''
+  copy = ''
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 6
+  telluricSkySubtraction = True
+  spectemp = ''
+  mag = ''
+  hline_method = 'vega'
+  hlineinter = False
+  continuuminter = False
+
+  [scienceReductionConfig]
+  sciStart = 1
+  sciStop = 6
+  scienceSkySubtraction = True
+  telluricCorrectionMethod = ''
+  telinter = False
+  fluxCalibrationMethod = ''
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
+And run the nifsPipeline with:
+
+.. code-block:: text
+
+  runNifty nifsPipeline config.cfg
+
+**nifsBaselineCalibration:** To only reduce calibrations type:
+
+.. code-block:: text
+
+  runNifty nifsBaselineCalibration
+
+Or use a config.cfg file like this:
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  merge = True
+  scienceDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83']
+  calibrationDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H']
+  telluricDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85']
+
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = True
+  telluricReduction = False
+  scienceReduction = False
+
+  [sortConfig]
+  rawPath = ''
+  program = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  date = ''
+  copy = ''
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 6
+  telluricSkySubtraction = True
+  spectemp = ''
+  mag = ''
+  hline_method = 'vega'
+  hlineinter = False
+  continuuminter = False
+
+  [scienceReductionConfig]
+  sciStart = 1
+  sciStop = 6
+  scienceSkySubtraction = True
+  telluricCorrectionMethod = ''
+  telinter = False
+  fluxCalibrationMethod = ''
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
+And run the nifsPipeline with:
+
+.. code-block:: text
+
+  runNifty nifsPipeline config.cfg
+
+**nifsReduce Telluric:** To only reduce telluric data type:
+
+.. code-block:: text
+
+  runNifty nifsReduce Telluric
+
+Or use a config.cfg file like this:
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  merge = True
+  scienceDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83']
+  calibrationDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H']
+  telluricDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85']
+
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = False
+  telluricReduction = True
+  scienceReduction = False
+
+  [sortConfig]
+  rawPath = ''
+  program = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  date = ''
+  copy = ''
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 6
+  telluricSkySubtraction = True
+  spectemp = ''
+  mag = ''
+  hline_method = 'vega'
+  hlineinter = False
+  continuuminter = False
+
+  [scienceReductionConfig]
+  sciStart = 1
+  sciStop = 6
+  scienceSkySubtraction = True
+  telluricCorrectionMethod = ''
+  telinter = False
+  fluxCalibrationMethod = ''
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
+And run the nifsPipeline with:
+
+.. code-block:: text
+
+  runNifty nifsPipeline config.cfg
+
+**nifsReduce Science:** To only reduce science data type:
+
+.. code-block:: text
+
+  runNifty nifsReduce Science
+
+Or use a config.cfg file like this:
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  merge = True
+  scienceDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83']
+  calibrationDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H']
+  telluricDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85']
+
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = False
+  telluricReduction = False
+  scienceReduction = True
+
+  [sortConfig]
+  rawPath = ''
+  program = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  date = ''
+  copy = ''
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 6
+  telluricSkySubtraction = True
+  spectemp = ''
+  mag = ''
+  hline_method = 'vega'
+  hlineinter = False
+  continuuminter = False
+
+  [scienceReductionConfig]
+  sciStart = 1
+  sciStop = 6
+  scienceSkySubtraction = True
+  telluricCorrectionMethod = ''
+  telinter = False
+  fluxCalibrationMethod = ''
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
+And run the nifsPipeline with:
+
+.. code-block:: text
+
+  runNifty nifsPipeline config.cfg

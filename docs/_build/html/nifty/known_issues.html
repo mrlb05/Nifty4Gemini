@@ -1,0 +1,326 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Known Issues &mdash; nifty 1.0.0.dev1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="nifty 1.0.0.dev1 documentation" href="../index.html"/>
+        <link rel="up" title="Introduction" href="introduction.html"/>
+        <link rel="next" title="Maintaining Nifty" href="maintenance_and_package_structure.html"/>
+        <link rel="prev" title="H Line Removal" href="tutorials.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> nifty
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="introduction.html">Introduction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="running_nifty.html">Running from the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_nifty.html#examples-of-running-from-the-command-line">Examples of Running from the Command Line</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preparing_input.html">Preparing the .cfg Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preparing_input.html#interactive-input-preparation">Interactive Input Preparation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="preparing_input.html#example-input-file">Example Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html">H Line Removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tutorials.html#merging-data-cubes">Merging Data Cubes</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#linearpipeline-py">nifsPipeline.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifssort-py">nifsSort.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#object-and-sky-frame-differentiation">Object and Sky frame differentiation</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#nifsbaselinecalibration-py">nifsBaselineCalibration.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifsreduce-py">nifsReduce.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifsmerge-py">nifsMerge.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifsutils-py">nifsUtils.py</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general-issues">General Issues</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance_and_package_structure.html">Maintaining Nifty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance_and_package_structure.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance_and_package_structure.html#pipeline-structure">Pipeline Structure</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance_and_package_structure.html#updates">Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance_and_package_structure.html#code-conventions">Code Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="future_work.html">Future Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nifty</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="introduction.html">Introduction</a> &raquo;</li>
+        
+      <li>Known Issues</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/nifty/known_issues.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="known-issues">
+<h1>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="linearpipeline-py">
+<h1>nifsPipeline.py<a class="headerlink" href="#linearpipeline-py" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="nifssort-py">
+<h1>nifsSort.py<a class="headerlink" href="#nifssort-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="object-and-sky-frame-differentiation">
+<h2>Object and Sky frame differentiation<a class="headerlink" href="#object-and-sky-frame-differentiation" title="Permalink to this headline">¶</a></h2>
+<p>If the sorting script does not create a skylist in the object or telluric observation
+directories this means that the offsets between sky frames and object frames were smaller
+than expected. A skyframelist can be manually created and saved in the appropriate directory, or
+the limit placed on the offset can be changed. To lower the limit manually do a search in nifsSort.py
+for “skyframelist.append(entry)” and change the &lt;= &lt;value_in_arcseconds&gt; to something new.</p>
+</div>
+</div>
+<div class="section" id="nifsbaselinecalibration-py">
+<h1>nifsBaselineCalibration.py<a class="headerlink" href="#nifsbaselinecalibration-py" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><strong>Long data file path names are not fed to IRAF tasks</strong>. It seems IRAF task parameters</li>
+</ul>
+<p>must be 99 characters or less. Nifty’s data files are stored in the Astroconda environment
+packages directory; for example, on my system it is “/Users/nat/miniconda2/envs/niftypip/lib/python2.7/site-packages/nifty/pipeline/”.
+If you have a long username, for example, this can cause the path name to be too long to
+be parsed by iraf.
+<em>Temporary fix:</em> I have made the names of all the data files short enough for it to work
+okay on my system. <strong>Please let me know if this seems to be
+causing you issues and I can come up with a better fix.</strong></p>
+</div>
+<div class="section" id="nifsreduce-py">
+<h1>nifsReduce.py<a class="headerlink" href="#nifsreduce-py" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li>z-band data is not capable of a flux calibration (yet!).</li>
+<li>Seems to be missing the first peak of the ronchi slit when iraf.nfsdist() is run interactively.
+This does not seem to be a problem.</li>
+<li>We noticed that iraf.nfsdist() produced different results when run interactively and
+non-interactively. To test check the log for iraf.nfsdist() output and make sure it is
+identifying 8/8 or 9/9 peaks every time.</li>
+<li>iraf.nftelluric() was not built to be run automatically. A lightly tested modified
+version that allows an automatic telluric correction is included in the extras directory
+but more testing is needed. For now applyTelluricPython() is recommended.</li>
+</ul>
+</div>
+<div class="section" id="nifsmerge-py">
+<h1>nifsMerge.py<a class="headerlink" href="#nifsmerge-py" title="Permalink to this headline">¶</a></h1>
+</div>
+<div class="section" id="nifsutils-py">
+<h1>nifsUtils.py<a class="headerlink" href="#nifsutils-py" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="general-issues">
+<h2>General Issues<a class="headerlink" href="#general-issues" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>A longstanding bug (see <a href="#id1"><span class="problematic" id="id2">`astropy&lt;https://github.com/astropy/astropy/pull/960&gt;`_</span></a> ) in astropy has made it
+difficult to build Nifty as a binary executable.</li>
+<li>The conversion of print statements to logging.info() statements was messy. Some of these
+may still not be properly converted and will throw nasty tracebacks. However these seem to
+have no effect on the functionioning of the code.</li>
+<li>Logging is still not perfect. One or two iraf tasks are sending their log files to
+“nifs.log” instead of “Nifty.log”.</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="maintenance_and_package_structure.html" class="btn btn-neutral float-right" title="Maintaining Nifty" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="tutorials.html" class="btn btn-neutral" title="H Line Removal" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Nat Comeau.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0.dev1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

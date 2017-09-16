@@ -1,0 +1,15 @@
+.DS_Store
+test.py
+tesh.sh
+nifsMerge.pyc
+nifsBaselineCalibration.pyc
+nifsDefs.pyc
+nifsReduce.pyc
+nifsSort.pyc
+hd165459
+AEGISz1284
+HD141004
+results
+
+# Compiled python modules.
+*.pyc

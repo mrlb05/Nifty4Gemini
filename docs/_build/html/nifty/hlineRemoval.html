@@ -1,0 +1,300 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>H Line Removal &mdash; nifty 1.0.0.dev1 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+        <link rel="index" title="Index"
+              href="../genindex.html"/>
+        <link rel="search" title="Search" href="../search.html"/>
+    <link rel="top" title="nifty 1.0.0.dev1 documentation" href="../index.html"/>
+        <link rel="up" title="Introduction" href="introduction.html"/>
+        <link rel="next" title="Merging Data Cubes" href="merging.html"/>
+        <link rel="prev" title="Example of Directory Modifications Through Nifty" href="directoryModifications.html"/> 
+
+  
+  <script src="../_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> nifty
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="introduction.html">Introduction</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="preparingInput.html">Preparing the .json Input File</a></li>
+<li class="toctree-l2"><a class="reference internal" href="runningNifty.html">Running Nifty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html">Example of Directory Modifications Through Nifty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html#nifssort">nifsSort</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html#nifsbaselinecalibration">nifsBaselineCalibration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html#nifsreduce-tellurics">nifsReduce(tellurics)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="directoryModifications.html#nifsreduce-science">nifsReduce(science)</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">H Line Removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="merging.html">Merging Data Cubes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="knownissues.html">Known Issues</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html">Maintaining Nifty</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#updates">Updates</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#code-conventions">Code Conventions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="maintenance.html#future-work">Future Work</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html">API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#nifty-structure">Nifty Structure</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">nifty</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="introduction.html">Introduction</a> &raquo;</li>
+        
+      <li>H Line Removal</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/nifty/hlineRemoval.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="h-line-removal">
+<h1>H Line Removal<a class="headerlink" href="#h-line-removal" title="Permalink to this headline">¶</a></h1>
+<p>The H-line removal can be done non-interactively, but it is advised that this be performed
+interactively and using the “vega_tweak” method in order to accurately scale the vega spectrum.
+In the interactive mode for the initial scaling and call to “telluric” these are the cursor keys
+and colon commands (from <a class="reference external" href="http://iraf.net/irafhelp.php?val=telluric&amp;help=Help+Page">http://iraf.net/irafhelp.php?val=telluric&amp;help=Help+Page</a>):</p>
+<ul class="simple">
+<li>? - print help</li>
+<li>a - automatic RMS minimization within sample regions</li>
+<li>c - toggle calibration spectrum display</li>
+<li>d - toggle data spectrum display</li>
+<li>e - expand (double) the step for the current selection</li>
+<li>q - quit</li>
+<li>r - redraw the graphs</li>
+<li>s - add or reset sample regions</li>
+<li>w - window commands (see :/help for additional information)</li>
+<li>x - graph and select from corrected shifted candidates</li>
+<li>y - graph and select from corrected scaled candidates</li>
+<li>:help           - print help</li>
+<li>:shift  [value] - print or reset the current shift</li>
+<li>:scale  [value] - print or reset the current scale</li>
+<li>:dshift [value] - print or reset the current shift step</li>
+<li>:dscale [value] - print or reset the current scale step</li>
+<li>:offset [value] - print or reset the current offset between spectra</li>
+<li>:sample [value] - print or reset the sample regions</li>
+<li>:smooth [value] - print or reset the smoothing box size</li>
+</ul>
+<p>To decrease the scale or shift value, the cursor must be under the spectrum and to increase
+these values the cursor must be above the spectrum. Occasionally, this will not work in which
+case the value can be designated with a colon command.</p>
+<p>If using the vega_tweak or other interactive line removal method, the lines can be removed
+in a splot environment (commands found here: <a class="reference external" href="http://stsdas.stsci.edu/cgi-bin/gethelp.cgi?splot.hlp">http://stsdas.stsci.edu/cgi-bin/gethelp.cgi?splot.hlp</a>).
+The most useful commands for this are:</p>
+<ul class="simple">
+<li>k + (g, l or v)</li>
+</ul>
+<p>Mark two continuum points and fit a single line profile. The second key selects the
+type of profile: g for gaussian, l for lorentzian, and v for voigt. Any other second key
+defaults to gaussian. The center, continuum at the center, core intensity, integrated flux,
+equivalent width, and FWHMs are printed and saved in the log file. See d for fitting multiple profiles and - to subtract the fit.</p>
+<ul class="simple">
+<li>w</li>
+</ul>
+<p>Window the graph. For further help type ? to the “window:” prompt or see help under gtools.
+To cancel the windowing use a.</p>
+<p>It is necessary to press ‘i’ before ‘q’ once the h-lines have been removed in order to save the changes.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="merging.html" class="btn btn-neutral float-right" title="Merging Data Cubes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="directoryModifications.html" class="btn btn-neutral" title="Example of Directory Modifications Through Nifty" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2017, Nat Comeau.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.0.dev1',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="../_static/jquery.js"></script>
+      <script type="text/javascript" src="../_static/underscore.js"></script>
+      <script type="text/javascript" src="../_static/doctools.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

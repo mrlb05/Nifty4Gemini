@@ -1,0 +1,12 @@
+#!python
+
+import sys
+import nifty
+
+if __name__ == '__main__':
+
+    if '--version' in sys.argv:
+        sys.stdout.write("%s\n" % stpipe.__version__)
+        sys.exit(0)
+
+    nifty.nifsPipeline.start(sys.argv[1:])
