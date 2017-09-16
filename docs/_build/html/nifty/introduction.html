@@ -36,6 +36,7 @@
               href="../genindex.html"/>
         <link rel="search" title="Search" href="../search.html"/>
     <link rel="top" title="nifty 1.0.0.dev1 documentation" href="../index.html"/>
+        <link rel="next" title="Example of Nifty File I/O" href="fileIO.html"/>
         <link rel="prev" title="Welcome to Nifty’s documentation!" href="../index.html"/> 
 
   
@@ -107,11 +108,12 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#tutorials">Tutorials</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#h-line-removal">H Line Removal</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-telluric-corrections">Custom Telluric Corrections</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#merging-data-cubes">Merging Data Cubes</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#known-issues">Known Issues</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#linearpipeline-py">nifsPipeline.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nifspipeline-py">nifsPipeline.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nifssort-py">nifsSort.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nifsbaselinecalibration-py">nifsBaselineCalibration.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nifsreduce-py">nifsReduce.py</a></li>
@@ -130,11 +132,13 @@
 <li class="toctree-l1"><a class="reference internal" href="#future-work">Future Work</a></li>
 <li class="toctree-l1"><a class="reference internal" href="#changelog">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#unreleased">Unreleased</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#b4-2017-09-12">1.0b4 - 2017-09-12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#b1-2017-09-08">1.0b1 - 2017-09-08</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#a1-2017-08-31">1.0a1 - 2017-08-31</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#api">API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="fileIO.html">Example of Nifty File I/O</a></li>
 </ul>
 
             
@@ -628,6 +632,12 @@ equivalent width, and FWHMs are printed and saved in the log file. See d for fit
 To cancel the windowing use a.</p>
 <p>It is necessary to press ‘i’ before ‘q’ once the h-lines have been removed in order to save the changes.</p>
 </div>
+<div class="section" id="custom-telluric-corrections">
+<h2>Custom Telluric Corrections<a class="headerlink" href="#custom-telluric-corrections" title="Permalink to this headline">¶</a></h2>
+<p>You can supply your own continuum-normalized telluric correction spectrum by placing a “telluricCorrection.fits” one D spectra
+and a “fit.fits” that you used to normalize that spectra in the science observation directory. Both spectra must be 2040 pixels
+long and have the data extension located in header unit zero. Note that overwrite must be turned off for this to work.</p>
+</div>
 <div class="section" id="merging-data-cubes">
 <h2>Merging Data Cubes<a class="headerlink" href="#merging-data-cubes" title="Permalink to this headline">¶</a></h2>
 <p>Nifty offers a few ways to merge data cubes. These are all contained in the
@@ -655,8 +665,8 @@ have made the default not to use transposition but we urge further testing.</p>
 </div>
 <div class="section" id="known-issues">
 <h1>Known Issues<a class="headerlink" href="#known-issues" title="Permalink to this headline">¶</a></h1>
-<div class="section" id="linearpipeline-py">
-<h2>nifsPipeline.py<a class="headerlink" href="#linearpipeline-py" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="nifspipeline-py">
+<h2>nifsPipeline.py<a class="headerlink" href="#nifspipeline-py" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="nifssort-py">
 <h2>nifsSort.py<a class="headerlink" href="#nifssort-py" title="Permalink to this headline">¶</a></h2>
@@ -703,7 +713,7 @@ but more testing is needed. For now applyTelluricPython() is recommended.</li>
 <div class="section" id="general-issues">
 <h2>General Issues<a class="headerlink" href="#general-issues" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
-<li>A longstanding bug (see <a href="#id1"><span class="problematic" id="id2">`astropy&lt;https://github.com/astropy/astropy/pull/960&gt;`_</span></a> ) in astropy has made it
+<li>A longstanding bug (see <a class="reference external" href="https://github.com/astropy/astropy/pull/960">astropy</a> ) in astropy has made it
 difficult to build Nifty as a binary executable.</li>
 <li>The conversion of print statements to logging.info() statements was messy. Some of these
 may still not be properly converted and will throw nasty tracebacks. However these seem to
@@ -727,10 +737,10 @@ a pdf.</p>
 <p>This file, others like it in the docs/ directory and the README are written in
 reStructuredText. This markup language integrates well with Python’s automatic
 documentation builder (we used Sphinx) and Github as well as being human readable. You can
-read more about reStructuredText <a href="#id3"><span class="problematic" id="id4">`here.&lt;http://www.sphinx-doc.org/en/stable/rest.html&gt;`_</span></a></p>
+read more about reStructuredText <a class="reference external" href="http://www.sphinx-doc.org/en/stable/rest.html">here</a>.</p>
 <p>Comments and DocStrings in Source Code</p>
 <p>Nifty uses the Google docstring style. Examples of docstrings can be found
-<a href="#id5"><span class="problematic" id="id6">`here.&lt;http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html&gt;`_</span></a></p>
+<a class="reference external" href="http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html">here</a>.</p>
 <p>Other Python comments use the following convention:</p>
 <ul class="simple">
 <li>A # is followed by a space and a capital letter.</li>
@@ -763,21 +773,21 @@ or changes break the public API, it is time to increment the MAJOR version numbe
 </div>
 <div class="section" id="code-conventions">
 <h2>Code Conventions<a class="headerlink" href="#code-conventions" title="Permalink to this headline">¶</a></h2>
-<p>Nifty was partly written using <a href="#id7"><span class="problematic" id="id8">`atom.&lt;https://atom.io/&gt;`_</span></a> Error messages,
-warnings and updates were written using templates in the included snippets.cson file.</p>
+<p>Nifty was partly written using <a class="reference external" href="https://atom.io/">atom</a>. Error messages,
+warnings and updates were partly written using templates in the included snippets.cson file.</p>
 <p>Where possible, nat used 2D (and higher) dimensional lists to implement error
 checking flags. These are particularly prominent in sort.</p>
 <p>Variables and functions were named using conventions in the
-<a href="#id9"><span class="problematic" id="id10">`Python Style Guide.&lt;https://www.python.org/dev/peps/pep-0008/#descriptive-naming-styles&gt;`_</span></a>
+<a class="reference external" href="https://www.python.org/dev/peps/pep-0008/#descriptive-naming-styles">Python Style Guide</a>.
 Specifically a mix of camelCase and lower_case_with_underscores was used.</p>
 </div>
 </div>
 <div class="section" id="future-work">
 <h1>Future Work<a class="headerlink" href="#future-work" title="Permalink to this headline">¶</a></h1>
-<p>Throughout the code, I’ve placed MANY TODO(nat) notes. These are my top priorities for now.</p>
-<p>Some nice to haves:</p>
+<p>Throughout the code, ncomeau has placed many TODO notes. These are good to check out and could be
+a good starting point.</p>
+<p>Some other nice to haves:</p>
 <ul class="simple">
-<li></li>
 <li>Add Python 3 compatability(if possible)</li>
 <li>Ability to restart individual steps easily</li>
 <li>Add some sort of status indicators… Like progress</li>
@@ -788,29 +798,39 @@ Specifically a mix of camelCase and lower_case_with_underscores was used.</p>
 <div class="section" id="changelog">
 <h1>Changelog<a class="headerlink" href="#changelog" title="Permalink to this headline">¶</a></h1>
 <p>All notable changes to this project will be documented in this file.</p>
-<p>The format is based on [Keep a Changelog](<a class="reference external" href="http://keepachangelog.com/en/1.0.0/">http://keepachangelog.com/en/1.0.0/</a>)
-and this project adheres to [Semantic Versioning](<a class="reference external" href="http://semver.org/spec/v2.0.0.html">http://semver.org/spec/v2.0.0.html</a>).</p>
+<p>The format is based on <a class="reference external" href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>
+and this project adheres to <a class="reference external" href="http://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.</p>
 <div class="section" id="unreleased">
 <h2>Unreleased<a class="headerlink" href="#unreleased" title="Permalink to this headline">¶</a></h2>
 <p>All in-development changes will be tracked here.</p>
 <ul class="simple">
-<li>Fixing merge flip due to differences between NIFS + ALTAIR and NIFS w/o ALTAIR</li>
+<li>Adding unit tests for each step and integration test for pipeline.</li>
+<li>Finished integrating multiple types of cube merging.</li>
 </ul>
-<p>on the bottom port.
-- Adding remaining overwrite blocks.
-- Adding unit tests for each step and integration test for pipeline.
-- Fixing telluric correction and absolute flux calibration.</p>
+</div>
+<div class="section" id="b4-2017-09-12">
+<h2>1.0b4 - 2017-09-12<a class="headerlink" href="#b4-2017-09-12" title="Permalink to this headline">¶</a></h2>
+<p>Much refined and patched Beta release. Still not finished but much more robust.</p>
+<ul class="simple">
+<li>Verified overwrite; it seems to be safe to use now.</li>
+<li>Fixing telluric correction and absolute flux calibration.</li>
+<li>Added 1D extraction routine.</li>
+<li>Preliminary addition of three types of cubes and cube merging.</li>
+</ul>
 </div>
 <div class="section" id="b1-2017-09-08">
 <h2>1.0b1 - 2017-09-08<a class="headerlink" href="#b1-2017-09-08" title="Permalink to this headline">¶</a></h2>
+<p>Preliminary Beta release.</p>
 <ul class="simple">
-<li>Preliminary Beta release. Syntax errors mean this version will not compile.</li>
+<li>Syntax errors mean this version will not compile.</li>
+<li>Fixing merge flip due to differences between NIFS + ALTAIR and NIFS w/o ALTAIR on the bottom port.</li>
 </ul>
 </div>
 <div class="section" id="a1-2017-08-31">
 <h2>1.0a1 - 2017-08-31<a class="headerlink" href="#a1-2017-08-31" title="Permalink to this headline">¶</a></h2>
+<p>Preliminary Alpha release.</p>
 <ul class="simple">
-<li>Preliminary Alpha release. .whl uploaded to PIP, docs uploaded to</li>
+<li>.whl uploaded to PIP, docs uploaded to</li>
 </ul>
 <p>ReadTheDocs and preliminary DOI assigned.</p>
 </div>
@@ -828,6 +848,8 @@ and this project adheres to [Semantic Versioning](<a class="reference external" 
           <footer>
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="fileIO.html" class="btn btn-neutral float-right" title="Example of Nifty File I/O" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
         <a href="../index.html" class="btn btn-neutral" title="Welcome to Nifty’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>

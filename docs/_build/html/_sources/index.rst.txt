@@ -23,6 +23,7 @@ Package Documentation
    :maxdepth: 2
 
    nifty/introduction.rst
+   nifty/fileIO.rst
 
 
 Indices and tables
