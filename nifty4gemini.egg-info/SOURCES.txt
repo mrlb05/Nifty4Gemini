@@ -1,9 +1,5 @@
 README.rst
 setup.py
-Nifty.egg-info/PKG-INFO
-Nifty.egg-info/SOURCES.txt
-Nifty.egg-info/dependency_links.txt
-Nifty.egg-info/top_level.txt
 nifty/__init__.py
 nifty/pipeline/__init__.py
 nifty/pipeline/nifsLowMemoryPipeline.py
@@ -37,4 +33,8 @@ nifty/runtimeData/j_ar.dat
 nifty/runtimeData/k_ar.dat
 nifty/runtimeData/new_starstemp.txt
 nifty/runtimeData/vega_ext.fits
+nifty4gemini.egg-info/PKG-INFO
+nifty4gemini.egg-info/SOURCES.txt
+nifty4gemini.egg-info/dependency_links.txt
+nifty4gemini.egg-info/top_level.txt
 scripts/runNifty
