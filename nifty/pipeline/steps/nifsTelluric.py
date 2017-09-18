@@ -482,7 +482,7 @@ def divideByContinuum(rawFrame, log, over):
         else:
             logging.info("\nOutput exists and -over not set - skipping division by continuum")
     else:
-        iraf.imarith("1_htel"+rawFrame+'.fits', "/", "2_fit"+rawFrame+'.fits', result="3_chtel"+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
+        iraf.imarith('1_htel'+rawFrame+'.fits', "/", '2_fit'+rawFrame+'.fits', result='3_chtel'+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
 
 def get1dSpecFromCube(rawFrame, log, over):
     """

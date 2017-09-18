@@ -259,16 +259,18 @@ def makeBlackBody(rawFrame, grating, log, over):
     else:
         iraf.mk1dspec(input="3_BBody"+rawFrame,output="",title='',ncols=2040,naps=1,header='',wstart=wstart,wend=wend,temperature=standardStarSpecTemperature)
         logging.info("\nMade a blackbody in 3_BBody{}.fits".format(rawFrame))
-    mean = iraf.imstat(images="3_BBody"+rawFrame+".fits", fields="mean", lower='INDEF', upper='INDEF', nclip=0, lsigma=3.0, usigma=3.0, binwidth=0.1, format='yes', cache='no', mode='al',Stdout=1)
-    print mean
 
 def makeBlackBodyScale(rawFrame, log, over):
     """
     For now, scale the black body by the ratio of the black body mean flux to fLambda.
     """
     # Get the mean of the unscaled blackbody.
-    mean = iraf.imstat(images="3_BBody"+rawFrame+".fits", fields="mean", lower='INDEF', upper='INDEF', nclip=0, lsigma=3.0, usigma=3.0, binwidth=0.1, format='yes', cache='no', mode='al',Stdout=1)
-    mean = float(mean[1].replace("'",""))
+    # FOR SOME REASON, iraf.imstat is having problems opening the image. So I am using Numpy for now.
+    #mean = iraf.imstat(images="3_BBody"+rawFrame+".fits", fields="mean", lower='INDEF', upper='INDEF', nclip=0, lsigma=3.0, usigma=3.0, binwidth=0.1, format='yes', cache='no', mode='al',Stdout=1)
+    unscaled = astropy.io.fits.open("3_BBody"+rawFrame+".fits")
+    data = unscaled[0].data
+    mean = float(np.mean(data))
+    #mean = float(mean[1].replace("'",""))
 
     # Get fLambda.
     with open("2_fLambda"+rawFrame+".txt", "r") as f:

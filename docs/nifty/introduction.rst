@@ -654,12 +654,21 @@ Updates
 
 To update Nifty, do five things:
 
-- Do your development in a new branch or fork, not the master branch of the repository
-- Run the test data reductions in the tests directory
-- Pick an appropriate version number
+- *Do your development in a new branch or fork, not the master branch of the repository*
+- Before uploading, run the test scripts in the tests directory
+- Pick an appropriate version number; update the setup.py
+- Create a new DIO (zenodo) and update the DOI in the README
+- Commit all changes to GitHub
 - Create a new Github Release
 - Upload the latest version to PyPi.org
-- Create a new DIO and update the DOI in the README
+
+Uploading to PyPi.org; instructions taken from `here <https://packaging.python.org/tutorials/distributing-packages/#wheels>`_.
+
+..code-block:: text
+
+  rm -r dist build             # Clean up old files
+  python setup.py bdist_wheel  # Build python wheels
+  twine upload dist/*          # Upload to PyPi.org
 
 Version Numbers
 

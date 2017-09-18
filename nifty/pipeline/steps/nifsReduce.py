@@ -436,6 +436,7 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
                 if kind=='Telluric':
                     extractOneD(tellist, kind, log, over, extractionXC, extractionYC, extractionRadius)
 
+                    # TODO(nat): add this as a parameter; encapsulate this.
                     copyToScience = True
                     if copyToScience:
                         # Copy final extracted results to science directory.
@@ -456,6 +457,7 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
                     logging.info("           ->gxtfbrsn - COMPLETED")
                     logging.info("")
                     logging.info("##############################################################################\n")
+                    #TODO(nat): add this as a parameter.
                     makeTelluricCube = True
                     if makeTelluricCube:
                         makeCube('tfbrsn', tellist, log, over)
@@ -478,6 +480,7 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
                         logging.info("##############################################################################\n")
                     makeCube('tfbrsn', scienceFrameList, log, over)
 
+                    # TODO(nat): encapsulate this inside a function.
                     if os.path.exists('products_uncorrected'):
                         if over:
                             shutil.rmtree('products_uncorrected')
@@ -520,16 +523,6 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
                     logging.info("  STEP 5b: Make uncorrected science data cubes, ->ctfbrsn  - COMPLETED")
                     logging.info("")
                     logging.info("##############################################################################\n")
-
-            ###########################################################################
-            ##  STEP 6 (Tellurics): Create an efficiency spectrum ->cgxtfbrsn        ##
-            ##  STEP 6 (Science): Create a final combined 3D data cube               ##
-            ##    ->[date]_[obsid]_merged.fits (and ->TOTAL_merged[grating].fits, if ##
-            ##    multiple observations to be merged).                               ##
-            ###########################################################################
-
-            elif valindex == 6:
-                pass
 
             valindex += 1
 

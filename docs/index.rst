@@ -8,13 +8,6 @@ Welcome to Nifty's documentation!
 
 Nifty is a full-featured Gemini NIFS data reduction pipeline and data reduction package.
 
-===========
-User Manual
-===========
-
-For an in-depth explanation of the underlying Python and I/O, see
-:download:`Nifty user manual <Surely_Youre_Joking_Mr_Feynman.pdf>`.
-
 =====================
 Package Documentation
 =====================

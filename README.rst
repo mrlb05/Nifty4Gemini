@@ -4,9 +4,9 @@ Nifty
 .. image:: https://zenodo.org/badge/93109208.svg
    :alt: DOI of the latest release. See releases.
    :target: https://zenodo.org/record/852696#.WaWmr5PyhMA
-.. image:: https://readthedocs.org/projects/newer-nifty/badge/?version=latest
+.. image:: https://readthedocs.org/projects/nifty4gemini/badge/?version=latest
    :alt: Nifty's documentation, hosted on ReadtheDocs.
-   :target: http://newer-nifty.readthedocs.io/en/latest/
+   :target: http://nifty4gemini.readthedocs.io/en/latest/
 .. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
    :alt: Nifty uses Astropy! Here is a link to the project webpage:
    :target: http://www.astropy.org/
@@ -16,7 +16,7 @@ Nifty
 A Python Data Reduction Pipeline for the Gemini-North Near-Infrared Integral
 Field Spectrometer (NIFS).
 
-Full documentation: `ReadTheDocs <http://newer-nifty.readthedocs.io/en/latest/>`_.
+Full documentation: `ReadTheDocs <http://nifty4gemini.readthedocs.io/en/latest/>`_.
 
 This is a new data reduction Python pipeline that uses Astroconda and the Gemini
 IRAF Package to reduce NIFS data. It offers a complete data reduction process from
