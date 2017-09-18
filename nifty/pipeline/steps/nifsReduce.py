@@ -45,7 +45,7 @@ import matplotlib.pyplot as plt
 # Import config parsing.
 from ..configobj.configobj import ConfigObj
 # Import custom Nifty functions.
-from ..nifsUtils import datefmt, listit, writeList, checkLists, makeSkyList, MEFarith, convertRAdec
+from ..nifsUtils import datefmt, listit, writeList, checkLists, makeSkyList, MEFarith, convertRAdec, copyResultsToScience
 
 # Define constants
 # Paths to Nifty data.
@@ -227,29 +227,31 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
         flat = 'calibrations/finalFlat'
         # Open and store the bad pixel mask
         finalBadPixelMask = 'calibrations/finalBadPixelMask'
+        # Ronchi, arc and database must all be in local calibrations directory
         # Open and store the name of the reduced spatial correction ronchi flat frame name from ronchifile in ronchi.
-        ronchi = 'calibrations/finalRonchi'
+        ronchi = 'finalRonchi'
         # Open and store the name of the reduced wavelength calibration arc frame from arclist in arc.
-        arc = 'calibrations/finalArc'
+        arc = 'finalArc'
 
         if os.path.exists(os.getcwd()+'/'+ronchi+".fits"):
             if over:
-                iraf.delete(os.getcwd()+'/'+ronchi+".fits")
+                iraf.delete(os.getcwd()+'/calibrations/finalRonchi.fits')
                 # Copy the spatial calibration ronchi flat frame from Calibrations_grating to the observation directory.
-                shutil.copy(os.getcwd()+'/'+ronchi+".fits", "./")
+                shutil.copy(os.getcwd()+'/calibrations/finalRonchi.fits', ronchi+'.fits')
             else:
                 print "\nOutput exists and -over not set - skipping copy of reduced ronchi"
         else:
-            shutil.copy(os.getcwd()+'/'+ronchi+".fits", "./")
+            shutil.copy(os.getcwd()+'/calibrations/finalRonchi.fits', ronchi+'.fits')
 
-        if os.path.exists(arc+".fits"):
+        if os.path.exists(os.getcwd()+'/'+arc+".fits"):
             if over:
-                os.remove(arc+".fits")
-                shutil.copy(arc+".fits", "./")
+                iraf.delete(os.getcwd()+'/calibrations/finalArc.fits')
+                # Copy the spatial calibration arc flat frame from Calibrations_grating to the observation directory.
+                shutil.copy(os.getcwd()+'/calibrations/finalArc.fits', arc+'.fits')
             else:
                 print "\nOutput exists and -over not set - skipping copy of reduced arc"
         else:
-            shutil.copy(arc+".fits", "./")
+            shutil.copy(os.getcwd()+'/calibrations/finalArc.fits', arc+'.fits')
         # Make sure the database files are in place. Current understanding is that
         # these should be local to the reduction directory, so need to be copied from
         # the calDir.
@@ -433,6 +435,21 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
                 # Make a combined extracted 1D standard star spectrum.
                 if kind=='Telluric':
                     extractOneD(tellist, kind, log, over, extractionXC, extractionYC, extractionRadius)
+
+                    copyToScience = True
+                    if copyToScience:
+                        # Copy final extracted results to science directory.
+                        with open("scienceMatchedTellsList", "r") as f:
+                            lines = f.readlines()
+                        lines = [x.strip() for x in lines]
+
+                        for i in range(len(lines)):
+                            if "obs" in lines[i]:
+                                k = 1
+                                while i+k != len(lines) and "obs" not in lines[i+k]:
+                                    copyResultsToScience("gxtfbrsn"+tellist[0]+".fits", "0_tel"+lines[i+k]+".fits", over)
+                                    k+=1
+
                     logging.info("\n##############################################################################")
                     logging.info("")
                     logging.info("  STEP 5a: Extract 1D Spectra and Make Combined 1D Standard Star Spectrum")
@@ -460,6 +477,43 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
                         logging.info("")
                         logging.info("##############################################################################\n")
                     makeCube('tfbrsn', scienceFrameList, log, over)
+
+                    if os.path.exists('products_uncorrected'):
+                        if over:
+                            shutil.rmtree('products_uncorrected')
+                            os.mkdir('products_uncorrected')
+                        else:
+                            logging.info("\nOutput exists and -over not set - skipping creating of products_uncorrected directory")
+                    else:
+                        os.mkdir('products_uncorrected')
+                    for item in scienceFrameList:
+                        if os.path.exists('products_uncorrected/ctfbrsn'+item+'.fits'):
+                            if over:
+                                os.remove('products_uncorrected/ctfbrsn'+item+'.fits')
+                                shutil.copy('ctfbrsn'+item+'.fits', 'products_uncorrected/ctfbrsn'+item+'.fits')
+                            else:
+                                logging.info("\nOutput exists and -over not set - skipping copy of uncorrected cube")
+                        else:
+                            shutil.copy('ctfbrsn'+item+'.fits', 'products_uncorrected/ctfbrsn'+item+'.fits')
+
+                    if os.path.exists('products_telluric_corrected'):
+                        if over:
+                            shutil.rmtree('products_telluric_corrected')
+                            os.mkdir('products_telluric_corrected')
+                        else:
+                            logging.info("\nOutput exists and -over not set - skipping creating of products_telluric_corrected directory")
+                    else:
+                        os.mkdir('products_telluric_corrected')
+                    for item in scienceFrameList:
+                        if os.path.exists('products_telluric_corrected/ctfbrsn'+item+'.fits'):
+                            if over:
+                                os.remove('products_telluric_corrected/ctfbrsn'+item+'.fits')
+                                shutil.copy('ctfbrsn'+item+'.fits', 'products_telluric_corrected/ctfbrsn'+item+'.fits')
+                            else:
+                                logging.info("\nOutput exists and -over not set - skipping copy of uncorrected cube")
+                        else:
+                            shutil.copy('ctfbrsn'+item+'.fits', 'products_telluric_corrected/ctfbrsn'+item+'.fits')
+
 
                     logging.info("\n##############################################################################")
                     logging.info("")
@@ -655,7 +709,7 @@ def fitCoords(objlist, arc, ronchi, log, over, kind):
             else:
                 logging.info("Output file exists and -over not set - skipping fitcoord_list")
                 continue
-        iraf.nsfitcoords("brsn"+frame, lamptransf=arc, sdisttransf=ronchi, lxorder=3, lyorder=2, sxorder=3, syorder=3, logfile=log)
+        iraf.nsfitcoords("brsn"+frame, lamptransf=arc, sdisttransf=ronchi, database="database", lxorder=3, lyorder=2, sxorder=3, syorder=3, logfile=log)
 
 #--------------------------------------------------------------------------------------------------------------------------------#
 

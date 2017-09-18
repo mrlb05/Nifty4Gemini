@@ -606,7 +606,7 @@ Maintaining Nifty
 Documentation
 -------------
 
-Right now there exists five forms of documentation.
+Right now there exists four forms of documentation.
 
 Paper
 
@@ -614,12 +614,6 @@ Paper
 
 README.rst
 
-
-Manual
-
-
-Nifty's manual gives a broad overview of how the code functions. It is included as
-a pdf.
 
 .rst Files in the docs/ directory
 
@@ -652,10 +646,20 @@ See the Nifty paper for a high level overview. Nifty general runs with the follo
 - These steps launch the appropriate routines, and
 - These routines launch the appropriate sub-routines.
 
-Nifty is built at the lowest level from Python and IRAF subroutines. It is built so that it is relatively easy to change the implentation of the underlying task.
+Nifty is built at the lowest level from Python and IRAF subroutines. It is built so that it is relatively
+easy to change the implementation of the underlying tasks.
 
 Updates
 -------
+
+To update Nifty, do five things:
+
+- Do your development in a new branch or fork, not the master branch of the repository
+- Run the test data reductions in the tests directory
+- Pick an appropriate version number
+- Create a new Github Release
+- Upload the latest version to PyPi.org
+- Create a new DIO and update the DOI in the README
 
 Version Numbers
 
@@ -684,19 +688,22 @@ Variables and functions were named using conventions in the
 `Python Style Guide <https://www.python.org/dev/peps/pep-0008/#descriptive-naming-styles>`_.
 Specifically a mix of camelCase and lower_case_with_underscores was used.
 
+Code style was influenced by the `Google Python Style Guide <https://google.github.io/styleguide/pyguide.html>`_.
+
 Future Work
 ===========
 
-Throughout the code, ncomeau has placed many TODO notes. These are good to check out and could be
-a good starting point.
+Throughout the code, ncomeau has placed many TODO notes. These are things that
+work but could be expressed in more robust ways.
 
-Some other nice to haves:
+Some other things to do in the future:
 
-- Add Python 3 compatability(if possible)
-- Ability to restart individual steps easily
-- Add some sort of status indicators... Like progress
-- Paralellisation?
+- Gemini private network downloads
+- XDGNIRS integration and NDMAPPER (James Turner) integration
 - Analysis tools: automatic velocity field? Dispersion?
+- Python 3 compatability(if possible)
+- Compiling as a self-contained executable
+- Full AstroConda integration
 
 Changelog
 =========

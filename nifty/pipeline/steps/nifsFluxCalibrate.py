@@ -14,7 +14,7 @@ RUNTIME_DATA_PATH = pkg_resources.resource_filename('nifty', 'runtimeData/')
 
 def run():
     """
-    Do a telluric correction.
+    Do a flux calibration.
     """
     # Store current working directory for later use.
     path = os.getcwd()
@@ -22,13 +22,14 @@ def run():
     # Set up iraf
     iraf.gemini()
     iraf.unlearn("gemini")
+    #iraf.unlearn(iraf.gemini,iraf.gemtools,iraf.gnirs,iraf.nifs,iraf.imcopy)
 
     # Set up the logging file.
     log = os.getcwd()+'/Nifty.log'
 
     logging.info('\n#################################################')
     logging.info('#                                               #')
-    logging.info('#       Start the NIFS Telluric Correction      #')
+    logging.info('#       Start the NIFS Flux Calibration         #')
     logging.info('#                                               #')
     logging.info('#################################################\n')
 
@@ -131,7 +132,7 @@ def divideByContinuum(rawFrame, log, over):
 
     """
     # Open the telluric corrected, un-fluxcalibrated data cube.
-    cube = astropy.io.fits.open('../products_telluric_corrected/actfbrsn'+rawFrame+'.fits')
+    cube = astropy.io.fits.open('0_telactfbrsn'+rawFrame+'.fits')
     # Open the scaled blackbody. We will multiply the cube by this.
     shiftedFit = astropy.io.fits.open("0_fit"+rawFrame+".fits")
     if os.path.exists('1_continuum'+rawFrame+'.fits'):

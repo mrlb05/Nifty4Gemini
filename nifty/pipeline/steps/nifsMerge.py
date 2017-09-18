@@ -234,7 +234,7 @@ def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
                 cubes.sort(key=lambda x: x[-8:-5])    # Sort cubes in increasing order by last three digits.
                 listsOfCubes.append(cubes)
             else:
-                logging.info("Warning: no uncorrected cubes found in " + str(os.getcwd()))
+                logging.info("Warning: no telluric corrected cubes found in " + str(os.getcwd()))
                 logging.info("Skipping cube merging in this directory.")
                 return
         elif cubeType == "telCorAndFluxCalibrated":
@@ -243,7 +243,7 @@ def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
                 cubes.sort(key=lambda x: x[-8:-5])    # Sort cubes in increasing order by last three digits.
                 listsOfCubes.append(cubes)
             else:
-                logging.info("Warning: no uncorrected cubes found in " + str(os.getcwd()))
+                logging.info("Warning: no flux calibrated and telluric corrected cubes found in " + str(os.getcwd()))
                 logging.info("Skipping cube merging in this directory.")
                 return
         else:

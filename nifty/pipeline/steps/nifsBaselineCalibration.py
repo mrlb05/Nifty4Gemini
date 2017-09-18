@@ -38,7 +38,7 @@ from pyraf import iraf, iraffunctions
 from ..configobj.configobj import ConfigObj
 
 # Import custom Nifty functions.
-from ..nifsUtils import datefmt, listit, checkLists, copyCalibration, copyCalibrationDatabase
+from ..nifsUtils import datefmt, listit, checkLists, copyCalibration, copyCalibrationDatabase, replaceNameDatabaseFiles
 
 # Define constants.
 # Paths to Nifty data.
@@ -701,8 +701,10 @@ def makeWaveCal(arclist, arc, arcdarklist, arcdark, grating, log, over, path):
         "Therefore please run iraf.nswavelength() interactively from Pyraf to do a wavelength calibration by hand.")
 
     # Copy to relevant science observation/calibrations/ directories
+    for item in glob.glob('database/idwrgn*'):
+        replaceNameDatabaseFiles(item, "wrgn"+arc, 'finalArc')
     copyCalibration("wrgn"+arc+".fits", 'finalArc.fits', grating, over)
-    copyCalibrationDatabase("idwrgn", grating, over)
+    copyCalibrationDatabase("idwrgn", grating, "finalArc", over)
 
 #--------------------------------------------------------------------------------------------------------------------------------#
 
@@ -788,8 +790,10 @@ def makeRonchi(ronchilist, ronchiflat, calflat, grating, over, flatdark, log):
 
     open("ronchifile", "w").write("rgn"+ronchiflat)
     # Copy to relevant science observation/calibrations/ directories
+    for item in glob.glob('database/idrgn*'):
+        replaceNameDatabaseFiles(item, "rgn"+ronchiflat, 'finalRonchi')
     copyCalibration("rgn"+ronchiflat+".fits", 'finalRonchi.fits', grating, over)
-    copyCalibrationDatabase("idrgn", grating, over)
+    copyCalibrationDatabase("idrgn", grating, "finalRonchi", over)
 
 #---------------------------------------------------------------------------------------------------------------------------------------#
 

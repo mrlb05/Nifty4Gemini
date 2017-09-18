@@ -138,6 +138,15 @@ def run():
                     logging.info("")
                     logging.info("##############################################################################\n")
 
+                if valindex == 9:
+                    copyToFluxCalDirectory(rawFrame, log, over)
+                    logging.info("\n##############################################################################")
+                    logging.info("")
+                    logging.info("  STEP 9 - COMPLETED ")
+                    logging.info("")
+                    logging.info("##############################################################################\n")
+
+
                 valindex += 1
 
         os.chdir(path)
@@ -176,6 +185,15 @@ def getStandardInfo(rawFrame, standardStarMagnitude, standardStarSpecTemperature
         else:
             logging.info("\nOutput exists and -over not set - skipping get standard star info")
             return
+
+    if os.path.exists('../products_fluxcal_AND_telluric_corrected'):
+        if over:
+            shutil.rmtree('../products_fluxcal_AND_telluric_corrected')
+            os.mkdir('../products_fluxcal_AND_telluric_corrected')
+        else:
+            logging.info("\nOutput exists and -over not set - skipping creation oproducts_fluxcal_AND_telluric_corrected/")
+    else:
+        os.mkdir('../products_fluxcal_AND_telluric_corrected')
 
     sf = open(starfile,'w')
     klf = open (kelvinfile)
@@ -582,7 +600,7 @@ def divideCubebyTel(rawFrame, log, over):
     Divide every element of a data cube by the derived telluric correction spectrum.
     """
     # Open the uncorrected data cube.
-    cube = astropy.io.fits.open('../products_uncorrected/'+'ctfbrsn'+rawFrame+'.fits')
+    cube = astropy.io.fits.open('ctfbrsn'+rawFrame+'.fits')
     # Open the shifted, scaled telluric correction spectrum.
     telluricSpec = astropy.io.fits.open('7_schtel'+rawFrame+'.fits')
     if os.path.exists("actfbrsn"+rawFrame+'.fits'):
@@ -601,6 +619,19 @@ def divideCubebyTel(rawFrame, log, over):
             for j in range(cube[1].header['NAXIS1']):     # NAXIS1 is the x axis of the final cube.
                 cube[1].data[:,i,j] /= (telluricSpec[0].data)
         cube.writeto("actfbrsn"+rawFrame+'.fits', output_verify='ignore')
+
+def copyToFluxCalDirectory(rawFrame, log, over):
+    """
+    Copy finished cubes to products_fluxcal_AND_telluric_corrected directory
+    """
+    if os.path.exists('../products_fluxcal_AND_telluric_corrected/actfbrsn'+rawFrame+'.fits'):
+        if over:
+            os.remove('../products_fluxcal_AND_telluric_corrected/actfbrsn'+rawFrame+'.fits')
+            shutil.copy('actfbrsn'+rawFrame+'.fits','../products_fluxcal_AND_telluric_corrected/0_telactfbrsn'+rawFrame+'.fits')
+        else:
+            logging.info("\nOutput exists and -over not set - skipping copy of telluric corrected cube to products_fluxcal_AND_telluric_corrected/")
+    else:
+            shutil.copy('actfbrsn'+rawFrame+'.fits','../products_fluxcal_AND_telluric_corrected/0_telactfbrsn'+rawFrame+'.fits')
 
 # ---------------------------------------------------------------------------- #
 

@@ -1,5 +1,5 @@
-Nifty TEST
-==========
+Nifty
+=====
 
 .. image:: https://zenodo.org/badge/93109208.svg
    :alt: DOI of the latest release. See releases.

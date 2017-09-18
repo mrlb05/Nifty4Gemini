@@ -14,7 +14,7 @@ README_TEXT = readme.read()
 readme.close()
 
 
-NAME = 'Nifty4NIFS'
+NAME = 'Nifty'
 SCRIPTS = glob('scripts/*')
 PACKAGE_DATA = {
     '': ['*.dat', '*.cfg', '*.fits', '*.txt']
@@ -22,9 +22,9 @@ PACKAGE_DATA = {
 
 setup(
     name=NAME,
-    version="1.0b5",
-    author='ncomeau',
-    author_email='ncomeau@gemini.edu',
+    version="1.0b6",
+    author='mbusserolle',
+    author_email='mbussero@gemini.edu',
     description='The Gemini NIFS data reduction pipeline.',
     long_description = README_TEXT,
     url='http://www.gemini.edu',
