@@ -309,7 +309,7 @@ def scaleBlackBody(rawFrame, log, over):
             # A bug involving iraf.gemini() causes imarith to fail here. Use astropy unless you fixed it.
             #iraf.imarith(operand1="3_BBody"+rawFrame, op="*", operand2=bbodyScaleFactor, result="5_scaledBBody"+rawFrame,title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
             operand1 = astropy.io.fits.open("3_BBody"+rawFrame+".fits")[0].data
-            operand2 = astropy.io.fits.open("3_BBody"+rawFrame+".fits")[0].data
+            operand2 = bbodyScaleFactor
             multiplied = operand1 * operand2
             hdu = astropy.io.fits.PrimaryHDU(multiplied)
             hdu.writeto("5_scaledBBody"+rawFrame+".fits")
@@ -321,11 +321,10 @@ def scaleBlackBody(rawFrame, log, over):
         # A bug involving iraf.gemini() causes imarith to fail here. Use astropy unless you fixed it.
         #iraf.imarith(operand1="3_BBody"+rawFrame, op="*", operand2=bbodyScaleFactor, result="5_scaledBBody"+rawFrame,title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
         operand1 = astropy.io.fits.open("3_BBody"+rawFrame+".fits")[0].data
-        operand2 = astropy.io.fits.open("3_BBody"+rawFrame+".fits")[0].data
+        operand2 = bbodyScaleFactor
         multiplied = operand1 * operand2
         hdu = astropy.io.fits.PrimaryHDU(multiplied)
         hdu.writeto("5_scaledBBody"+rawFrame+".fits")
-        logging.info("\nCreated a scaled blackbody, 5_scaledBBody{}.fits".format(rawFrame))
     # We now have a scaled blackbody, scaledBlackBody.fits
 
 def multiplyByBlackBody(rawFrame, log, over):
