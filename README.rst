@@ -1,6 +1,7 @@
 Nifty
 =====
 .. image:: https://badge.fury.io/py/nifty4gemini.svg
+    :alt: Available on PyPi.
     :target: https://badge.fury.io/py/nifty4gemini
 .. image:: https://zenodo.org/badge/93109208.svg
    :alt: DOI of the latest release. See releases.
@@ -8,6 +9,11 @@ Nifty
 .. image:: https://readthedocs.org/projects/nifty4gemini/badge/?version=latest
    :alt: Nifty's documentation, hosted on ReadtheDocs.
    :target: http://nifty4gemini.readthedocs.io/en/latest/
+
+ .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
+     :alt: MIT license.
+     :target: https://opensource.org/licenses/MIT
+
 .. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
    :alt: Nifty uses Astropy! Here is a link to the project webpage:
    :target: http://www.astropy.org/
