@@ -73,7 +73,7 @@ from nifsUtils import datefmt, printDirectoryLists, writeList, getParam, interac
 #                                      +
 #
 
-# Welcome to Nifty.
+# Welcome to Nifty!
 
 # The current version:
 # TODO(nat): fix this to import the version from setup.py.
@@ -214,7 +214,6 @@ def start(args):
         if manualMode:
             a = raw_input('About to enter nifsReduce to reduce science.')
         nifsReduce.start('Science')
-
     if telluricCorrection:
         if manualMode:
             a = raw_input('About to enter nifsTelluric to make and create telluric corrected cubes.')

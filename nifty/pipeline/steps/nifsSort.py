@@ -1406,7 +1406,7 @@ def matchTellurics(telDirList, obsDirList, telluricTimeThreshold):
                 logging.info("#####################################################################")
                 logging.info("#####################################################################\n")
 
-                rewriteSciImageList(2.0, Science)
+                rewriteSciImageList(2.0, "Science")
                 try:
                     sciImageList = open('scienceFrameList', "r").readlines()
                     logging.info("\nSucceeded; a science frame list exists in " + str(os.getcwd()))
