@@ -9,11 +9,12 @@ Nifty
 .. image:: https://readthedocs.org/projects/nifty4gemini/badge/?version=latest
    :alt: Nifty's documentation, hosted on ReadtheDocs.
    :target: http://nifty4gemini.readthedocs.io/en/latest/
-
- .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
-     :alt: MIT license.
-     :target: https://opensource.org/licenses/MIT
-
+.. image:: https://img.shields.io/badge/License-MIT-yellow.svg
+   :alt: MIT license.
+   :target: https://opensource.org/licenses/MIT
+.. image:: https://badges.frapsoft.com/os/v2/open-source.svg?v=103
+   :alt: Nifty is open-source.
+   :target: https://github.com/ellerbrock/open-source-badges/
 .. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
    :alt: Nifty uses Astropy! Here is a link to the project webpage:
    :target: http://www.astropy.org/
