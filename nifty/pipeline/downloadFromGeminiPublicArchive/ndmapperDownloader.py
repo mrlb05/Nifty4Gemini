@@ -38,7 +38,7 @@ import xml.dom.minidom as xmd
 import tarfile
 import hashlib
 
-def download_query_gemini(query, dirname=''):
+def download_query_gemini(query, dirname='', cookieName=''):
     """
     Perform a user-specified Gemini science archive query and save the files
     returned to a specified directory.
@@ -67,10 +67,18 @@ def download_query_gemini(query, dirname=''):
     checksum_fn = 'md5sums.txt'
     aux_fn = [checksum_fn, 'README.txt']
 
+
     # Perform Web query and download the tar file to a StringIO file object
     # in memory, passing through any HTTP errors.
-    with closing(urllib2.urlopen(query)) as fileobj:
-        fobj_buff = StringIO(fileobj.read())
+    # Added by ncomeau: support for proprietary downloads
+    if cookieName:
+        opener = urllib2.build_opener()
+        opener.addheaders.append(('Cookie', 'gemini_archive_session={}'.format(cookieName)))
+        with closing(opener.open(query)) as fileobj:
+            fobj_buff = StringIO(fileobj.read())
+    else:
+        with closing(urllib2.urlopen(query)) as fileobj:
+            fobj_buff = StringIO(fileobj.read())
 
     # Open the in-memory tar file & extract its contents.
     with tarfile.open(fileobj=fobj_buff) as tar_obj:

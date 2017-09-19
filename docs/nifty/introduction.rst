@@ -586,6 +586,33 @@ nifsReduce.py
 nifsMerge.py
 ------------
 
+nifsTelluric.py
+---------------
+
+nifsTelluric.py and nifsFluxCalibrate.py rely on several IRAF tasks finding information in the correct image
+header. If this implicit header data matching changes in future IRAF implementations these tasks will break.
+A fix could be to explicitly specify the data header for each task. TODO(nat): Try to do this before you leave.
+
+- iraf.imarith() is having some strange errors. I'm using astropy and numpy instead to do the 2 imarith steps.
+- See nifsFluxCalibrate for the iraf.gemini() and iraf.imarith() bug.
+
+nifsFluxCalibrate.py
+--------------------
+
+- **If iraf.gemini() is called in nifsTelluric.py and the two steps are run back to back,**
+iraf.imarith() does not work in nifsFluxCalibrate.py. iraf.imarith can't seem to open the result
+of step 3; it throws this error:
+
+..code-block:: text
+
+  3_BBodyN20100401S0182 is not an image or a number
+
+When I ran nifsTelluric.py and nifsFluxCalibrated.py back to back, using nifsPipeline.py as a wrapper,
+iraf.imarith() *worked when iraf.gemini() was commented out in nifsTelluric.py*. It crashed with the
+above error when iraf.gemini() was uncommented.
+
+I've implemented a just-as-good solution using astropy and numpy.
+
 nifsUtils.py
 ------------
 

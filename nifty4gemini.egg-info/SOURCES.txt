@@ -1,5 +1,4 @@
 README.rst
-setup.py
 nifty/__init__.py
 nifty/pipeline/__init__.py
 nifty/pipeline/nifsLowMemoryPipeline.py
