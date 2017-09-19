@@ -3,12 +3,12 @@ Nifty
 .. image:: https://badge.fury.io/py/nifty4gemini.svg
     :alt: Available on PyPi.
     :target: https://badge.fury.io/py/nifty4gemini
-.. image:: https://zenodo.org/badge/93109208.svg
-   :alt: DOI of the latest release. See releases.
-   :target: https://zenodo.org/record/852696#.WaWmr5PyhMA
 .. image:: https://readthedocs.org/projects/nifty4gemini/badge/?version=latest
    :alt: Nifty's documentation, hosted on ReadtheDocs.
    :target: http://nifty4gemini.readthedocs.io/en/latest/
+.. image:: https://zenodo.org/badge/93109208.svg
+   :alt: DOI of the latest release. See releases.
+   :target: https://zenodo.org/record/852696#.WaWmr5PyhMA
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :alt: MIT license.
    :target: https://opensource.org/licenses/MIT
