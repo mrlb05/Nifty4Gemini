@@ -1,6 +1,7 @@
 Nifty
 =====
-
+.. image:: https://badge.fury.io/py/nifty4gemini.svg
+    :target: https://badge.fury.io/py/nifty4gemini
 .. image:: https://zenodo.org/badge/93109208.svg
    :alt: DOI of the latest release. See releases.
    :target: https://zenodo.org/record/852696#.WaWmr5PyhMA

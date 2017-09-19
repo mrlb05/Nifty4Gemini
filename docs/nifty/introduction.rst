@@ -550,12 +550,54 @@ nifsSort.py
 
 Object and Sky frame differentiation
 
+Relevant warning:
 
-If the sorting script does not create a skylist in the object or telluric observation
-directories this means that the offsets between sky frames and object frames were smaller
-than expected. A skyframelist can be manually created and saved in the appropriate directory, or
-the limit placed on the offset can be changed. To lower the limit manually do a search in nifsSort.py
-for "skyframelist.append(entry)" and change the <= <value_in_arcseconds> to something new.
+..code-block:: text
+
+  #####################################################################
+  #####################################################################
+
+       WARNING in sort: science " <scienceObservationName>
+                        in " <currentWorkingDirectory>
+                        does not have a scienceFrameList.")
+                        I am trying to rewrite it with zero point offsets.
+
+  #####################################################################
+  #####################################################################
+
+Solution:
+
+- Change the skyThreshold parameter (given in arc seconds) and re-run sort.
+
+If the sorting script does not create a skyFrameList in the object or telluric observation
+directories this means that the offsets between sky frames and object frames were different
+than expected. A skyFrameList can be manually created and saved in the appropriate directory, or
+the skyThreshold parameter modified.
+
+Telluric and Science Frame Matching
+
+Relevant warning:
+
+..code-block:: text
+
+  #####################################################################
+
+  WARNING in sort: no tellurics data found for science " <scienceImageName>
+       in " <currentWorkingdirectory
+
+  #####################################################################
+
+Solution:
+
+- Raise telluricTimeThreshold to something above 5400 seconds.
+
+By default standard star observations are matched with each science frame if they
+are within 1.5 hours (5400) seconds in UT start time. Sometimes just a few science frames
+will be outside that threshold.
+
+If you see the relevant warning after running sort, you will have to raise the
+telluricTimeThreshold in the config.cfg file if you want to do telluric corrections.
+
 
 nifsBaselineCalibration.py
 --------------------------

@@ -266,8 +266,15 @@ def getStandardInfo(rawFrame, standardStarMagnitude, standardStarSpecTemperature
         start_name='http://simbad.u-strasbg.fr/simbad/sim-coo?Coord='
         end_name = '&submit=submit%20query&Radius.unit=arcsec&Radius=10'
         www_page = start_name+coordinates+end_name
-        f = urllib.urlopen(www_page)
-        html2 = f.read()
+        #f = urllib.urlopen(www_page)
+        while True:
+            try:
+                with urllib.urlopen(www_page) as f:
+                    html2 = f.read()
+                    break
+            except IOError:
+                logging.info("\nFailed to open SIMBAD; retrying.")
+                pass
         html2 = html2.replace(' ','')
         search_error = str(html2.split('\n'))
         #Exit if the lookup found nothing.
