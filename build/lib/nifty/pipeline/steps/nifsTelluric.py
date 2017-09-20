@@ -266,8 +266,15 @@ def getStandardInfo(rawFrame, standardStarMagnitude, standardStarSpecTemperature
         start_name='http://simbad.u-strasbg.fr/simbad/sim-coo?Coord='
         end_name = '&submit=submit%20query&Radius.unit=arcsec&Radius=10'
         www_page = start_name+coordinates+end_name
-        f = urllib.urlopen(www_page)
-        html2 = f.read()
+        #f = urllib.urlopen(www_page)
+        while True:
+            try:
+                with urllib.urlopen(www_page) as f:
+                    html2 = f.read()
+                    break
+            except IOError:
+                logging.info("\nFailed to open SIMBAD; retrying.")
+                pass
         html2 = html2.replace(' ','')
         search_error = str(html2.split('\n'))
         #Exit if the lookup found nothing.
@@ -492,6 +499,7 @@ def divideByContinuum(rawFrame, log, over):
     if os.path.exists("3_chtel"+rawFrame+'.fits'):
         if over:
             os.remove("3_chtel"+rawFrame+'.fits')
+            # This is related to issue #3
             #iraf.imarith("1_htel"+rawFrame+'.fits', "/", "2_fit"+rawFrame+'.fits', result="3_chtel"+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
             operand1 = astropy.io.fits.open("1_htel"+rawFrame+'.fits')[0].data
             operand2 = astropy.io.fits.open("2_fit"+rawFrame+'.fits')[0].data
@@ -509,6 +517,7 @@ def divideByContinuum(rawFrame, log, over):
         else:
             logging.info("\nOutput exists and -over not set - skipping division by continuum")
     else:
+        # This is related to issue #3
         #iraf.imarith('1_htel'+rawFrame+'.fits', "/", '2_fit'+rawFrame+'.fits', result='3_chtel'+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
         operand1 = astropy.io.fits.open("1_htel"+rawFrame+'.fits')[0].data
         operand2 = astropy.io.fits.open("2_fit"+rawFrame+'.fits')[0].data

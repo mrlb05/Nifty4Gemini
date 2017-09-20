@@ -18,7 +18,6 @@ def run():
     """
     # Store current working directory for later use.
     path = os.getcwd()
-    import pdb; pdb.set_trace()
     # Set up the logging file.
     log = os.getcwd()+'/Nifty.log'
     # Set up iraf
