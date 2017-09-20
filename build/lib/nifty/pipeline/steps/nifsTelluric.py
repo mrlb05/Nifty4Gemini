@@ -51,6 +51,20 @@ def run():
         standardStarRA = telluricCorrectionConfig['standardStarRA']
         standardStarDec = telluricCorrectionConfig['standardStarDec']
 
+    # TESTING IRAF
+    iraf.gemini()
+    #iraf.gemtools()
+    #iraf.gnirs()
+    #iraf.nifs()
+
+    #iraf.unlearn(iraf.gemini,iraf.gemtools,iraf.gnirs,iraf.nifs)
+
+    #iraf.set(stdimage='imt2048')
+    #iraf.nsheaders("nifs", logfile=log)
+    #user_clobber=iraf.envget("clobber")
+    #iraf.reset(clobber='yes')
+
+
     for scienceDirectory in scienceDirectoryList:
         try:
             os.chdir(scienceDirectory + '/products_telluric_corrected')
@@ -478,18 +492,44 @@ def divideByContinuum(rawFrame, log, over):
     if os.path.exists("3_chtel"+rawFrame+'.fits'):
         if over:
             os.remove("3_chtel"+rawFrame+'.fits')
-            iraf.imarith("1_htel"+rawFrame+'.fits', "/", "2_fit"+rawFrame+'.fits', result="3_chtel"+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
+            #iraf.imarith("1_htel"+rawFrame+'.fits', "/", "2_fit"+rawFrame+'.fits', result="3_chtel"+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
+            operand1 = astropy.io.fits.open("1_htel"+rawFrame+'.fits')[0].data
+            operand2 = astropy.io.fits.open("2_fit"+rawFrame+'.fits')[0].data
+            header = astropy.io.fits.open("1_htel"+rawFrame+'.fits')[0].header
+            multiplied = np.array(operand1, copy=True)
+            for i in range(len(multiplied)):
+                if operand2[i] != 0:
+                    multiplied[i] = operand1[i] / operand2[i]
+                else:
+                    multiplied[i] = 0.0
+            hdu = astropy.io.fits.PrimaryHDU(multiplied)
+            hdu.header = header
+            hdu.writeto("3_chtel"+rawFrame+".fits")
+            logging.info("\nDivided telluric correction by continuum")
         else:
             logging.info("\nOutput exists and -over not set - skipping division by continuum")
     else:
-        iraf.imarith('1_htel'+rawFrame+'.fits', "/", '2_fit'+rawFrame+'.fits', result='3_chtel'+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
+        #iraf.imarith('1_htel'+rawFrame+'.fits', "/", '2_fit'+rawFrame+'.fits', result='3_chtel'+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
+        operand1 = astropy.io.fits.open("1_htel"+rawFrame+'.fits')[0].data
+        operand2 = astropy.io.fits.open("2_fit"+rawFrame+'.fits')[0].data
+        header = astropy.io.fits.open("1_htel"+rawFrame+'.fits')[0].header
+        multiplied = np.array(operand1, copy=True)
+        for i in range(len(multiplied)):
+            if operand2[i] != 0:
+                multiplied[i] = operand1[i] / operand2[i]
+            else:
+                multiplied[i] = 0.0
+        hdu = astropy.io.fits.PrimaryHDU(multiplied)
+        hdu.header = header
+        hdu.writeto("3_chtel"+rawFrame+".fits")
+        logging.info("\nDivided telluric correction by continuum")
 
 def get1dSpecFromCube(rawFrame, log, over):
     """
     Turn a cube into a 1D spec, used to find shift and scale values of telluric spectrum.
     Currently: Extracts 1D spectra from center of cube.
     """
-    cube = astropy.io.fits.open('../products_uncorrected/ctfbrsn'+rawFrame+'.fits')
+    cube = astropy.io.fits.open('ctfbrsn'+rawFrame+'.fits')
     cubeheader = cube[1].header
     cubeslice = cube[1].data[:,30,30]
     # Create a PrimaryHDU object to encapsulate the data and header.
@@ -684,12 +724,41 @@ def vega(rawFrame, grating, hLineInter, log, over):
 
     if os.path.exists("final_tel_no_hLines_no_norm.fits"):
         if over:
-            os.remove("final_tel_no_hLines_no_norm.fits")
-            iraf.imarith(operand1="1_htel" + rawFrame, op='/', operand2=norm, result='final_tel_no_hLines_no_norm', title='', divzero=0.0, hparams='', pixtype='', calctype='', verbose='yes', noact='no', mode='al')
+            # Subtle bugs in iraf mean imarith doesn't work. So we use an astropy/numpy solution.
+            # Open the image and the scalar we will be dividing it by.
+            operand1 = astropy.io.fits.open("1_htel" + rawFrame+'.fits')[0].data
+            operand2 = float(norm)
+            # Create a new data array
+            multiplied = np.array(operand1, copy=True)
+            # Don't forget to include the original header! If you don't later IRAF tasks get confused.
+            header = astropy.io.fits.open("1_htel" + rawFrame+'.fits')[0].header
+            for i in range(len(multiplied)):
+                if operand2 != 0:
+                    multiplied[i] = operand1[i] / operand2
+                else:
+                    multiplied[i] = 1
+            # Set the data and header of the in-memory image
+            hdu = astropy.io.fits.PrimaryHDU(multiplied)
+            hdu.header = header
+            # Finally, write the new image to a new .fits file. It only has one extension; zero, with a header and data.
+            hdu.writeto('final_tel_no_hLines_no_norm.fits')
+            #iraf.imarith(operand1="1_htel" + rawFrame, op='/', operand2=norm, result='final_tel_no_hLines_no_norm', title='', divzero=0.0, hparams='', pixtype='', calctype='', verbose='yes', noact='no', mode='al')
         else:
             logging.info("Output file exists and -over not set - skipping H line normalization correction")
     else:
-        iraf.imarith(operand1="1_htel" + rawFrame, op='/', operand2=norm, result='final_tel_no_hLines_no_norm', title='', divzero=0.0, hparams='', pixtype='', calctype='', verbose='yes', noact='no', mode='al')
+        #iraf.imarith(operand1="1_htel" + rawFrame, op='/', operand2=norm, result='final_tel_no_hLines_no_norm', title='', divzero=0.0, hparams='', pixtype='', calctype='', verbose='yes', noact='no', mode='al')
+        operand1 = astropy.io.fits.open("1_htel" + rawFrame+'.fits')[0].data
+        operand2 = float(norm)
+        multiplied = np.array(operand1, copy=True)
+        header = astropy.io.fits.open("1_htel" + rawFrame+'.fits')[0].header
+        for i in range(len(multiplied)):
+            if operand2 != 0:
+                multiplied[i] = operand1[i] / operand2
+            else:
+                multiplied[i] = 1
+        hdu = astropy.io.fits.PrimaryHDU(multiplied)
+        hdu.header = header
+        hdu.writeto('final_tel_no_hLines_no_norm.fits')
 
     if os.path.exists('final_tel_no_hLines_no_norm.fits'):
         os.remove("1_htel" + rawFrame + ".fits")

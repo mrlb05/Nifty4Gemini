@@ -293,11 +293,15 @@ def makePythonLists(rawPath, skyThreshold):
         header = astropy.io.fits.open(entry)
 
         # Store information in variables.
+        instrument = header[0].header['INSTRUME']
+        if instrument != 'NIFS':
+            # Only grab frames belonging to NIFS raw data!
+            continue
         obstype = header[0].header['OBSTYPE'].strip()
         ID = header[0].header['OBSID']
         date = header[0].header[ 'DATE'].replace('-','')
-        aper = header[0].header['APERTURE']
         obsclass = header[0].header['OBSCLASS']
+        aper = header[0].header['APERTURE']
         # If object name isn't alphanumeric, make it alphanumeric.
         objname = header[0].header['OBJECT']
         objname = re.sub('[^a-zA-Z0-9\n\.]', '', objname)
@@ -385,6 +389,11 @@ def makePythonLists(rawPath, skyThreshold):
     for i in range(len(rawfiles)):
 
         header = astropy.io.fits.open(rawfiles[i])
+        # Store information in variables.
+        instrument = header[0].header['INSTRUME']
+        if instrument != 'NIFS':
+            # Only grab frames belonging to NIFS raw data!
+            continue
         date = header[0].header['DATE'].replace('-','')
         obsclass = header[0].header['OBSCLASS']
         obj = header[0].header['OBJECT']
@@ -405,6 +414,11 @@ def makePythonLists(rawPath, skyThreshold):
     n = 0
     for flat in flatlist:
         header = astropy.io.fits.open(flat)
+        # Store information in variables.
+        instrument = header[0].header['INSTRUME']
+        if instrument != 'NIFS':
+            # Only grab frames belonging to NIFS raw data!
+            continue
         obsid = header[0].header['OBSID']
         date = header[0].header['DATE'].replace('-','')
         # Make sure no duplicate dates are being entered.
@@ -1406,7 +1420,7 @@ def matchTellurics(telDirList, obsDirList, telluricTimeThreshold):
                 logging.info("#####################################################################")
                 logging.info("#####################################################################\n")
 
-                rewriteSciImageList(2.0, Science)
+                rewriteSciImageList(2.0, "Science")
                 try:
                     sciImageList = open('scienceFrameList', "r").readlines()
                     logging.info("\nSucceeded; a science frame list exists in " + str(os.getcwd()))

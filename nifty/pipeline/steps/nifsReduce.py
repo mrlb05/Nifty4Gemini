@@ -440,16 +440,19 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
                     copyToScience = True
                     if copyToScience:
                         # Copy final extracted results to science directory.
-                        with open("scienceMatchedTellsList", "r") as f:
-                            lines = f.readlines()
-                        lines = [x.strip() for x in lines]
+                        try:
+                            with open("scienceMatchedTellsList", "r") as f:
+                                lines = f.readlines()
+                            lines = [x.strip() for x in lines]
 
-                        for i in range(len(lines)):
-                            if "obs" in lines[i]:
-                                k = 1
-                                while i+k != len(lines) and "obs" not in lines[i+k]:
-                                    copyResultsToScience("gxtfbrsn"+tellist[0]+".fits", "0_tel"+lines[i+k]+".fits", over)
-                                    k+=1
+                            for i in range(len(lines)):
+                                if "obs" in lines[i]:
+                                    k = 1
+                                    while i+k != len(lines) and "obs" not in lines[i+k]:
+                                        copyResultsToScience("gxtfbrsn"+tellist[0]+".fits", "0_tel"+lines[i+k]+".fits", over)
+                                        k+=1
+                        except IOError:
+                            logging.info("\nNo scienceMatchedTellsList found in "+ os.getcwd() +" . Skipping copy of extracted spectra to science directory.")
 
                     logging.info("\n##############################################################################")
                     logging.info("")

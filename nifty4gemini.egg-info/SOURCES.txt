@@ -26,7 +26,6 @@ nifty/pipeline/steps/routines/nifsMakeTelluric.py
 nifty/recipes/__init__.py
 nifty/recipes/defaultConfig.cfg
 nifty/runtimeData/__init__.py
-nifty/runtimeData/config.cfg
 nifty/runtimeData/h_ar.dat
 nifty/runtimeData/j_ar.dat
 nifty/runtimeData/k_ar.dat

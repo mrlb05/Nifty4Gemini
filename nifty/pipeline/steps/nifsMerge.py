@@ -83,22 +83,43 @@ def run():
         scienceDirectoryList = config['scienceDirectoryList']
         # Read baselineCalibrationReduction specfic config.
         mergeConfig = config['mergeConfig']
-        mergeUncorrectedCubes = mergeConfig['mergeUncorrectedCubes']
-        mergeTelluricCorrectedCubes = mergeConfig['mergeTelluricCorrectedCubes']
-        mergeTelCorAndFluxCalibratedCubes = mergeConfig['mergeTelCorAndFluxCalibratedCubes']
+        start = mergeConfig['mergeStart']
+        stop = mergeConfig['mergeStop']
         use_pq_offsets = mergeConfig['use_pq_offsets']
         im3dtran = mergeConfig['im3dtran']
 
-    # There are three types of merging to choose from. You can:
-    # Merge uncorrected cubes. These have the "ctfbrsn" prefix.
-    if mergeUncorrectedCubes:
-        mergeCubes(scienceDirectoryList, "uncorrected", use_pq_offsets, im3dtran, over)
-    # Merge telluric corrected cubes. These have the "actfbrsn" prefix.
-    if mergeTelluricCorrectedCubes:
-        mergeCubes(scienceDirectoryList, "telluricCorrected", use_pq_offsets, im3dtran, over)
-    # Merge telluric corrected AND flux calibrated cubes. These have the "factfbrsn" prefix.
-    if mergeTelCorAndFluxCalibratedCubes:
-        mergeCubes(scienceDirectoryList, "telCorAndFluxCalibrated", use_pq_offsets, im3dtran, over)
+    valindex = start
+    while valindex <= stop:
+        # There are three types of merging to choose from. You can:
+
+        if valindex == 1:
+            # Merge uncorrected cubes. These have the "ctfbrsn" prefix.
+            mergeCubes(scienceDirectoryList, "uncorrected", use_pq_offsets, im3dtran, over)
+            logging.info("\n##############################################################################")
+            logging.info("")
+            logging.info("  STEP 1 - Merge Uncorrected Cubes - COMPLETED ")
+            logging.info("")
+            logging.info("##############################################################################\n")
+
+        if valindex == 2:
+            # Merge telluric corrected cubes. These have the "actfbrsn" prefix.
+            mergeCubes(scienceDirectoryList, "telluricCorrected", use_pq_offsets, im3dtran, over)
+            logging.info("\n##############################################################################")
+            logging.info("")
+            logging.info("  STEP 2 - Merge Telluric Corrected Cubes - COMPLETED ")
+            logging.info("")
+            logging.info("##############################################################################\n")
+
+        if valindex == 3:
+            # Merge telluric corrected AND flux calibrated cubes. These have the "factfbrsn" prefix.
+            mergeCubes(scienceDirectoryList, "telCorAndFluxCalibrated", use_pq_offsets, im3dtran, over)
+            logging.info("\n##############################################################################")
+            logging.info("")
+            logging.info("  STEP 3 - Merge Telluric Corrected and Flux Calibrated Cubes - COMPLETED ")
+            logging.info("")
+            logging.info("##############################################################################\n")
+
+        valindex += 1
 
 def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
     """MERGE

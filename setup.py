@@ -22,10 +22,10 @@ PACKAGE_DATA = {
 
 setup(
     name=NAME,
-    version="1.0b9",
+    version="1.0b11",
     author='mbusserolle',
     author_email='mbussero@gemini.edu',
-    description='The Gemini NIFS data reduction pipeline.',
+    description='Gemini Instruments Data Reduction Framework.',
     long_description = README_TEXT,
     url='http://www.gemini.edu',
     license='MIT',

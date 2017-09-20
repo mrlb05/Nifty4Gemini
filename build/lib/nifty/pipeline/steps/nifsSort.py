@@ -127,6 +127,7 @@ def start():
         sortConfig = options['sortConfig']
         rawPath = sortConfig['rawPath']
         program = sortConfig['program']
+        proprietaryCookie = sortConfig['proprietaryCookie']
         skyThreshold = sortConfig['skyThreshold']
         sortTellurics = sortConfig['sortTellurics']
         telluricTimeThreshold = sortConfig['telluricTimeThreshold']
@@ -145,7 +146,10 @@ def start():
             os.mkdir('./rawData')
         logging.info('\nDownloading data from Gemini public archive to ./rawData. This will take a few minutes.')
         logging.info('\nURL used for the download: \n' + str(url))
-        download_query_gemini(url, './rawData')
+        if proprietaryCookie:
+            download_query_gemini(url, './rawData', proprietaryCookie)
+        else:
+            download_query_gemini(url, './rawData')
         rawPath = os.getcwd()+'/rawData'
 
 
@@ -1402,7 +1406,7 @@ def matchTellurics(telDirList, obsDirList, telluricTimeThreshold):
                 logging.info("#####################################################################")
                 logging.info("#####################################################################\n")
 
-                rewriteSciImageList(2.0, Science)
+                rewriteSciImageList(2.0, "Science")
                 try:
                     sciImageList = open('scienceFrameList', "r").readlines()
                     logging.info("\nSucceeded; a science frame list exists in " + str(os.getcwd()))

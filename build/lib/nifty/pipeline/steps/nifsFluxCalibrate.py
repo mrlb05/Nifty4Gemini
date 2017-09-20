@@ -18,14 +18,15 @@ def run():
     """
     # Store current working directory for later use.
     path = os.getcwd()
-
-    # Set up iraf
-    iraf.gemini()
-    iraf.unlearn("gemini")
-    #iraf.unlearn(iraf.gemini,iraf.gemtools,iraf.gnirs,iraf.nifs,iraf.imcopy)
-
+    import pdb; pdb.set_trace()
     # Set up the logging file.
     log = os.getcwd()+'/Nifty.log'
+    # Set up iraf
+    iraf.gemini()
+    #iraf.unlearn("gemini")
+
+    #iraf.unlearn(iraf.gemini,iraf.gemtools,iraf.gnirs,iraf.nifs,iraf.imcopy)
+
 
     logging.info('\n#################################################')
     logging.info('#                                               #')
@@ -305,13 +306,25 @@ def scaleBlackBody(rawFrame, log, over):
     if os.path.exists("5_scaledBBody"+rawFrame+".fits"):
         if over:
             os.remove("5_scaledBBody"+rawFrame+".fits")
-            iraf.imarith(operand1="3_BBody"+rawFrame, op="*", operand2=bbodyScaleFactor, result="5_scaledBBody"+rawFrame,title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
+            # A bug involving iraf.gemini() causes imarith to fail here. Use astropy unless you fixed it.
+            #iraf.imarith(operand1="3_BBody"+rawFrame, op="*", operand2=bbodyScaleFactor, result="5_scaledBBody"+rawFrame,title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
+            operand1 = astropy.io.fits.open("3_BBody"+rawFrame+".fits")[0].data
+            operand2 = bbodyScaleFactor
+            multiplied = operand1 * operand2
+            hdu = astropy.io.fits.PrimaryHDU(multiplied)
+            hdu.writeto("5_scaledBBody"+rawFrame+".fits")
+
             logging.info("\nCreated a scaled blackbody, 5_scaledBBody{}.fits".format(rawFrame))
         else:
             logging.info("\nOutput exists and -over not set - skipping production of scaled black body")
     else:
-        iraf.imarith(operand1="3_BBody"+rawFrame, op="*", operand2=bbodyScaleFactor, result="5_scaledBBody"+rawFrame,title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
-        logging.info("\nCreated a scaled blackbody, 5_scaledBBody{}.fits".format(rawFrame))
+        # A bug involving iraf.gemini() causes imarith to fail here. Use astropy unless you fixed it.
+        #iraf.imarith(operand1="3_BBody"+rawFrame, op="*", operand2=bbodyScaleFactor, result="5_scaledBBody"+rawFrame,title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
+        operand1 = astropy.io.fits.open("3_BBody"+rawFrame+".fits")[0].data
+        operand2 = bbodyScaleFactor
+        multiplied = operand1 * operand2
+        hdu = astropy.io.fits.PrimaryHDU(multiplied)
+        hdu.writeto("5_scaledBBody"+rawFrame+".fits")
     # We now have a scaled blackbody, scaledBlackBody.fits
 
 def multiplyByBlackBody(rawFrame, log, over):

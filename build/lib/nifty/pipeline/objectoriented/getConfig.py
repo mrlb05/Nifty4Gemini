@@ -101,18 +101,6 @@ class GetConfig(object):
                 self.config.write(self.outfile)
             logging.info("\nData reduction parameters for this reduction were copied from recipes/defaultConfig.cfg to ./config.cfg.")
 
-        if self.repeat:
-            logging.info("\nOverwriting ./config.cfg with saved config from most recent data reduction.")
-            if os.path.exists('./' + self.configFile):
-                os.remove('./' + self.configFile)
-            shutil.copy(self.RUNTIME_DATA_PATH + self.configFile, './' + self.configFile)
-
-        # Print data reduction parameters for a user's peace-of-mind.
-        logging.info("\nSaving data reduction parameters.")
-        if os.path.exists(self.RUNTIME_DATA_PATH + self.configFile):
-            os.remove(self.RUNTIME_DATA_PATH + self.configFile)
-        shutil.copy('./' + self.configFile, self.RUNTIME_DATA_PATH + self.configFile)
-
         # TODO(nat): fix this. It isn't recursively printing the dictionaries of values.
         logging.info("\nParameters for this data reduction as read from ./config.cfg:\n")
         with open(self.configFile) as self.config_file:
