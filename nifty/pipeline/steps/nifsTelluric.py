@@ -499,6 +499,7 @@ def divideByContinuum(rawFrame, log, over):
     if os.path.exists("3_chtel"+rawFrame+'.fits'):
         if over:
             os.remove("3_chtel"+rawFrame+'.fits')
+            # This is related to issue #3
             #iraf.imarith("1_htel"+rawFrame+'.fits', "/", "2_fit"+rawFrame+'.fits', result="3_chtel"+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
             operand1 = astropy.io.fits.open("1_htel"+rawFrame+'.fits')[0].data
             operand2 = astropy.io.fits.open("2_fit"+rawFrame+'.fits')[0].data
@@ -516,6 +517,7 @@ def divideByContinuum(rawFrame, log, over):
         else:
             logging.info("\nOutput exists and -over not set - skipping division by continuum")
     else:
+        # This is related to issue #3
         #iraf.imarith('1_htel'+rawFrame+'.fits', "/", '2_fit'+rawFrame+'.fits', result='3_chtel'+rawFrame+'.fits',title='',divzero=0.0,hparams='',pixtype='',calctype='',verbose='no',noact='no',mode='al')
         operand1 = astropy.io.fits.open("1_htel"+rawFrame+'.fits')[0].data
         operand2 = astropy.io.fits.open("2_fit"+rawFrame+'.fits')[0].data
