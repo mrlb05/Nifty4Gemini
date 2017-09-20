@@ -6,9 +6,9 @@ Nifty
 .. image:: https://readthedocs.org/projects/nifty4gemini/badge/?version=latest
    :alt: Nifty's documentation, hosted on ReadtheDocs.
    :target: http://nifty4gemini.readthedocs.io/en/latest/
-.. image:: https://zenodo.org/badge/93109208.svg
-   :alt: DOI of the latest release. See releases.
-   :target: https://zenodo.org/record/852696#.WaWmr5PyhMA
+.. image:: https://zenodo.org/badge/103719389.svg
+   :alt: DOI
+   :target: https://zenodo.org/badge/latestdoi/103719389
 .. image:: https://img.shields.io/badge/License-MIT-yellow.svg
    :alt: MIT license.
    :target: https://opensource.org/licenses/MIT
