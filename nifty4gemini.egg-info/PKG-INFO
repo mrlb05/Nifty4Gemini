@@ -1,4 +1,4 @@
-Metadata-Version: 1.1
+Metadata-Version: 1.2
 Name: nifty4gemini
 Version: 1.0b11
 Summary: Gemini Instruments Data Reduction Framework.
@@ -111,3 +111,4 @@ Classifier: Operating System :: MacOS
 Classifier: Programming Language :: Python :: 2.7
 Classifier: Topic :: Scientific/Engineering :: Astronomy
 Classifier: Topic :: Scientific/Engineering :: Physics
+Requires-Python: ~=2.7

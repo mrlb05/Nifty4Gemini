@@ -28,17 +28,10 @@
 
 # STDLIB
 
-import sys, glob, shutil, getopt, os, time, logging, glob, sgmllib, urllib, re, traceback, pkg_resources
-import pexpect as p
+import sys, glob, shutil, os, time, logging, glob, urllib, re, pkg_resources
 from pyraf import iraf, iraffunctions
 import astropy.io.fits
-from astropy.io.fits import getdata, getheader
 import numpy as np
-from scipy.interpolate import interp1d
-from scipy import arange, array, exp
-from scipy.ndimage.interpolation import shift
-import pylab as pl
-import matplotlib.pyplot as plt
 
 # LOCAL
 
@@ -780,7 +773,7 @@ def extractOneD(inputList, kind, log, over, extractionXC=15.0, extractionYC=33.0
                 continue
 
         iraf.nfextract("tfbrsn"+frame, outpref="x", xc=extractionXC, yc=extractionYC, diameter=extractionRadius, fl_int='no', logfile=log)
-
+    inputList = checkLists(inputList, '.', 'xtfbrsn', '.fits')
     # Combine all the 1D spectra to one final output file with the name of the first input file.
     combined = str(inputList[0]).strip()
     if len(inputList) > 1:

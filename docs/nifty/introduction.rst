@@ -628,6 +628,9 @@ nifsReduce.py
 nifsMerge.py
 ------------
 
+- When overwrite is turned on, merging the final cubes from multiple directories redundantly repeats.
+This is a good quick fix for someone to implement.
+
 nifsTelluric.py
 ---------------
 

@@ -252,11 +252,13 @@ def makeBlackBody(rawFrame, grating, log, over):
     if os.path.exists("3_BBody"+rawFrame+".fits"):
         if over:
             os.remove("3_BBody"+rawFrame+".fits")
+            iraf.chdir(os.getcwd())
             iraf.mk1dspec(input="3_BBody"+rawFrame,output="",title='',ncols=2040,naps=1,header='',wstart=wstart,wend=wend,temperature=standardStarSpecTemperature)
             logging.info("\nMade a blackbody in 3_BBody{}.fits".format(rawFrame))
         else:
             logging.info("\nOutput exists and -over not set - skipping production of unscaled black body")
     else:
+        iraf.chdir(os.getcwd())
         iraf.mk1dspec(input="3_BBody"+rawFrame,output="",title='',ncols=2040,naps=1,header='',wstart=wstart,wend=wend,temperature=standardStarSpecTemperature)
         logging.info("\nMade a blackbody in 3_BBody{}.fits".format(rawFrame))
 

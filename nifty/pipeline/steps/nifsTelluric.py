@@ -200,13 +200,7 @@ def getStandardInfo(rawFrame, standardStarMagnitude, standardStarSpecTemperature
             logging.info("\nOutput exists and -over not set - skipping get standard star info")
             return
 
-    if os.path.exists('../products_fluxcal_AND_telluric_corrected'):
-        if over:
-            shutil.rmtree('../products_fluxcal_AND_telluric_corrected')
-            os.mkdir('../products_fluxcal_AND_telluric_corrected')
-        else:
-            logging.info("\nOutput exists and -over not set - skipping creation oproducts_fluxcal_AND_telluric_corrected/")
-    else:
+    if not os.path.exists('../products_fluxcal_AND_telluric_corrected'):
         os.mkdir('../products_fluxcal_AND_telluric_corrected')
 
     sf = open(starfile,'w')
@@ -269,9 +263,9 @@ def getStandardInfo(rawFrame, standardStarMagnitude, standardStarSpecTemperature
         #f = urllib.urlopen(www_page)
         while True:
             try:
-                with urllib.urlopen(www_page) as f:
-                    html2 = f.read()
-                    break
+                html2 = urllib.urlopen(www_page)
+                html2 = html2.read()
+                break
             except IOError:
                 logging.info("\nFailed to open SIMBAD; retrying.")
                 pass
@@ -570,11 +564,13 @@ def getShiftScale(rawFrame, telluricInter, log, over):
         if over:
             os.remove('5_oneDCorrected'+rawFrame+'.fits')
             # TODO(nat): implement logging for this
+            iraf.chdir(os.getcwd())
             tell_info = iraf.telluric(input='4_cubeslice'+rawFrame+'.fits[0]',output='5_oneDCorrected'+rawFrame+'.fits',cal="3_chtel"+rawFrame+'.fits[0]',airmass=1.0,answer='yes',ignoreaps='yes',xcorr='yes',tweakrms='yes',inter=telluricInter,sample="*",threshold=0.1,lag=3,shift=0.,dshift=0.1,scale=1.0,dscale=0.1, offset=1,smooth=1,cursor='',mode='al',Stdout=1)
         else:
             logging.info("\nOutput exists and -over not set - skipping get shift scale of telluric correction and fit")
             return
     else:
+        iraf.chdir(os.getcwd())
         tell_info = iraf.telluric(input='4_cubeslice'+rawFrame+'.fits[0]',output='5_oneDCorrected'+rawFrame+'.fits',cal="3_chtel"+rawFrame+'.fits[0]',airmass=1.0,answer='yes',ignoreaps='yes',xcorr='yes',tweakrms='yes',inter=telluricInter,sample="*",threshold=0.1,lag=3,shift=0.,dshift=0.1,scale=1.0,dscale=0.1, offset=1,smooth=1,cursor='',mode='al',Stdout=1)
     # Get shift and scale from the list of values iraf.telluric() returns.
     # Sample tell_info:
@@ -673,9 +669,9 @@ def copyToFluxCalDirectory(rawFrame, log, over):
     """
     Copy finished cubes to products_fluxcal_AND_telluric_corrected directory
     """
-    if os.path.exists('../products_fluxcal_AND_telluric_corrected/actfbrsn'+rawFrame+'.fits'):
+    if os.path.exists('../products_fluxcal_AND_telluric_corrected/0_telactfbrsn'+rawFrame+'.fits'):
         if over:
-            os.remove('../products_fluxcal_AND_telluric_corrected/actfbrsn'+rawFrame+'.fits')
+            os.remove('../products_fluxcal_AND_telluric_corrected/0_telactfbrsn'+rawFrame+'.fits')
             shutil.copy('actfbrsn'+rawFrame+'.fits','../products_fluxcal_AND_telluric_corrected/0_telactfbrsn'+rawFrame+'.fits')
         else:
             logging.info("\nOutput exists and -over not set - skipping copy of telluric corrected cube to products_fluxcal_AND_telluric_corrected/")
@@ -718,11 +714,13 @@ def vega(rawFrame, grating, hLineInter, log, over):
     if os.path.exists("1_htel" + rawFrame + ".fits"):
             if over:
                 os.remove("1_htel" + rawFrame + ".fits")
+                iraf.chdir(os.getcwd())
                 tell_info = iraf.telluric(input="0_tel" + rawFrame + ".fits[1]", output="1_htel"+rawFrame, cal= RUNTIME_DATA_PATH+'vega_ext.fits['+ext+']', xcorr='yes', tweakrms='yes', airmass=1.0, inter=hLineInter, sample=sample, threshold=0.1, lag=3, shift=0., dshift=0.05, scale=scale, dscale=0.05, offset=0., smooth=1, cursor='', mode='al', Stdout=1)
             else:
                 logging.info("Output file exists and -over not set - skipping H line correction")
                 return
     else:
+        iraf.chdir(os.getcwd())
         tell_info = iraf.telluric(input="0_tel" + rawFrame + ".fits[1]", output="1_htel"+rawFrame, cal= RUNTIME_DATA_PATH+'vega_ext.fits['+ext+']', xcorr='yes', tweakrms='yes', airmass=1.0, inter=hLineInter, sample=sample, threshold=0.1, lag=3, shift=0., dshift=0.05, scale=scale, dscale=0.05, offset=0., smooth=1, cursor='', mode='al', Stdout=1)
 
     # need this loop to identify telluric output containing warning about pix outside calibration limits (different formatting)

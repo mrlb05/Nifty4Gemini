@@ -32,8 +32,6 @@ import astropy.io.fits
 
 # LOCAL
 
-from ..nifsUtils import datefmt, writeList, listit
-
 # Import config parsing.
 from ..configobj.configobj import ConfigObj
 
@@ -363,11 +361,11 @@ def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
         if os.path.exists('cube_merged.fits'):
             if over:
                 os.remove('cube_merged.fits')
-                iraf.imcombine(prefix+'*', output = 'cube_merged.fits',  combine = 'median', offsets = 'offsets.txt')
+                iraf.imcombine(prefix+'*', output = 'cube_merged.fits',  combine = 'sum', offsets = 'offsets.txt')
             else:
                 logging.info('Output already exists and -over- not set - skipping imcombine')
         else:
-            iraf.imcombine(prefix+'*', output = 'cube_merged.fits',  combine = 'median', offsets = 'offsets.txt')
+            iraf.imcombine(prefix+'*', output = 'cube_merged.fits',  combine = 'sum', offsets = 'offsets.txt')
         # TODO(nat): barf. This is pretty nasty... We should fix the overwrite statements here and
         # find a way to use less nesting
         if im3dtran:
@@ -403,12 +401,16 @@ def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
             grat = cubeheader[0].header['GRATING']
             gratlist.append(grat)
         print "gratlist is: ", gratlist
+        # TODO(nat): right now we do more final merges here than we have to. Eg, if there are three H
+        # grating directories in gratlist, we will do a final merge three times. We should only be doing this once!
+        # Right now it is only a problem when overwrite is turned on but it should still be fixed.
         for n in range(len(gratlist)): # For each unique grating
             # Grab the indices of the cubes associated with that grating.
             indices = [k for k, x in enumerate(gratlist) if x==gratlist[n]]
             newcubelist = []
             for ind in indices:
                 newcubelist.append(mergedCubes[ind])
+            print newcubelist
             waveshift(newcubelist, grat)
             for i in range(len(newcubelist)):
                 # Build an input string containing all the cubes to combine.
@@ -437,11 +439,13 @@ def waveshift(cubelist, grat):
     fwave = open('waveoffsets{0}.txt'.format(grat[0]), 'w')
     fwave.write('%d %d %d\n' % (0, 0, 0))
     for i in range(len(cubelist)):
+        if i == 0:
+            continue
         cubeheader = astropy.io.fits.open(cubelist[i])
         wstart = cubeheader[1].header['CRVAL3']
         wdelt = cubeheader[1].header['CD3_3']
         waveoff = round((wstart-wstart0)/wdelt)
-        fwave.write('%d %d %d\n' % (waveoff, 0, 0))
+        fwave.write('%d %d %d\n' % (0, 0, waveoff))
     fwave.close()
 
 #---------------------------------------------------------------------------------------------------------------------------------------#
