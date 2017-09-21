@@ -100,11 +100,3 @@ class GetConfig(object):
             with open('./' + self.configFile, 'w') as self.outfile:
                 self.config.write(self.outfile)
             logging.info("\nData reduction parameters for this reduction were copied from recipes/defaultConfig.cfg to ./config.cfg.")
-
-        # TODO(nat): fix this. It isn't recursively printing the dictionaries of values.
-        logging.info("\nParameters for this data reduction as read from ./config.cfg:\n")
-        with open(self.configFile) as self.config_file:
-            self.config = ConfigObj(self.config_file, unrepr=True)
-            for i in self.config:
-                logging.info(str(i) + " " + str(self.config[i]))
-        logging.info("")

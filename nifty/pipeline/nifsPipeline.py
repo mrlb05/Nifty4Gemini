@@ -145,7 +145,11 @@ def start(args):
     with open('./config.cfg') as config_file:
         config = ConfigObj(config_file, unrepr=True)
         for i in config:
-            logging.info(str(i) + " " + str(config[i]))
+            if isinstance(config[i], dict):
+                for k in config[i]:
+                    logging.info(str(k) + " " + str(config[i][k]))
+            else:
+                logging.info(str(i) + " " + str(config[i]))
     logging.info("")
 
     # Load pipeline configuration from ./config.cfg that is used by this script.
@@ -234,14 +238,14 @@ def start(args):
     ##                  Good luck with your science!                         ##
     ###########################################################################
 
-    logging.info('#########################################')
-    logging.info('#                                       #')
-    logging.info('#        DATA REDUCTION COMPLETE        #')
-    logging.info('#     Good luck with your science!      #')
-    logging.info('#        Check out ??                   #')
-    logging.info('#   For docs, tutorials and examples.   #')
-    logging.info('#                                       #')
-    logging.info('#########################################')
+    logging.info('\n###########################################################')
+    logging.info('#                                                         #')
+    logging.info('#               DATA REDUCTION COMPLETE                   #')
+    logging.info('#             Good luck with your science!                #')
+    logging.info('# Check out http://nifty4gemini.readthedocs.io/en/latest/ #')
+    logging.info('#           For docs, tutorials and examples.             #')
+    logging.info('#                                                         #')
+    logging.info('###########################################################\n')
 
     return
 

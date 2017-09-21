@@ -117,6 +117,9 @@ def start(args):
     ch.setFormatter(formatter)
     logger.addHandler(ch)
 
+    logging.info("\nWARNING: This pipeline is untested and needs revision.")
+    # TODO(nat): revise this pipeline.
+
     logging.info("\n####################################")
     logging.info("#                                  #")
     logging.info("#             NIFTY                #")

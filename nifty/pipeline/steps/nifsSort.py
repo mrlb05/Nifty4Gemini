@@ -1499,15 +1499,22 @@ def matchTellurics(telDirList, obsDirList, telluricTimeThreshold):
                     logging.info("")
                     logging.info("#####################################################################")
                     logging.info("#####################################################################\n")
+                    logging.info("\n#####################################################################")
+                    logging.info("#####################################################################")
+                    logging.info("")
+                    logging.info("    TURNING OFF TELLURIC-RELATED STEPS IN CONFIG FILE.")
+                    logging.info("")
+                    logging.info("#####################################################################")
+                    logging.info("#####################################################################\n")
                     # Turn off the telluric correction.
                     logging.info("\nnifsSort: no tellurics data found for a directory. Turning off telluric reduction, telluric correction and flux calibration in ./config.cfg.")
-                    with open('./config.cfg') as config_file:
+                    with open('../../../config.cfg') as config_file:
                         options = ConfigObj(config_file, unrepr=True)
                         nifsPipelineConfig = options['nifsPipelineConfig']
                     nifsPipelineConfig['telluricReduction'] = False
                     nifsPipelineConfig['telluricCorrection'] = False
                     nifsPipelineConfig['fluxCalibration'] = False
-                    with open('./config.cfg', 'w') as config_file:
+                    with open('../../../config.cfg', 'w') as config_file:
                         options.write(config_file)
 
                 os.chdir(scienceDirectory)
