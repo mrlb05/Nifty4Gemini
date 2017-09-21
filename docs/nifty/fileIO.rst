@@ -1,6 +1,12 @@
 Example of Nifty File I/O
 =========================
 
+Note: this is out of data. v1.0b12 compartmentalized the data of each step,
+so you can safely delete the intermediate products of each step. This is moderately correct
+up the extraction of 1D spectra.
+
+.. TODO(nat): update this for the first release of Nifty.
+
 This is an example of how the Nifty directory tree appears after each step of the
 date reduction. These directory trees were created using a custom **niftree** bash command:
 

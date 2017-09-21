@@ -138,7 +138,7 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
 
     # This helps make sure all variables are initialized to prevent bugs.
     scienceSkySubtraction = None
-    oneDExtraction = None
+    scienceOneDExtraction = None
     extractionXC = None
     extractionYC = None
     extractionRadius = None
@@ -151,7 +151,7 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
         over = config['over']
         manualMode = config['manualMode']
         calDirList = config['calibrationDirectoryList']
-        oneDExtraction = config['oneDExtraction']
+        scienceOneDExtraction = config['scienceOneDExtraction']
         extractionXC = config['extractionXC']
         extractionYC = config['extractionYC']
         extractionRadius = config['extractionRadius']
@@ -466,7 +466,7 @@ def start(kind, telluricDirectoryList="", scienceDirectoryList=""):
                 # For Science data:
                 # Possibly extract 1D spectra, and make uncorrected cubes.
                 elif kind=='Science':
-                    if oneDExtraction:
+                    if scienceOneDExtraction:
                         extractOneD(scienceFrameList, kind, log, over, extractionXC, extractionYC, extractionRadius)
                         copyExtracted(scienceFrameList, over)
                         logging.info("\n##############################################################################")

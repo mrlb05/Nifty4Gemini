@@ -1499,8 +1499,19 @@ def matchTellurics(telDirList, obsDirList, telluricTimeThreshold):
                     logging.info("")
                     logging.info("#####################################################################")
                     logging.info("#####################################################################\n")
+                    # Turn off the telluric correction.
+                    logging.info("\nnifsSort: no tellurics data found for a directory. Turning off telluric reduction, telluric correction and flux calibration in ./config.cfg.")
+                    with open('./config.cfg') as config_file:
+                        options = ConfigObj(config_file, unrepr=True)
+                        nifsPipelineConfig = options['nifsPipelineConfig']
+                    nifsPipelineConfig['telluricReduction'] = False
+                    nifsPipelineConfig['telluricCorrection'] = False
+                    nifsPipelineConfig['fluxCalibration'] = False
+                    with open('./config.cfg', 'w') as config_file:
+                        options.write(config_file)
+
                 os.chdir(scienceDirectory)
-                # TO DO:
+                # TODO(nat):
                 # Optional: open that telluric image and store time in telluric_time
                 # Check that abs(telluric_time - science_time) < 1.5 hours
 

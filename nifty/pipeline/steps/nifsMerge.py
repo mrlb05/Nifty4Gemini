@@ -29,6 +29,7 @@ import time
 from pyraf import iraf
 from pyraf import iraffunctions
 import astropy.io.fits
+import numpy
 
 # LOCAL
 
@@ -83,6 +84,7 @@ def run():
         mergeConfig = config['mergeConfig']
         start = mergeConfig['mergeStart']
         stop = mergeConfig['mergeStop']
+        mergeType = mergeConfig['mergeType']
         use_pq_offsets = mergeConfig['use_pq_offsets']
         im3dtran = mergeConfig['im3dtran']
 
@@ -92,7 +94,7 @@ def run():
 
         if valindex == 1:
             # Merge uncorrected cubes. These have the "ctfbrsn" prefix.
-            mergeCubes(scienceDirectoryList, "uncorrected", use_pq_offsets, im3dtran, over)
+            mergeCubes(scienceDirectoryList, "uncorrected", mergeType, use_pq_offsets, im3dtran, over)
             logging.info("\n##############################################################################")
             logging.info("")
             logging.info("  STEP 1 - Merge Uncorrected Cubes - COMPLETED ")
@@ -101,7 +103,7 @@ def run():
 
         if valindex == 2:
             # Merge telluric corrected cubes. These have the "actfbrsn" prefix.
-            mergeCubes(scienceDirectoryList, "telluricCorrected", use_pq_offsets, im3dtran, over)
+            mergeCubes(scienceDirectoryList, "telluricCorrected", mergeType, use_pq_offsets, im3dtran, over)
             logging.info("\n##############################################################################")
             logging.info("")
             logging.info("  STEP 2 - Merge Telluric Corrected Cubes - COMPLETED ")
@@ -110,7 +112,7 @@ def run():
 
         if valindex == 3:
             # Merge telluric corrected AND flux calibrated cubes. These have the "factfbrsn" prefix.
-            mergeCubes(scienceDirectoryList, "telCorAndFluxCalibrated", use_pq_offsets, im3dtran, over)
+            mergeCubes(scienceDirectoryList, "telCorAndFluxCalibrated", mergeType, use_pq_offsets, im3dtran, over)
             logging.info("\n##############################################################################")
             logging.info("")
             logging.info("  STEP 3 - Merge Telluric Corrected and Flux Calibrated Cubes - COMPLETED ")
@@ -119,7 +121,7 @@ def run():
 
         valindex += 1
 
-def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
+def mergeCubes(obsDirList, cubeType, mergeType, use_pq_offsets, im3dtran, over=""):
     """MERGE
 
     This module contains all the functions needed to merge
@@ -361,11 +363,11 @@ def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
         if os.path.exists('cube_merged.fits'):
             if over:
                 os.remove('cube_merged.fits')
-                iraf.imcombine(prefix+'*', output = 'cube_merged.fits',  combine = 'sum', offsets = 'offsets.txt')
+                iraf.imcombine(prefix+'*', output = 'cube_merged.fits',  combine = mergeType, offsets = 'offsets.txt')
             else:
                 logging.info('Output already exists and -over- not set - skipping imcombine')
         else:
-            iraf.imcombine(prefix+'*', output = 'cube_merged.fits',  combine = 'sum', offsets = 'offsets.txt')
+            iraf.imcombine(prefix+'*', output = 'cube_merged.fits',  combine = mergeType, offsets = 'offsets.txt')
         # TODO(nat): barf. This is pretty nasty... We should fix the overwrite statements here and
         # find a way to use less nesting
         if im3dtran:
@@ -411,7 +413,9 @@ def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
             for ind in indices:
                 newcubelist.append(mergedCubes[ind])
             print newcubelist
-            waveshift(newcubelist, grat)
+            # Do some housekeeping before the final cube merging.
+            resizeAndCenterCubes(newcubelist, over)
+            makeWavelengthOffsets(newcubelist, grat)
             for i in range(len(newcubelist)):
                 # Build an input string containing all the cubes to combine.
                 if i==0:
@@ -421,19 +425,77 @@ def mergeCubes(obsDirList, cubeType, use_pq_offsets, im3dtran, over=""):
             if os.path.exists('temp_merged'+gratlist[n][0]+'.fits'):
                 if over:
                     iraf.delete('temp_merged'+gratlist[n][0]+'.fits')
-                    iraf.imcombine(inputstring, output = 'temp_merged'+gratlist[n][0]+'.fits', combine = 'median', offsets = 'waveoffsets'+grat[0]+'.txt')
+                    iraf.imcombine(inputstring, output = 'temp_merged'+gratlist[n][0]+'.fits', combine = mergeType, offsets = 'waveoffsets'+grat[0]+'.txt')
                     iraf.fxcopy(input=newcubelist[0]+'[0], temp_merged'+gratlist[n][0]+'.fits', output = 'TOTAL_merged'+gratlist[0][0]+'.fits')
                 else:
                     logging.info('Output exists and -over- not set - skipping final cube merge')
             else:
-                iraf.imcombine(inputstring, output = 'temp_merged'+gratlist[n][0]+'.fits', combine = 'median', offsets = 'waveoffsets'+grat[0]+'.txt')
+                iraf.imcombine(inputstring, output = 'temp_merged'+gratlist[n][0]+'.fits', combine = mergeType, offsets = 'waveoffsets'+grat[0]+'.txt')
                 iraf.fxcopy(input=newcubelist[0]+'[0], temp_merged'+gratlist[n][0]+'.fits', output = 'TOTAL_merged'+gratlist[n][0]+'.fits')
 #####################################################################################
 #                                        FUNCTIONS                                  #
 #####################################################################################
 
+def resizeAndCenterCubes(cubelist, over):
+    """
+    Resize and center a cube based on the size of the biggest cube.
+    Based on https://stackoverflow.com/a/35751427/6571817
+    """
+    # TODO(nat): DANGER: This does not update the relevant x and y keywords.
+    # That would be a good thing to implement.
 
-def waveshift(cubelist, grat):
+    # TODO(nat): We don't save intermediate products yet. That would be good to
+    # implement.
+
+    # Find biggest x and y cube dimensions.
+    maxXSize = 0
+    maxYSize = 0
+    cPix1Max = None
+    cPix2Max = None
+    for cube in cubelist:
+        cubeData = astropy.io.fits.open(cube)[1].data
+        cubeHeader = astropy.io.fits.open(cube)[1].header
+        xSize = cubeData.shape[2]
+        ySize = cubeData.shape[1]
+        if xSize > maxXSize:
+            maxXSize = xSize
+            cPix1Max = cubeHeader['CRPIX1']
+        if ySize > maxYSize:
+            maxYSize = ySize
+            cPix2Max = cubeHeader['CRPIX2']
+
+    # Resize the cubes to the biggest, overwriting the old cube. Not optimal to overwrite the old one!
+    for cube in cubelist:
+        # Open the cubeData and header
+        oldCube = astropy.io.fits.open(cube)
+        cubeData = oldCube[1].data
+
+        oldShape = cubeData.shape
+        # Make a numpy zeros array as big as the largest cube.
+        newShape = (oldShape[0], maxXSize, maxYSize)
+        result = numpy.zeros(newShape)
+
+        # Calculate X and Y offsets.
+        xOffset = int((maxXSize - cubeData.shape[2]) / 2.0)
+        yOffset = int((maxYSize - cubeData.shape[1]) / 2.0)
+
+        result[:, yOffset:oldShape[1]+yOffset, xOffset:oldShape[2]+xOffset] = cubeData
+
+        oldCube[1].data = result
+        oldCube[1].header['CRPIX1'] = cPix1Max
+        oldCube[1].header['CRPIX2'] = cPix2Max
+
+        if os.path.exists("temp.fits"):
+            os.remove("temp.fits")
+        oldCube.writeto("temp.fits")
+        os.remove(cube)
+        shutil.move("temp.fits", cube)
+
+
+def makeWavelengthOffsets(cubelist, grat):
+    """
+    Get wavelength shift of cubes.
+    """
     cubeheader0 = astropy.io.fits.open(cubelist[0])
     wstart0 = cubeheader0[1].header['CRVAL3']
     fwave = open('waveoffsets{0}.txt'.format(grat[0]), 'w')

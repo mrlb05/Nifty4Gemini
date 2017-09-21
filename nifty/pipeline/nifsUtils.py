@@ -84,61 +84,62 @@ def interactiveNIFSInput():
     if fullReduction == False:
         # "Select in". User has to turn individual steps on.
         # TODO(nat): Implement these steps.
-        date = ""
-        program = ""
-        copy = ""
 
-        # Get sort params.
+        manualMode = getParam(
+        "Run in manualMode? [no]: ",
+        False,
+        "nifsPipeline can be run as a fully automatic pipeline or pausing after each step, giving you "
+        "a chance to review intermediate products."
+        )
+
+        over = getParam(
+        "Overwrite old files? [no]: ",
+        False,
+        "Would you like to overwrite any old results Nifty finds?"
+        )
+
+        extractionXC = getParam(
+        "Extraction X Coordinate? [15.0]: ",
+        15.0,
+        "You can set the nfextract x coordinate here."
+        )
+        extractionYC = getParam(
+        "Extraction Y Coordinate? [33.0]: ",
+        33.0,
+        "You can set the nfextract y coordinate here."
+        )
+        extractionRadius = getParam(
+        "Extraction y coordinate? [2.5]: ",
+        2.5,
+        "You can specify a radius for nfextract here."
+        )
+        scienceOneDExtraction = getParam(
+        "Extract one D spectra from science cubes? [yes]: ",
+        'yes',
+        "Nifty can extract summed, combined one-D spectra from science cubes as well as telluric cubes. The extraction "
+        "radius, x coordinate and y coordinate will be the same as in the telluric one D extraction."
+        )
+        scienceDirectoryList = getParam(
+        "Science Directory List? []: ",
+        [],
+        "You can specify a Python list of science observation directories here."
+        )
+        telluricDirectoryList = getParam(
+        "Telluric Directory List? []: ",
+        [],
+        "You can specify a Python list of telluric observation directories here."
+        )
+        calibrationDirectoryList = getParam(
+        "Calibration Directory List? []: ",
+        [],
+        "You can specify a Python list of calibration observation directories here."
+        )
+
         sort = getParam(
         "Sort raw data? [yes]: ",
         'yes',
         "Nifty needs raw data to be in a specific directory structure with text files helping it. " + \
         "You can have it build a structure automatically."
-        )
-        program = getParam(
-        "Gemini Program ID? []: ",
-        "",
-        "Nifty can either download raw data from the Gemini Public archive (to ./rawData) or copy it from " + \
-        "a local directory. An example of a valid program string: \"GN-2013A-Q-62\". "
-        )
-        rawPath = getParam(
-        "Path to raw files directory? []: ",
-        "",
-        "An example of a valid raw files path string: \"/Users/nat/data/spaceMonster\""
-        )
-        #
-        oneDExtraction = getParam(
-        "Do a one D extraction from uncorrected cubes? [yes]: ",
-        True,
-        "Not implemeted yet"
-        )
-        extractionXC = getParam(
-        "Extraction x coordinate? [15.0]: ",
-        15.0,
-        "Not implemeted yet"
-        )
-        extractionYC = getParam(
-        "Extraction y coordinate? [33.0]: ",
-        33.0,
-        "Not implemeted yet"
-        )
-        extractionRadius = getParam(
-        "Extraction y coordinate? [2.5]: ",
-        2.5,
-        "Not implemeted yet"
-        )
-        telluricTimeThreshold = getParam(
-        "Max time between matched science and standard star frames? [5400]",
-        5400,
-        "Nifty will try to match science frames with the telluric frame closest to it in UT start time, " + \
-        "within a certain threshold (in seconds). The default is 5400 seconds (1.5 hours)."
-        )
-        skyThreshold = getParam(
-        "Sky threshold? [2.0]: ",
-        2.0,
-        "Nifty differentiates between sky and science frames from the telescope P and Q offsets. " + \
-        "If sqrt(Poffset^2 + Qoffset^2) is more than the given threshold, a frame is marked as a science frame. " + \
-        "Nifty also tries to take the telescope P and Q offset zero point into account if the first past seems to only identify sky frames."
         )
         # See if we want to reduce the baseline calibrations. And if so, which substeps
         # to perform.
@@ -147,6 +148,87 @@ def interactiveNIFSInput():
         'yes',
         "NIFS data comes with a set of calibrations that should be reduced and used."
         )
+        # Check and get params for a telluric data reduction.
+        telluricReduction = getParam(
+        "Reduce telluric data? [yes]: ",
+        'yes',
+        "You can specify to do a telluric data reduction."
+        )
+        # Check for science as well.
+        scienceReduction = getParam(
+        "Reduce science data? [yes]: ",
+        'yes',
+        "Nifty can reduce science data producing UNMERGED 3D data cubes."
+        )
+        telluricCorrection = getParam(
+        "Do a telluric correction? [yes]: ",
+        'yes',
+        "Nifty can derive and apply a telluric correction using various methods. Currently the only method "
+        "implemented is that of Mason et al. 2015. in the XDGNIRS pipeline."
+        )
+        fluxCalibration = getParam(
+        "Do a flux calibration? [yes]: ",
+        'yes',
+        "Nifty can derive and apply a flux calibration using various methods. Currently the only method "
+        "implemented is that of Mason et al. 2015. in the XDGNIRS pipeline."
+        )
+        merge = getParam(
+        "Do a final data cube merging? [yes]: ",
+        'yes',
+        "Nifty can merge final data cubes by object, grating and correction type."
+        )
+        telluricCorrectionMethod = getParam(
+        "Telluric correction method? [gnirs]: ",
+        "gnirs",
+        "Specify a telluric correction method or not to apply one. The options are \"gnirs\", \"none\" and \"iraf\"."
+        )
+        fluxCalibrationMethod = getParam(
+        "Flux calibration method? [gnirs]: ",
+        "gnirs",
+        "Nifty can do a flux calibration. The available options are \"gnirs\" and \"none\"."
+        )
+        mergeMethod = getParam(
+        "Merge final data cubes? []: ",
+        '',
+        "Not yet implemented; Nifty has support for multiple merge methods."
+        )
+
+        rawPath = getParam(
+        "Path to raw files directory? []: ",
+        "",
+        "An example of a valid raw files path string: \"/Users/nat/data/spaceMonster\""
+        )
+        program = getParam(
+        "Gemini Program ID? []: ",
+        "",
+        "Nifty can either download raw data from the Gemini Public archive (to ./rawData) or copy it from " + \
+        "a local directory. An example of a valid program string: \"GN-2013A-Q-62\". "
+        )
+        proprietaryCookie = getParam(
+        "Cookie for proprietary downloads? []: ",
+        '',
+        "You can provide a cookie from you Gemini public archive login session to automatically "
+        "download proprietary data."
+        )
+        skyThreshold = getParam(
+        "Sky threshold? [2.0]: ",
+        2.0,
+        "Nifty differentiates between sky and science frames from the telescope P and Q offsets. " + \
+        "If sqrt(Poffset^2 + Qoffset^2) is more than the given threshold, a frame is marked as a science frame. " + \
+        "Nifty also tries to take the telescope P and Q offset zero point into account if the first past seems to only identify sky frames."
+        )
+        sortTellurics = getParam(
+        "Sort telluric observations? [yes]: ",
+        'yes',
+        "Nifty can sort telluric observations into the directory structure."
+        )
+        telluricTimeThreshold = getParam(
+        "Max time between matched science and standard star frames? [5400]",
+        5400,
+        "Nifty will try to match science frames with the telluric frame closest to it in UT start time, " + \
+        "within a certain threshold (in seconds). The default is 5400 seconds (1.5 hours)."
+        )
+
         # By default do all of them.
         baselineCalibrationStart = getParam(
         "Starting point of baseline calibration reductions? [1]: ",
@@ -158,12 +240,7 @@ def interactiveNIFSInput():
         4,
         "Specify the stop step for the reduction of calibrations here."
         )
-        # Check and get params for a telluric data reduction.
-        telluricReduction = getParam(
-        "Reduce telluric data? [yes]: ",
-        'yes',
-        "You can specify to do a telluric data reduction."
-        )
+
         telStart = getParam(
         "Start point? [1]: ",
         1,
@@ -179,49 +256,7 @@ def interactiveNIFSInput():
         'yes',
         "Specify to subtract sky frames from telluric frames."
         )
-        # Set the telluric application correction method. Choices are iraf.telluric and a python variant.
-        # Set the h-line removal method with the vega() function in nifsReduce as default.
-        hline_method = getParam(
-        "H-line removal method? [vega]: ",
-        "none",
-        "Nifty can attempt to remove H-lines from a telluric correction spectrum. The available options are \"vega\" and \"none\"."
-        )
-        # Set yes or no for interactive the h line removal, telluric correction, and continuum fitting
 
-        # Disabled (for now!) because of bugs in interactive Pyraf tasks.
-        # TODO(nat): when interactive is fixed re-enable this.
-        # Temp fix:
-        hlineinter = False
-        """hlineinter = getParam(
-        "Interative H-line removal? [no]: ",
-        False
-        )"""
-        continuuminter = False
-        """continuuminter = getParam(
-        "Interative telluric continuum fitting? [no]: ",
-        False
-        )"""
-
-        telluricCorrectionMethod = getParam(
-        "Telluric correction method? [gnirs]: ",
-        "gnirs",
-        "Specify a telluric correction method or not to apply one. The options are \"gnirs\", \"none\" and \"iraf\"."
-        )
-
-        # TODO(nat): disabled for now because of that interactive task bug.
-        telinter = False
-        """
-        telinter = getParam(
-        "Interactive telluric correction? [no]: ",
-        False
-        )"""
-
-        # Check for science as well.
-        scienceReduction = getParam(
-        "Reduce science data? [yes]: ",
-        'yes',
-        "Nifty can reduce science data producing UNMERGED 3D data cubes."
-        )
         sciStart = getParam(
         "Starting point of science and telluric reductions? [1]: ",
         1,
@@ -237,37 +272,103 @@ def interactiveNIFSInput():
         'yes',
         "Nifty can subtract a sky frame of the same exposure duration from each science frame."
         )
-        fluxCalibrationMethod = getParam(
-        "Flux calibration method? [no]: ",
-        "gnirs",
-        "Nifty can do a flux calibration. The available options are \"gnirs\" and \"none\"."
+
+        telluricCorrectionStart = getParam(
+        "Start step of telluric correction? [1]: ",
+        1,
+        "Choose a start step of the telluric correction."
         )
-        spectemp = getParam(
+        telluricCorrectionStop = getParam(
+        "Stop step of telluric correction? [5]: ",
+        5,
+        "Choose a stop step of the telluric correction."
+        )
+        hLineMethod = getParam(
+        "H-line removal method? [vega]: ",
+        "none",
+        "Nifty can attempt to remove H-lines from a telluric correction spectrum. The available options are \"vega\" and \"none\"."
+        )
+        # Some of these are disabled (for now!) because of bugs in interactive Pyraf tasks.
+        # TODO(nat): when interactive is fixed re-enable this.
+        # Temp fix:
+        hlineinter = getParam(
+        "Interative H-line removal? [no]: ",
+        False,
+        "WARNING: This is currently broken due to bugs in interactive PyRAF tasks. Use with caution."
+        )
+        continuumInter = getParam(
+        "Interative telluric continuum fitting? [no]: ",
+        False,
+        "WARNING: This is currently broken due to bugs in interactive PyRAF tasks. Use with caution."
+        )
+        telluricInter = getParam(
+        "Interative telluric correction with iraf.telluric()? [no]: ",
+        False,
+        "WARNING: This is currently broken due to bugs in interactive PyRAF tasks. Use with caution."
+        )
+        tempInter = getParam(
+        "Plot intermediate results using matplotlib? [no]: ",
+        False,
+        "As a short term fix, you can choose to plot intermediate results of the telluric correction at runtime "
+        "using matplotlib."
+        )
+        standardStarSpecTemperature = getParam(
         "Effective temperature in kelvin of telluric standard star? [""]: ",
         "",
         "You can specify the temperature of the telluric standard star; if not Nifty will attempt " + \
         "a SIMBAD query to find Teff."
         )
-        mag = getParam(
+        standardStarMagnitude = getParam(
         "Magnitude of standard star? [""]: ",
         "",
         "You can specify the magnitude of the telluric standard star. If not Nifty will attempt "+ \
         "a SIMBAD query to look it up."
         )
-        mergeUncorrectedCubes = getParam(
-        "Merge uncorrected data cubes? [yes]: ",
-        'yes',
-        "Nifty can also merge cubes in a unique observations to make one final cube per object, per grating."
+        standardStarRA = getParam(
+        "RA of standard star? [""]: ",
+        "",
+        "You can specify the RA of the telluric standard star. If not Nifty will attempt "+ \
+        "a SIMBAD query to look it up."
         )
-        mergeTelluricCorrectedCubes = getParam(
-        "Merge TELLURIC CORRECTED data cubes? [yes]: ",
-        'yes',
-        "Nifty can also merge cubes in a unique observations to make one final cube per object, per grating."
+        standardStarDec = getParam(
+        "Dec of standard star? [""]: ",
+        "",
+        "You can specify the Dec of the telluric standard star. If not Nifty will attempt "+ \
+        "a SIMBAD query to look it up."
         )
-        mergeTelCorAndFluxCalibratedCubes = getParam(
-        "Merge FLUX CALIBRATED AND TELLURIC CORRECTED data cubes? [yes]: ",
-        'yes',
-        "Nifty can also merge cubes in a unique observations to make one final cube per object, per grating."
+        standardStarBand = getParam(
+        "Band of standard star? [""]: ",
+        "",
+        "You can specify the spectral band of the telluric standard star. If not Nifty will attempt "+ \
+        "to look it up from the directory structure."
+        )
+
+        fluxCalibrationStart = getParam(
+        "Start step of flux calibration? [1]: ",
+        1,
+        "Choose a start point for the flux calibration."
+        )
+        fluxCalibrationStop = getParam(
+        "Stop step of flux calibration? [6]",
+        6,
+        "Choose a stop point for the flux calibration."
+        )
+
+        mergeStart = getParam(
+        "Start step of the final cube merging? [1]: ",
+        1,
+        "Choose a start point for the final cube merging."
+        )
+        mergeStop = getParam(
+        "Stop step of final cube merging? [3]:",
+        3,
+        "Choose a stop point for the final cube merging."
+        )
+        mergeType = getParam(
+        "Type of merging to do? [median]: ",
+        "median",
+        "What type of merging would you like imcombine to do in merging? The options are the same as those "
+        "available in imcombine; median, average, sum, etc."
         )
         use_pq_offsets = getParam(
         "Use pq offsets to merge data cubes? [yes]: ",
@@ -281,42 +382,40 @@ def interactiveNIFSInput():
         "Nifty can transpose cubes to work around a bug in iraf.imcombine(). If not using this, note Nifty " + \
         "will take over 25 minutes to merge each cube."
         )
-        over = getParam(
-        "Overwrite old files? [no]: ",
-        False,
-        "Nifty can attempt to overwrite old files. Use with caution; this is very lightly tested."
-        )
-        manualMode = getParam(
-        "Pause after each data reduction step? [no]: ",
-        False,
-        "Nifty can pause before each major step and routine to make it easier to follow what it is doing."
-        )
 
         # Save the options as a .cfg file.
         config = ConfigObj(RECIPES_PATH+'defaultConfig.cfg', unrepr=True)
 
         # General config used by all scripts.
-        config['over'] = over
         config['manualMode'] = manualMode
-        config['oneDExtraction'] = oneDExtraction
+        config['over'] = over
         config['extractionXC'] = extractionXC
         config['extractionYC'] = extractionYC
         config['extractionRadius'] = extractionRadius
+        config['scienceOneDExtraction'] = scienceOneDExtraction
+        config['scienceDirectoryList'] = scienceDirectoryList
+        config['calibrationDirectoryList'] = calibrationDirectoryList
+        config['telluricDirectoryList'] = telluricDirectoryList
 
         config['nifsPipelineConfig'] = {}
         config['nifsPipelineConfig']['sort'] = sort
         config['nifsPipelineConfig']['calibrationReduction'] = calibrationReduction
         config['nifsPipelineConfig']['telluricReduction'] = telluricReduction
         config['nifsPipelineConfig']['scienceReduction'] = scienceReduction
+        config['nifsPipelineConfig']['telluricCorrection'] = telluricCorrection
+        config['nifsPipelineConfig']['fluxCalibration'] = fluxCalibration
+        config['nifsPipelineConfig']['merge'] = merge
+        config['nifsPipelineConfig']['telluricCorrectionMethod'] = telluricCorrectionMethod
+        config['nifsPipelineConfig']['fluxCalibrationMethod'] = fluxCalibrationMethod
+        config['nifsPipelineConfig']['mergeMethod'] = mergeMethod
 
         config['sortConfig'] = {}
         config['sortConfig']['rawPath'] = rawPath
         config['sortConfig']['program'] = program
+        config['sortConfig']['proprietaryCookie'] = proprietaryCookie
         config['sortConfig']['skyThreshold'] = skyThreshold
-        config['sortConfig']['sortTellurics'] = telluricReduction
+        config['sortConfig']['sortTellurics'] = sortTellurics
         config['sortConfig']['telluricTimeThreshold'] = telluricTimeThreshold
-        config['sortConfig']['date'] = date
-        config['sortConfig']['copy'] = copy
 
         config['calibrationReductionConfig'] = {}
         config['calibrationReductionConfig']['baselineCalibrationStart']= baselineCalibrationStart
@@ -326,24 +425,36 @@ def interactiveNIFSInput():
         config['telluricReductionConfig']['telStart'] = telStart
         config['telluricReductionConfig']['telStop'] = telStop
         config['telluricReductionConfig']['telluricSkySubtraction'] = telluricSkySubtraction
-        config['telluricReductionConfig']['spectemp'] = spectemp
-        config['telluricReductionConfig']['mag'] = mag
-        config['telluricReductionConfig']['hline_method'] = hline_method
-        config['telluricReductionConfig']['hlineinter'] = hlineinter
-        config['telluricReductionConfig']['continuuminter'] = continuuminter
 
         config['scienceReductionConfig'] = {}
         config['scienceReductionConfig']['sciStart'] = sciStart
         config['scienceReductionConfig']['sciStop'] = sciStop
         config['scienceReductionConfig']['scienceSkySubtraction'] = scienceSkySubtraction
-        config['scienceReductionConfig']['telluricCorrectionMethod'] = telluricCorrectionMethod
-        config['scienceReductionConfig']['telinter'] = telinter
-        config['scienceReductionConfig']['fluxCalibrationMethod'] = fluxCalibrationMethod
-        config['scienceReductionConfig']['mergeUncorrectedCubes'] = mergeUncorrectedCubes
-        config['scienceReductionConfig']['mergeTelluricCorrectedCubes'] = mergeTelluricCorrectedCubes
-        config['scienceReductionConfig']['mergeTelCorAndFluxCalibratedCubes'] = mergeTelCorAndFluxCalibratedCubes
-        config['scienceReductionConfig']['use_pq_offsets'] = use_pq_offsets
-        config['scienceReductionConfig']['im3dtran'] = im3dtran
+
+        config['telluricCorrectionConfig'] = {}
+        config['telluricCorrectionConfig']['telluricCorrectionStart'] = telluricCorrectionStart
+        config['telluricCorrectionConfig']['telluricCorrectionStop'] = telluricCorrectionStop
+        config['telluricCorrectionConfig']['hLineMethod'] = hLineMethod
+        config['telluricCorrectionConfig']['hLineInter'] = hLineInter
+        config['telluricCorrectionConfig']['continuumInter'] = continuumInter
+        config['telluricCorrectionConfig']['telluricInter'] = telluricInter
+        config['telluricCorrectionConfig']['tempInter'] = tempInter
+        config['telluricCorrectionConfig']['standardStarSpecTemperature'] = standardStarSpecTemperature
+        config['telluricCorrectionConfig']['standardStarMagnitude'] = standardStarMagnitude
+        config['telluricCorrectionConfig']['standardStarRA'] = standardStarRA
+        config['telluricCorrectionConfig']['standardStarDec'] = standardStarDec
+        config['telluricCorrectionConfig']['standardStarBand'] = standardStarBand
+
+        config['fluxCalbrationConfig'] = {}
+        config['fluxCalbrationConfig']['fluxCalibrationStart'] = fluxCalibrationStart
+        config['fluxCalbrationConfig']['fluxCalibrationStop'] = fluxCalibrationStop
+
+        config['mergeConfig'] = {}
+        config['mergeConfig']['mergeStart'] = mergeStart
+        config['mergeConfig']['mergeStop'] = mergeStop
+        config['mergeConfig']['mergeType'] = mergeType
+        config['mergeConfig']['use_pq_offsets'] = use_pq_offsets
+        config['mergeConfig']['im3dtran'] = im3dtran
 
         with open('./config.cfg', 'w') as outfile:
             config.write(outfile)

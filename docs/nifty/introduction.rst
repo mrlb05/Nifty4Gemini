@@ -548,6 +548,8 @@ nifsPipeline.py
 nifsSort.py
 -----------
 
+Two things can routinely cause nifsSort to fail.
+
 Object and Sky frame differentiation
 
 Relevant warning:
@@ -775,12 +777,15 @@ Future Work
 ===========
 
 Throughout the code, ncomeau has placed many TODO notes. These are things that
-work but could be expressed in more robust ways.
+should be reviewed at some point.
 
-Some other things to do in the future:
+Future work:
 
-- Gemini private network downloads
-- XDGNIRS integration and NDMAPPER (James Turner) integration
+- Implement more telluric and flux calibration methods
+- Automated Gemini data reductions at the start of the day.
+- Object Oriented rewrite; see the JWST calibration pipeline. Pipelines, Steps,
+Routines and Tasks may implemented better as software objects.
+- XDGNIRS integration and NDMAPPER (James EH Turner) integration
 - Analysis tools: automatic velocity field? Dispersion?
 - Python 3 compatability(if possible)
 - Compiling as a self-contained executable
