@@ -1,8 +1,7 @@
 Nifty
 =====
 .. image:: https://badge.fury.io/py/nifty4gemini.svg
-    :alt: Available on PyPi.
-    :target: https://badge.fury.io/py/nifty4gemini
+   :target: https://badge.fury.io/py/nifty4gemini
 .. image:: https://readthedocs.org/projects/nifty4gemini/badge/?version=latest
    :alt: Nifty's documentation, hosted on ReadtheDocs.
    :target: http://nifty4gemini.readthedocs.io/en/latest/
