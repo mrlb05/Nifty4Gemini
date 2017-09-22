@@ -3,10 +3,11 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Nifty's documentation!
+Welcome to Nifty4Gemini's documentation!
 =================================
 
-Nifty is a full-featured Gemini NIFS data reduction package.
+Nifty4Gemini is a full-featured Gemini data reduction framework for Gemini instruments and
+here we provide the documentation for its associate NIFS pipeline.
 
 =====================
 Package Documentation
