@@ -1031,6 +1031,11 @@ read more about reStructuredText `here <http://www.sphinx-doc.org/en/stable/rest
 
 Comments and DocStrings in Source Code
 
+Tests
+-----
+
+This is a todo. Currently we do not have automated tests.
+
 Pipeline Structure
 ------------------
 
