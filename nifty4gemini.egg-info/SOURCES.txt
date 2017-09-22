@@ -1,5 +1,4 @@
 README.rst
-setup.py
 nifty/__init__.py
 nifty/pipeline/__init__.py
 nifty/pipeline/nifsLowMemoryPipeline.py
@@ -12,7 +11,6 @@ nifty/pipeline/downloadFromGeminiPublicArchive/ndmapperDownloader.py
 nifty/pipeline/objectoriented/GetConfig.py
 nifty/pipeline/objectoriented/OOnifsBaseline.py
 nifty/pipeline/objectoriented/__init__.py
-nifty/pipeline/objectoriented/getConfig.py
 nifty/pipeline/objectoriented/routine.py
 nifty/pipeline/objectoriented/step.py
 nifty/pipeline/objectoriented/subroutine.py

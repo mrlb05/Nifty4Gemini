@@ -101,7 +101,7 @@ def start(args):
     """
     # Save starting path for later use and change one directory up.
     path = os.getcwd()
-
+    print "IT WORKED!"
     # Get paths to built-in Nifty data. Special code in setup.py makes sure recipes/ and
     # runtimeData/ will be installed when someone installs Nifty, and accessible in this way.
     RECIPES_PATH = pkg_resources.resource_filename('nifty', 'recipes/')
