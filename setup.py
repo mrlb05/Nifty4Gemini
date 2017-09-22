@@ -22,7 +22,7 @@ PACKAGE_DATA = {
 
 setup(
     name=NAME,
-    version="1.0b12",
+    version="1.0.0",
     author='mbusserolle',
     author_email='mbussero@gemini.edu',
     description='Gemini Instruments Data Reduction Framework.',
@@ -30,8 +30,7 @@ setup(
     url='http://www.gemini.edu',
     license='MIT',
     classifiers=[
-        # 5 - Production/Stable
-        'Development Status :: 4 - Beta',
+        'Development Status :: 5 - Production/Stable',
         'Environment :: MacOS X',
         'Intended Audience :: Science/Research',
         'Intended Audience :: Education',
