@@ -1115,11 +1115,13 @@ should be reviewed at some point.
 
 Future work:
 
-- Implement more telluric and flux calibration methods
-- Automated Gemini data reductions at the start of the day.
-- Object Oriented rewrite; see the JWST calibration pipeline. Pipelines, Steps,
-Routines and Tasks may implemented better as software objects.
-- XDGNIRS integration and NDMAPPER (James EH Turner) integration
+- Implement more telluric and flux calibration methods.
+- Implement instrument signature removal routine.
+- Implement cosmic ray removal routine.
+- Implement differential atmospheric refraction correction routine.
+- Implement full automatic Gemini (on server) reduction routine.
+- Object Oriented rewrite; see the `JWST calibration pipeline <https://github.com/STScI-JWST/jwst>`_. Pipelines, Steps, Routines and Tasks may implemented better as software objects.
+- XDGNIRS integration and `NDMAPPER (James EH Turner) <http://ndmapper.readthedocs.io/en/latest/index.html>`_ integration
 - Analysis tools: automatic velocity field? Dispersion?
 - Python 3 compatability(if possible)
 - Compiling as a self-contained executable

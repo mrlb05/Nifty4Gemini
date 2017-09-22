@@ -7,5 +7,3 @@ import pipeline.steps.nifsReduce as nifsReduce
 import pipeline.steps.nifsTelluric as nifsTelluric
 import pipeline.steps.nifsFluxCalibrate as nifsFluxCalibrate
 import pipeline.steps.nifsMerge as nifsMerge
-
-__version__ = "1.0.0"

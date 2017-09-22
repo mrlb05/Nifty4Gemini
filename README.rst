@@ -88,3 +88,10 @@ and a full local path to the raw data or a Gemini Program ID string (Eg: GN-2013
 .. code-block:: text
 
    runNifty nifsPipeline -f <data_location>
+
+
+License
+=======
+
+See the LICENSE file in the current directory. Note that downloadFromGeminiPublicArchive does not use the MIT
+license. Refer to the LICENCE file in the downloadFromGeminiPublicArchive directory to view the appropriate license.

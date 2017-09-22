@@ -1,1 +1,0 @@
-from ndmapperDownloader import download_query_gemini
