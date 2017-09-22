@@ -92,6 +92,7 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#running-from-the-command-line">Running from the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html#running-from-python">Running from Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#preparing-the-cfg-input-file">Preparing the .cfg Input File</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#data-reduction-examples">Data Reduction Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#tutorials">Tutorials</a></li>
@@ -101,6 +102,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#changelog">Changelog</a></li>
 <li class="toctree-l1"><a class="reference internal" href="introduction.html#api">API</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Example of Nifty File I/O</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#example-data-reduction-products">Example Data Reduction Products:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nifspipeline-data-reduction">nifsPipeline Data Reduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nifsreduce-of-tellurics">nifsReduce of Tellurics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#nifsreduce-science">nifsReduce Science</a></li>
@@ -172,6 +174,9 @@
             
   <div class="section" id="example-of-nifty-file-i-o">
 <h1>Example of Nifty File I/O<a class="headerlink" href="#example-of-nifty-file-i-o" title="Permalink to this headline">¶</a></h1>
+<p>Note: this is out of data. v1.0b12 compartmentalized the data of each step,
+so you can safely delete the intermediate products of each step. This is moderately correct
+up the extraction of 1D spectra.</p>
 <p>This is an example of how the Nifty directory tree appears after each step of the
 date reduction. These directory trees were created using a custom <strong>niftree</strong> bash command:</p>
 <div class="highlight-text"><div class="highlight"><pre><span></span>find . -name .git -prune -o -print | sed -e &#39;s;[^/]*/;|____;g;s;____|; |;g&#39;
@@ -180,6 +185,125 @@ date reduction. These directory trees were created using a custom <strong>niftre
 <p>Add the following line to your ~/.bash_profile to create the <strong>niftree</strong> alias:</p>
 <div class="highlight-text"><div class="highlight"><pre><span></span>alias niftree=&quot;find . -name .git -prune -o -print | sed -e &#39;s;[^/]*/;|____;g;s;____|; |;g&#39;&quot;
 </pre></div>
+</div>
+<div class="section" id="example-data-reduction-products">
+<h2>Example Data Reduction Products:<a class="headerlink" href="#example-data-reduction-products" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-text"><div class="highlight"><pre><span></span>|____.DS_Store
+|____config.cfg
+|____ExtractedOneD
+| |____20130527_obs28
+| | |____xtfbrsnN20130527S0264.fits
+| | |____xtfbrsnN20130527S0266.fits
+| | |____xtfbrsnN20130527S0267.fits
+| | |____xtfbrsnN20130527S0269.fits
+| | |____xtfbrsnN20130527S0270.fits
+| | |____xtfbrsnN20130527S0272.fits
+| |____20130530_obs36
+| | |____xtfbrsnN20130530S0261.fits
+| | |____xtfbrsnN20130530S0263.fits
+| |____20130530_obs55
+| | |____xtfbrsnN20130530S0254.fits
+| | |____xtfbrsnN20130530S0256.fits
+| |____20130531_obs36
+| | |____xtfbrsnN20130531S0162.fits
+| | |____xtfbrsnN20130531S0164.fits
+| |____20130621_obs36
+| | |____xtfbrsnN20130621S0248.fits
+| | |____xtfbrsnN20130621S0250.fits
+| | |____xtfbrsnN20130621S0251.fits
+| | |____xtfbrsnN20130621S0253.fits
+| |____20130622_obs44
+| | |____xtfbrsnN20130622S0327.fits
+| | |____xtfbrsnN20130622S0329.fits
+| | |____xtfbrsnN20130622S0330.fits
+| | |____xtfbrsnN20130622S0332.fits
+| |____20130624_obs75
+| | |____xtfbrsnN20130624S0078.fits
+| | |____xtfbrsnN20130624S0080.fits
+| | |____xtfbrsnN20130624S0081.fits
+| | |____xtfbrsnN20130624S0083.fits
+| | |____xtfbrsnN20130624S0084.fits
+| | |____xtfbrsnN20130624S0086.fits
+| |____20130626_obs83
+| | |____xtfbrsnN20130626S0108.fits
+| | |____xtfbrsnN20130626S0110.fits
+| | |____xtfbrsnN20130626S0111.fits
+| | |____xtfbrsnN20130626S0113.fits
+| |____combined20130527_obs28.fits
+| |____combined20130530_obs36.fits
+| |____combined20130530_obs55.fits
+| |____combined20130531_obs36.fits
+| |____combined20130621_obs36.fits
+| |____combined20130622_obs44.fits
+| |____combined20130624_obs75.fits
+| |____combined20130626_obs83.fits
+|____Merged_telCorAndFluxCalibrated
+| |____.DS_Store
+| |____20130527_obs28_merged.fits
+| |____20130530_obs36_merged.fits
+| |____20130530_obs55_merged.fits
+| |____20130531_obs36_merged.fits
+| |____20130621_obs36_merged.fits
+| |____20130622_obs44_merged.fits
+| |____20130624_obs75_merged.fits
+| |____20130626_obs83_merged.fits
+| |____temp_mergedH.fits
+| |____TOTAL_mergedH.fits
+| |____waveoffsetsH.txt
+|____Merged_telluricCorrected
+| |____20130527_obs28_merged.fits
+| |____20130530_obs36_merged.fits
+| |____20130530_obs55_merged.fits
+| |____20130531_obs36_merged.fits
+| |____20130621_obs36_merged.fits
+| |____20130622_obs44_merged.fits
+| |____20130624_obs75_merged.fits
+| |____20130626_obs83_merged.fits
+| |____temp_mergedH.fits
+| |____TOTAL_mergedH.fits
+| |____waveoffsetsH.txt
+|____Merged_uncorrected
+| |____20130527_obs28_merged.fits
+| |____20130530_obs36_merged.fits
+| |____20130530_obs55_merged.fits
+| |____20130531_obs36_merged.fits
+| |____20130621_obs36_merged.fits
+| |____20130622_obs44_merged.fits
+| |____20130624_obs75_merged.fits
+| |____20130626_obs83_merged.fits
+| |____temp_mergedH.fits
+| |____TOTAL_mergedH.fits
+| |____waveoffsetsH.txt
+|____Nifty.log
+
+.
+|____config.cfg
+|____ExtractedOneD/                     # Extracted One D Science Spectra
+| |____20130527_obs28/
+| |____20130530_obs36/
+| |____20130530_obs55/
+| |____20130531_obs36/
+| |____20130621_obs36/
+| |____20130622_obs44/
+| |____20130624_obs75/
+| |____20130626_obs83/
+| |____combined20130527_obs28.fits
+| |____combined20130530_obs36.fits
+| |____combined20130530_obs55.fits
+| |____combined20130531_obs36.fits
+| |____combined20130621_obs36.fits
+| |____combined20130622_obs44.fits
+| |____combined20130624_obs75.fits
+| |____combined20130626_obs83.fits
+|____Merged_telCorAndFluxCalibrated/    # Telluric corrected AND flux calibrated
+| |____TOTAL_mergedH.fits
+|____Merged_telluricCorrected/          # Telluric corrected cubes
+| |____TOTAL_mergedH.fits
+|____Merged_uncorrected                 # Uncorrected cubes
+| |____TOTAL_mergedH.fits
+|____Nifty.log
+</pre></div>
+</div>
 </div>
 <div class="section" id="nifspipeline-data-reduction">
 <h2>nifsPipeline Data Reduction<a class="headerlink" href="#nifspipeline-data-reduction" title="Permalink to this headline">¶</a></h2>

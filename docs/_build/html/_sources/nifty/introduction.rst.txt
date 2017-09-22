@@ -1,6 +1,8 @@
 Introduction
 ============
 
+Nifty, for now, uses Python 2.7. Please keep this in mind.
+
 Running from the Command Line
 =============================
 
@@ -18,35 +20,69 @@ To get help or list the available options, type the runNifty command without any
 
   runNifty
 
+Running from Python
+===================
+
+Python Programmers: even though Nifty's API has not been defined yet, you can still run Nifty Pipelines, Steps, Routines and Tasks from a Python interpeter
+by importing them.
+
+For example, to run a final cube merge from the Python interpreter:
+
+.. code-block:: python
+
+  # Import relevant modules; you can find those at top of nifsMerge.py
+  from pyraf import iraf, iraffunctions
+  # Import relevant local script
+  import nifty.pipeline.steps.nifsMerge
+
+  # Set up iraf
+  iraf.gemini()
+  iraf.gemtools()
+  iraf.gnirs()
+  iraf.nifs()
+
+  # Define routine parameters
+  scienceDirectoryList = []
+  cubeType = "uncorrected"
+  mergeType = "sum"
+  use_pq_offsets = True
+  im3dtran = True
+  over = False
+
+  # Start the cube merging
+  nifty.pipeline.steps.nifsMerge.mergeCubes(scienceDirectoryList, cubeType, mergeType, use_pq_offsets, im3dtran, over="")
+
+You might be able to figure out what imports you need by checking the tops of the relevant scripts.
+
 Examples of Running from the Command Line
 -----------------------------------------
 
 Starting a Data Reduction from the Beginning
 
 
-To start the NIFS pipeline, populating a configuration file interactively:
+Supply the -i flag to start the NIFS pipeline, populating a configuration file interactively:
 
 .. code-block:: text
 
  runNifty nifsPipeline -i
 
-To start the NIFS pipeline from a pre-built configuration file:
+Supply a config.cfg file to start the NIFS pipeline from a pre-built configuration file:
 
 .. code-block:: text
 
  runNifty nifsPipeline config.cfg
 
-To do a fully automatic data reduction, downloading raw data from the Gemini Public Archive (Eg: GN-2013A-Q-62):
+Supply the -f flat to do a fully automatic data reduction, downloading raw data from the Gemini Public Archive (Eg: GN-2013A-Q-62):
 
 .. code-block:: text
 
   runNifty nifsPipeline -f GN-2013A-Q-62
 
-To do a fully automatic data reduction, using raw data from a local directory (Eg: /Users/ncomeau/data/TUTORIAL):
+Supply the -f flag to do a fully automatic data reduction, using raw data from a local directory (Eg: /Users/ncomeau/data/TUTORIAL):
 
 .. code-block:: text
 
- runNifty nifsPipeline /Users/ncomeau/data/TUTORIAL
+ runNifty nifsPipeline -f /Users/ncomeau/data/TUTORIAL
 
 Starting a Data Reduction from a Specified Point
 
@@ -56,66 +92,79 @@ Each step requires the general config section and its unique config section to b
 
 You can also run an individual step by turning them on or off in nifsPipeline config and running the nifsPipeline.
 
-**nifsSort:** To only copy and sort NIFS raw data type:
+**nifsSort:** To only copy and sort NIFS raw data use a config.cfg file like this:
 
 .. code-block:: text
 
- runNifty nifsSort
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
 
-Or use a config.cfg file like this:
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
 
-.. code-block:: text
+  [nifsPipelineConfig]
+  sort = True
+  calibrationReduction = False
+  telluricReduction = False
+  scienceReduction = False
+  telluricCorrection = False
+  fluxCalibration = False
+  merge = False
+  telluricCorrectionMethod = 'gnirs'
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
 
- # Nifty configuration file.
- #
- # Each section lists parameters required by a pipeline step.
+  [sortConfig]
+  rawPath = '/Users/nat/data/TUTORIAL'
+  program = ''
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 5400
 
- manualMode = False
- over = False
- merge = True
- scienceDirectoryList = []
- telluricDirectoryList = []
- calibrationDirectoryList = []
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
 
- [nifsPipelineConfig]
- sort = True
- calibrationReduction = False
- telluricReduction = False
- scienceReduction = False
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = True
 
- [sortConfig]
- rawPath = ''
- program = ''
- skyThreshold = 2.0
- sortTellurics = True
- date = ''
- copy = ''
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
 
- [calibrationReductionConfig]
- baselineCalibrationStart = 1
- baselineCalibrationStop = 4
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
 
- [telluricReductionConfig]
- telStart = 1
- telStop = 6
- telluricSkySubtraction = True
- spectemp = ''
- mag = ''
- hline_method = 'vega'
- hlineinter = False
- continuuminter = False
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
 
- [scienceReductionConfig]
- sciStart = 1
- sciStop = 6
- scienceSkySubtraction = True
- telluricCorrectionMethod = ''
- telinter = False
- fluxCalibrationMethod = ''
- use_pq_offsets = True
- im3dtran = True
-
- # Good luck with your Science!
+  # Good luck with your Science!
 
 And run the nifsPipeline with:
 
@@ -123,66 +172,79 @@ And run the nifsPipeline with:
 
  runNifty nifsPipeline config.cfg
 
-**nifsBaselineCalibration:** To only reduce calibrations type:
+**nifsBaselineCalibration:** To only reduce calibrations use a config.cfg file like this:
 
 .. code-block:: text
 
- runNifty nifsBaselineCalibration
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
 
-Or use a config.cfg file like this:
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
 
-.. code-block:: text
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = True
+  telluricReduction = False
+  scienceReduction = False
+  telluricCorrection = False
+  fluxCalibration = False
+  merge = False
+  telluricCorrectionMethod = 'gnirs'
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
 
- # Nifty configuration file.
- #
- # Each section lists parameters required by a pipeline step.
+  [sortConfig]
+  rawPath = '/Users/nat/data/TUTORIAL'
+  program = ''
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 5400
 
- manualMode = False
- over = False
- merge = True
- scienceDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83']
- calibrationDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H']
- telluricDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85']
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
 
- [nifsPipelineConfig]
- sort = False
- calibrationReduction = True
- telluricReduction = False
- scienceReduction = False
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = True
 
- [sortConfig]
- rawPath = ''
- program = ''
- skyThreshold = 2.0
- sortTellurics = True
- date = ''
- copy = ''
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
 
- [calibrationReductionConfig]
- baselineCalibrationStart = 1
- baselineCalibrationStop = 4
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
 
- [telluricReductionConfig]
- telStart = 1
- telStop = 6
- telluricSkySubtraction = True
- spectemp = ''
- mag = ''
- hline_method = 'vega'
- hlineinter = False
- continuuminter = False
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
 
- [scienceReductionConfig]
- sciStart = 1
- sciStop = 6
- scienceSkySubtraction = True
- telluricCorrectionMethod = ''
- telinter = False
- fluxCalibrationMethod = ''
- use_pq_offsets = True
- im3dtran = True
-
- # Good luck with your Science!
+  # Good luck with your Science!
 
 And run the nifsPipeline with:
 
@@ -190,66 +252,80 @@ And run the nifsPipeline with:
 
  runNifty nifsPipeline config.cfg
 
-**nifsReduce Telluric:** To only reduce telluric data type:
+**nifsReduce Telluric:** To only reduce telluric data use a config.cfg file like this:
+*Make sure to populate scienceDirectoryList, telluricDirectoryList and calibrationDirectoryList before running!*
 
 .. code-block:: text
 
- runNifty nifsReduce Telluric
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
 
-Or use a config.cfg file like this:
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
 
-.. code-block:: text
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = False
+  telluricReduction = True
+  scienceReduction = False
+  telluricCorrection = False
+  fluxCalibration = False
+  merge = False
+  telluricCorrectionMethod = 'gnirs'
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
 
- # Nifty configuration file.
- #
- # Each section lists parameters required by a pipeline step.
+  [sortConfig]
+  rawPath = '/Users/nat/data/TUTORIAL'
+  program = ''
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 5400
 
- manualMode = False
- over = False
- merge = True
- scienceDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83']
- calibrationDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H']
- telluricDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85']
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
 
- [nifsPipelineConfig]
- sort = False
- calibrationReduction = False
- telluricReduction = True
- scienceReduction = False
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = True
 
- [sortConfig]
- rawPath = ''
- program = ''
- skyThreshold = 2.0
- sortTellurics = True
- date = ''
- copy = ''
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
 
- [calibrationReductionConfig]
- baselineCalibrationStart = 1
- baselineCalibrationStop = 4
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
 
- [telluricReductionConfig]
- telStart = 1
- telStop = 6
- telluricSkySubtraction = True
- spectemp = ''
- mag = ''
- hline_method = 'vega'
- hlineinter = False
- continuuminter = False
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
 
- [scienceReductionConfig]
- sciStart = 1
- sciStop = 6
- scienceSkySubtraction = True
- telluricCorrectionMethod = ''
- telinter = False
- fluxCalibrationMethod = ''
- use_pq_offsets = True
- im3dtran = True
-
- # Good luck with your Science!
+  # Good luck with your Science!
 
 And run the nifsPipeline with:
 
@@ -257,66 +333,80 @@ And run the nifsPipeline with:
 
  runNifty nifsPipeline config.cfg
 
-**nifsReduce Science:** To only reduce science data type:
+**nifsReduce Science:** To only reduce science data use a config.cfg file like this:
+*Make sure to populate scienceDirectoryList, telluricDirectoryList and calibrationDirectoryList before running!*
 
 .. code-block:: text
 
- runNifty nifsReduce Science
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
 
-Or use a config.cfg file like this:
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
 
-.. code-block:: text
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = False
+  telluricReduction = False
+  scienceReduction = True
+  telluricCorrection = False
+  fluxCalibration = False
+  merge = False
+  telluricCorrectionMethod = 'gnirs'
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
 
- # Nifty configuration file.
- #
- # Each section lists parameters required by a pipeline step.
+  [sortConfig]
+  rawPath = '/Users/nat/data/TUTORIAL'
+  program = ''
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 5400
 
- manualMode = False
- over = False
- merge = True
- scienceDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/obs28', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs55', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/obs36', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/obs44', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/obs75', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/obs83']
- calibrationDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/Calibrations_H', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/Calibrations_H']
- telluricDirectoryList = ['/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs26', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs51', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130527/H/Tellurics/obs30', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs53', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130530/H/Tellurics/obs38', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs34', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130531/H/Tellurics/obs64', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130621/H/Tellurics/obs69', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs42', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130622/H/Tellurics/obs46', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs73', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130624/H/Tellurics/obs77', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs81', '/Users/ncomeau/tests/newQ62/AEGISz1284/20130626/H/Tellurics/obs85']
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
 
- [nifsPipelineConfig]
- sort = False
- calibrationReduction = False
- telluricReduction = False
- scienceReduction = True
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = True
 
- [sortConfig]
- rawPath = ''
- program = ''
- skyThreshold = 2.0
- sortTellurics = True
- date = ''
- copy = ''
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
 
- [calibrationReductionConfig]
- baselineCalibrationStart = 1
- baselineCalibrationStop = 4
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
 
- [telluricReductionConfig]
- telStart = 1
- telStop = 6
- telluricSkySubtraction = True
- spectemp = ''
- mag = ''
- hline_method = 'vega'
- hlineinter = False
- continuuminter = False
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
 
- [scienceReductionConfig]
- sciStart = 1
- sciStop = 6
- scienceSkySubtraction = True
- telluricCorrectionMethod = ''
- telinter = False
- fluxCalibrationMethod = ''
- use_pq_offsets = True
- im3dtran = True
-
- # Good luck with your Science!
+  # Good luck with your Science!
 
 And run the nifsPipeline with:
 
@@ -324,6 +414,248 @@ And run the nifsPipeline with:
 
  runNifty nifsPipeline config.cfg
 
+**nifsTelluric Correction:** To only derive and apply a telluric correction use a config.cfg file like this:
+*Make sure to populate scienceDirectoryList, telluricDirectoryList and calibrationDirectoryList before running!*
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
+
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = False
+  telluricReduction = False
+  scienceReduction = False
+  telluricCorrection = True
+  fluxCalibration = False
+  merge = False
+  telluricCorrectionMethod = 'gnirs'
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
+
+  [sortConfig]
+  rawPath = '/Users/nat/data/TUTORIAL'
+  program = ''
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 5400
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = True
+
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
+
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
+
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
+And run the nifsPipeline with:
+
+.. code-block:: text
+
+ runNifty nifsPipeline config.cfg
+
+**nifsFluxCalibration:** To only do a flux calibration use a config.cfg file like this:
+*Make sure to populate scienceDirectoryList, telluricDirectoryList and calibrationDirectoryList before running!*
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
+
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = False
+  telluricReduction = False
+  scienceReduction = False
+  telluricCorrection = False
+  fluxCalibration = True
+  merge = False
+  telluricCorrectionMethod = 'gnirs'
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
+
+  [sortConfig]
+  rawPath = '/Users/nat/data/TUTORIAL'
+  program = ''
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 5400
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = True
+
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
+
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
+
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
+And run the nifsPipeline with:
+
+.. code-block:: text
+
+ runNifty nifsPipeline config.cfg
+
+**nifsMerge Cube Merging:** To only merge final data cubes use a config.cfg file like this:
+*Make sure to populate scienceDirectoryList, telluricDirectoryList and calibrationDirectoryList before running!*
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
+
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = False
+  telluricReduction = False
+  scienceReduction = False
+  telluricCorrection = True
+  fluxCalibration = False
+  merge = True
+  telluricCorrectionMethod = 'gnirs'
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
+
+  [sortConfig]
+  rawPath = '/Users/nat/data/TUTORIAL'
+  program = ''
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 5400
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = True
+
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
+
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
+
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
+And run the nifsPipeline with:
+
+.. code-block:: text
+
+ runNifty nifsPipeline config.cfg
 
 Preparing the .cfg Input File
 =============================
@@ -548,14 +880,58 @@ nifsPipeline.py
 nifsSort.py
 -----------
 
+Two things can routinely cause nifsSort to fail.
+
 Object and Sky frame differentiation
 
+Relevant warning:
 
-If the sorting script does not create a skylist in the object or telluric observation
-directories this means that the offsets between sky frames and object frames were smaller
-than expected. A skyframelist can be manually created and saved in the appropriate directory, or
-the limit placed on the offset can be changed. To lower the limit manually do a search in nifsSort.py
-for "skyframelist.append(entry)" and change the <= <value_in_arcseconds> to something new.
+..code-block:: text
+
+  #####################################################################
+  #####################################################################
+
+       WARNING in sort: science " <scienceObservationName>
+                        in " <currentWorkingDirectory>
+                        does not have a scienceFrameList.")
+                        I am trying to rewrite it with zero point offsets.
+
+  #####################################################################
+  #####################################################################
+
+Solution:
+
+- Change the skyThreshold parameter (given in arc seconds) and re-run sort.
+
+If the sorting script does not create a skyFrameList in the object or telluric observation
+directories this means that the offsets between sky frames and object frames were different
+than expected. A skyFrameList can be manually created and saved in the appropriate directory, or
+the skyThreshold parameter modified.
+
+Telluric and Science Frame Matching
+
+Relevant warning:
+
+..code-block:: text
+
+  #####################################################################
+
+  WARNING in sort: no tellurics data found for science " <scienceImageName>
+       in " <currentWorkingdirectory
+
+  #####################################################################
+
+Solution:
+
+- Raise telluricTimeThreshold to something above 5400 seconds.
+
+By default standard star observations are matched with each science frame if they
+are within 1.5 hours (5400) seconds in UT start time. Sometimes just a few science frames
+will be outside that threshold.
+
+If you see the relevant warning after running sort, you will have to raise the
+telluricTimeThreshold in the config.cfg file if you want to do telluric corrections.
+
 
 nifsBaselineCalibration.py
 --------------------------
@@ -586,6 +962,36 @@ nifsReduce.py
 nifsMerge.py
 ------------
 
+- When overwrite is turned on, merging the final cubes from multiple directories redundantly repeats.
+This is a good quick fix for someone to implement.
+
+nifsTelluric.py
+---------------
+
+nifsTelluric.py and nifsFluxCalibrate.py rely on several IRAF tasks finding information in the correct image
+header. If this implicit header data matching changes in future IRAF implementations these tasks will break.
+A fix could be to explicitly specify the data header for each task. TODO(nat): Try to do this before you leave.
+
+- iraf.imarith() is having some strange errors. I'm using astropy and numpy instead to do the 2 imarith steps.
+- See nifsFluxCalibrate for the iraf.gemini() and iraf.imarith() bug.
+
+nifsFluxCalibrate.py
+--------------------
+
+- **If iraf.gemini() is called in nifsTelluric.py and the two steps are run back to back,**
+iraf.imarith() does not work in nifsFluxCalibrate.py. iraf.imarith can't seem to open the result
+of step 3; it throws this error:
+
+..code-block:: text
+
+  3_BBodyN20100401S0182 is not an image or a number
+
+When I ran nifsTelluric.py and nifsFluxCalibrated.py back to back, using nifsPipeline.py as a wrapper,
+iraf.imarith() *worked when iraf.gemini() was commented out in nifsTelluric.py*. It crashed with the
+above error when iraf.gemini() was uncommented.
+
+I've implemented a just-as-good solution using astropy and numpy.
+
 nifsUtils.py
 ------------
 
@@ -606,7 +1012,7 @@ Maintaining Nifty
 Documentation
 -------------
 
-Right now there exists five forms of documentation.
+Right now there exists four forms of documentation.
 
 Paper
 
@@ -614,12 +1020,6 @@ Paper
 
 README.rst
 
-
-Manual
-
-
-Nifty's manual gives a broad overview of how the code functions. It is included as
-a pdf.
 
 .rst Files in the docs/ directory
 
@@ -631,14 +1031,10 @@ read more about reStructuredText `here <http://www.sphinx-doc.org/en/stable/rest
 
 Comments and DocStrings in Source Code
 
+Tests
+-----
 
-Nifty uses the Google docstring style. Examples of docstrings can be found
-`here <http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_.
-
-Other Python comments use the following convention:
-
-- A # is followed by a space and a capital letter.
-- All comments end in a period where possible.
+This is a todo. Currently we do not have automated tests.
 
 Pipeline Structure
 ------------------
@@ -652,10 +1048,27 @@ See the Nifty paper for a high level overview. Nifty general runs with the follo
 - These steps launch the appropriate routines, and
 - These routines launch the appropriate sub-routines.
 
-Nifty is built at the lowest level from Python and IRAF subroutines. It is built so that it is relatively easy to change the implentation of the underlying task.
+Nifty is built at the lowest level from Python and IRAF subroutines. It is built so that it is relatively
+easy to change the implementation of the underlying tasks.
 
 Updates
 -------
+
+To update Nifty, do five things:
+
+- *Try to do your development in a new branch or fork, not the master branch of the repository*
+- Before uploading, do a few test data reductions.
+- Pick an appropriate version number based on `semantic versioning <http://semver.org/>`_; update the setup.py
+- Commit all changes to GitHub
+- Create a new Github Release
+- `Upload the latest version to PyPi.org < https://packaging.python.org/tutorials/distributing-packages/>`_
+
+
+..code-block:: text
+
+  rm -r dist build             # Clean up old files
+  python setup.py bdist_wheel  # Build python wheels
+  twine upload dist/*          # Upload to PyPi.org
 
 Version Numbers
 
@@ -684,19 +1097,36 @@ Variables and functions were named using conventions in the
 `Python Style Guide <https://www.python.org/dev/peps/pep-0008/#descriptive-naming-styles>`_.
 Specifically a mix of camelCase and lower_case_with_underscores was used.
 
+Code style was influenced by the `Google Python Style Guide <https://google.github.io/styleguide/pyguide.html>`_.
+
+Nifty uses the Google docstring style. Examples of docstrings can be found
+`here <http://sphinxcontrib-napoleon.readthedocs.io/en/latest/example_google.html>`_.
+
+Other Python comments use the following convention:
+
+- A # is followed by a space and a capital letter.
+- All comments end in a period where possible.
+
 Future Work
 ===========
 
-Throughout the code, ncomeau has placed many TODO notes. These are good to check out and could be
-a good starting point.
+Throughout the code, ncomeau has placed many TODO notes. These are things that
+should be reviewed at some point.
 
-Some other nice to haves:
+Future work:
 
-- Add Python 3 compatability(if possible)
-- Ability to restart individual steps easily
-- Add some sort of status indicators... Like progress
-- Paralellisation?
+- Implement more telluric and flux calibration methods.
+- Implement instrument signature removal routine.
+- Implement cosmic ray removal routine.
+- Implement differential atmospheric refraction correction routine.
+- Implement full automatic Gemini (on server) reduction routine.
+- Implement a "don't save intermediate products" switch
+- Object Oriented rewrite; see the `JWST calibration pipeline <https://github.com/STScI-JWST/jwst>`_. Pipelines, Steps, Routines and Tasks may implemented better as software objects.
+- XDGNIRS integration and `NDMAPPER (James EH Turner) <http://ndmapper.readthedocs.io/en/latest/index.html>`_ integration
 - Analysis tools: automatic velocity field? Dispersion?
+- Python 3 compatability(if possible)
+- Compiling as a self-contained executable
+- Full AstroConda integration
 
 Changelog
 =========
@@ -710,6 +1140,13 @@ Unreleased
 All in-development changes will be tracked here.
 
 - Adding unit tests for each step and integration test for pipeline.
+
+1.0.0 - 2017-09-12
+------------------
+First production release. Works fairly smoothly once raw data is located and sorted
+properly.
+
+- Rigorously tested first type of cube merging; not final wave shifting of cubes; with dummy data.
 - Finished integrating multiple types of cube merging.
 
 1.0b4 - 2017-09-12
@@ -737,3 +1174,8 @@ ReadTheDocs and preliminary DOI assigned.
 
 API
 ===
+
+Note: I didn't have time to implement this using Sphinx automodule. Nifty has fairly good docstrings and you
+can use individual steps, routines and tasks by importing them. This is a todo.
+
+.. TODO(nat): implement the public API.

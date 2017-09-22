@@ -92,6 +92,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html">Introduction</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#running-from-the-command-line">Running from the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#running-from-python">Running from Python</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#preparing-the-cfg-input-file">Preparing the .cfg Input File</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#data-reduction-examples">Data Reduction Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#tutorials">Tutorials</a></li>
@@ -166,18 +167,14 @@
             
   <div class="section" id="welcome-to-nifty-s-documentation">
 <h1>Welcome to Nifty’s documentation!<a class="headerlink" href="#welcome-to-nifty-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Nifty is a full-featured Gemini NIFS data reduction pipeline and data reduction package.</p>
-<div class="section" id="user-manual">
-<h2>User Manual<a class="headerlink" href="#user-manual" title="Permalink to this headline">¶</a></h2>
-<p>For an in-depth explanation of the underlying Python and I/O, see
-<a class="reference download internal" href="_downloads/Surely_Youre_Joking_Mr_Feynman.pdf" download=""><code class="xref download docutils literal"><span class="pre">Nifty</span> <span class="pre">user</span> <span class="pre">manual</span></code></a>.</p>
-</div>
+<p>Nifty is a full-featured Gemini NIFS data reduction package.</p>
 <div class="section" id="package-documentation">
 <h2>Package Documentation<a class="headerlink" href="#package-documentation" title="Permalink to this headline">¶</a></h2>
 <div class="toctree-wrapper compound">
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html">Introduction</a></li>
-<li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#running-from-the-command-line">Running from the Command Line</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#running-from-the-command-line">Running from the Command Line</a></li>
+<li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#running-from-python">Running from Python</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#examples-of-running-from-the-command-line">Examples of Running from the Command Line</a></li>
 </ul>
 </li>
@@ -203,12 +200,15 @@
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#nifsbaselinecalibration-py">nifsBaselineCalibration.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#nifsreduce-py">nifsReduce.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#nifsmerge-py">nifsMerge.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#nifstelluric-py">nifsTelluric.py</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#nifsfluxcalibrate-py">nifsFluxCalibrate.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#nifsutils-py">nifsUtils.py</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#general-issues">General Issues</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#maintaining-nifty">Maintaining Nifty</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#documentation">Documentation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#tests">Tests</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#pipeline-structure">Pipeline Structure</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#updates">Updates</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#code-conventions">Code Conventions</a></li>
@@ -217,6 +217,7 @@
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#future-work">Future Work</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#changelog">Changelog</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#unreleased">Unreleased</a></li>
+<li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#id3">1.0.0 - 2017-09-12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#b4-2017-09-12">1.0b4 - 2017-09-12</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#b1-2017-09-08">1.0b1 - 2017-09-08</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/introduction.html#a1-2017-08-31">1.0a1 - 2017-08-31</a></li>
@@ -224,6 +225,7 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="nifty/introduction.html#api">API</a></li>
 <li class="toctree-l1"><a class="reference internal" href="nifty/fileIO.html">Example of Nifty File I/O</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="nifty/fileIO.html#example-data-reduction-products">Example Data Reduction Products:</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/fileIO.html#nifspipeline-data-reduction">nifsPipeline Data Reduction</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/fileIO.html#nifsreduce-of-tellurics">nifsReduce of Tellurics</a></li>
 <li class="toctree-l2"><a class="reference internal" href="nifty/fileIO.html#nifsreduce-science">nifsReduce Science</a></li>

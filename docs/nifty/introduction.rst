@@ -1120,6 +1120,7 @@ Future work:
 - Implement cosmic ray removal routine.
 - Implement differential atmospheric refraction correction routine.
 - Implement full automatic Gemini (on server) reduction routine.
+- Implement a "don't save intermediate products" switch
 - Object Oriented rewrite; see the `JWST calibration pipeline <https://github.com/STScI-JWST/jwst>`_. Pipelines, Steps, Routines and Tasks may implemented better as software objects.
 - XDGNIRS integration and `NDMAPPER (James EH Turner) <http://ndmapper.readthedocs.io/en/latest/index.html>`_ integration
 - Analysis tools: automatic velocity field? Dispersion?
@@ -1139,6 +1140,13 @@ Unreleased
 All in-development changes will be tracked here.
 
 - Adding unit tests for each step and integration test for pipeline.
+
+1.0.0 - 2017-09-12
+------------------
+First production release. Works fairly smoothly once raw data is located and sorted
+properly.
+
+- Rigorously tested first type of cube merging; not final wave shifting of cubes; with dummy data.
 - Finished integrating multiple types of cube merging.
 
 1.0b4 - 2017-09-12

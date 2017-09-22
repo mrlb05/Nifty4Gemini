@@ -20,6 +20,126 @@ Add the following line to your ~/.bash_profile to create the **niftree** alias:
 
   alias niftree="find . -name .git -prune -o -print | sed -e 's;[^/]*/;|____;g;s;____|; |;g'"
 
+Example Data Reduction Products:
+--------------------------------
+
+.. code-block:: text
+
+  |____.DS_Store
+  |____config.cfg
+  |____ExtractedOneD
+  | |____20130527_obs28
+  | | |____xtfbrsnN20130527S0264.fits
+  | | |____xtfbrsnN20130527S0266.fits
+  | | |____xtfbrsnN20130527S0267.fits
+  | | |____xtfbrsnN20130527S0269.fits
+  | | |____xtfbrsnN20130527S0270.fits
+  | | |____xtfbrsnN20130527S0272.fits
+  | |____20130530_obs36
+  | | |____xtfbrsnN20130530S0261.fits
+  | | |____xtfbrsnN20130530S0263.fits
+  | |____20130530_obs55
+  | | |____xtfbrsnN20130530S0254.fits
+  | | |____xtfbrsnN20130530S0256.fits
+  | |____20130531_obs36
+  | | |____xtfbrsnN20130531S0162.fits
+  | | |____xtfbrsnN20130531S0164.fits
+  | |____20130621_obs36
+  | | |____xtfbrsnN20130621S0248.fits
+  | | |____xtfbrsnN20130621S0250.fits
+  | | |____xtfbrsnN20130621S0251.fits
+  | | |____xtfbrsnN20130621S0253.fits
+  | |____20130622_obs44
+  | | |____xtfbrsnN20130622S0327.fits
+  | | |____xtfbrsnN20130622S0329.fits
+  | | |____xtfbrsnN20130622S0330.fits
+  | | |____xtfbrsnN20130622S0332.fits
+  | |____20130624_obs75
+  | | |____xtfbrsnN20130624S0078.fits
+  | | |____xtfbrsnN20130624S0080.fits
+  | | |____xtfbrsnN20130624S0081.fits
+  | | |____xtfbrsnN20130624S0083.fits
+  | | |____xtfbrsnN20130624S0084.fits
+  | | |____xtfbrsnN20130624S0086.fits
+  | |____20130626_obs83
+  | | |____xtfbrsnN20130626S0108.fits
+  | | |____xtfbrsnN20130626S0110.fits
+  | | |____xtfbrsnN20130626S0111.fits
+  | | |____xtfbrsnN20130626S0113.fits
+  | |____combined20130527_obs28.fits
+  | |____combined20130530_obs36.fits
+  | |____combined20130530_obs55.fits
+  | |____combined20130531_obs36.fits
+  | |____combined20130621_obs36.fits
+  | |____combined20130622_obs44.fits
+  | |____combined20130624_obs75.fits
+  | |____combined20130626_obs83.fits
+  |____Merged_telCorAndFluxCalibrated
+  | |____.DS_Store
+  | |____20130527_obs28_merged.fits
+  | |____20130530_obs36_merged.fits
+  | |____20130530_obs55_merged.fits
+  | |____20130531_obs36_merged.fits
+  | |____20130621_obs36_merged.fits
+  | |____20130622_obs44_merged.fits
+  | |____20130624_obs75_merged.fits
+  | |____20130626_obs83_merged.fits
+  | |____temp_mergedH.fits
+  | |____TOTAL_mergedH.fits
+  | |____waveoffsetsH.txt
+  |____Merged_telluricCorrected
+  | |____20130527_obs28_merged.fits
+  | |____20130530_obs36_merged.fits
+  | |____20130530_obs55_merged.fits
+  | |____20130531_obs36_merged.fits
+  | |____20130621_obs36_merged.fits
+  | |____20130622_obs44_merged.fits
+  | |____20130624_obs75_merged.fits
+  | |____20130626_obs83_merged.fits
+  | |____temp_mergedH.fits
+  | |____TOTAL_mergedH.fits
+  | |____waveoffsetsH.txt
+  |____Merged_uncorrected
+  | |____20130527_obs28_merged.fits
+  | |____20130530_obs36_merged.fits
+  | |____20130530_obs55_merged.fits
+  | |____20130531_obs36_merged.fits
+  | |____20130621_obs36_merged.fits
+  | |____20130622_obs44_merged.fits
+  | |____20130624_obs75_merged.fits
+  | |____20130626_obs83_merged.fits
+  | |____temp_mergedH.fits
+  | |____TOTAL_mergedH.fits
+  | |____waveoffsetsH.txt
+  |____Nifty.log
+
+  .
+  |____config.cfg
+  |____ExtractedOneD/                     # Extracted One D Science Spectra
+  | |____20130527_obs28/
+  | |____20130530_obs36/
+  | |____20130530_obs55/
+  | |____20130531_obs36/
+  | |____20130621_obs36/
+  | |____20130622_obs44/
+  | |____20130624_obs75/
+  | |____20130626_obs83/
+  | |____combined20130527_obs28.fits
+  | |____combined20130530_obs36.fits
+  | |____combined20130530_obs55.fits
+  | |____combined20130531_obs36.fits
+  | |____combined20130621_obs36.fits
+  | |____combined20130622_obs44.fits
+  | |____combined20130624_obs75.fits
+  | |____combined20130626_obs83.fits
+  |____Merged_telCorAndFluxCalibrated/    # Telluric corrected AND flux calibrated
+  | |____TOTAL_mergedH.fits
+  |____Merged_telluricCorrected/          # Telluric corrected cubes
+  | |____TOTAL_mergedH.fits
+  |____Merged_uncorrected                 # Uncorrected cubes
+  | |____TOTAL_mergedH.fits
+  |____Nifty.log
+
 nifsPipeline Data Reduction
 -----------------------------
 
