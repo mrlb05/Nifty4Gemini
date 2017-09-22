@@ -25,7 +25,7 @@ IRAF Package to reduce NIFS data. It offers a complete data reduction process fr
 sorting the data to producing a final flux calibrated and wavelength calibrated
 combined cube with the full S/N for a science target.
 
-This pipeline is open source but is not supported by Gemini Observatory.
+This pipeline is open source and it is supported via the `Gemini Data Reduction User Forum <http://drforum.gemini.edu/>`_.
 
 Any feedback and comments (mbusserolle@gemini.edu) are welcome!
 
