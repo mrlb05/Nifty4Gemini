@@ -1053,13 +1053,11 @@ To update Nifty, do five things:
 
 - *Try to do your development in a new branch or fork, not the master branch of the repository*
 - Before uploading, do a few test data reductions.
-- Pick an appropriate version number; update the setup.py
-- Create a new DIO (zenodo) and update the DOI in the README
+- Pick an appropriate version number based on `semantic versioning <http://semver.org/>`_; update the setup.py
 - Commit all changes to GitHub
 - Create a new Github Release
-- Upload the latest version to PyPi.org
+- `Upload the latest version to PyPi.org < https://packaging.python.org/tutorials/distributing-packages/>`_
 
-Uploading to PyPi.org; instructions taken from `here <https://packaging.python.org/tutorials/distributing-packages/#wheels>`_.
 
 ..code-block:: text
 
