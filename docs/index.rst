@@ -7,7 +7,7 @@ Welcome to Nifty4Gemini's documentation!
 =================================
 
 Nifty4Gemini is a full-featured Gemini data reduction framework for Gemini instruments and
-here we provide the documentation for its associate NIFS pipeline.
+here we provide the documentation for its associated NIFS pipeline.
 
 =====================
 Package Documentation
