@@ -679,68 +679,100 @@ An Example Input File
 ---------------------
 
 Nifty includes a default configuration file in the runtimeData/ directory. As of v1.0b2, It looks like this:
-.. TODO(nat): This is out of data! Update this!
 
 .. code-block:: text
 
- # Nifty configuration file.
- #
- # Each section lists parameters required by a pipeline step.
-
- manualMode = False
- over = False
- merge = True
- scienceDirectoryList = []
- telluricDirectoryList = []
- calibrationDirectoryList = []
-
- [nifsPipelineConfig]
- sort = True
- calibrationReduction = True
- telluricReduction = True
- scienceReduction = True
-
- [sortConfig]
- rawPath = ''
- program = ''
- skyThreshold = 2.0
- sortTellurics = True
- date = ''
- copy = ''
-
- [calibrationReductionConfig]
- baselineCalibrationStart = 1
- baselineCalibrationStop = 4
-
- [telluricReductionConfig]
- telStart = 1
- telStop = 6
- telluricSkySubtraction = True
- spectemp = ''
- mag = ''
- hline_method = 'vega'
- hlineinter = False
- continuuminter = False
-
- [scienceReductionConfig]
- sciStart = 1
- sciStop = 6
- scienceSkySubtraction = True
- telluricCorrectionMethod = ''
- telinter = False
- fluxCalibrationMethod = ''
- use_pq_offsets = True
- im3dtran = True
-
- # Good luck with your Science!
+  TODO(nat): Updated example
 
 Data Reduction Examples
 =======================
 
-Observations of Titan
----------------------
+Observations of Titan; GN-2014A-Q-85
+------------------------------------
 
-Recipe used: defaultConfig.cfg
+Once you raise the telluricTimeThreshold to 7200 seconds and turn off the telluric
+sky subtraction, this data reduction works very well in full-automatic mode.
+
+Configuration file used:
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  niftyVersion = '1.0.0'
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = []
+  telluricDirectoryList = []
+  calibrationDirectoryList = []
+
+  [nifsPipelineConfig]
+  sort = True
+  calibrationReduction = True
+  telluricReduction = True
+  scienceReduction = True
+  telluricCorrection = True
+  fluxCalibration = True
+  merge = True
+  telluricCorrectionMethod = 'gnirs'
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
+
+  [sortConfig]
+  rawPath = ''
+  program = 'GN-2014A-Q-85'         # This was added
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 7200      # This had to be tweaked
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = False   # This had to be turned off
+
+  [scienceReductionConfig]
+  sciStart = 1
+  sciStop = 5
+  scienceSkySubtraction = True
+
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
+
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
+
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
 
 Observations of a Moderate Redshift Galaxy
 ------------------------------------------
