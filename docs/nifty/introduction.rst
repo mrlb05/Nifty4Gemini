@@ -773,6 +773,92 @@ Configuration file used:
 
   # Good luck with your Science!
 
+The Massive Black Hole in M87
+-----------------------------
+
+This program is problematic for nifsSort.py as some individual observations span
+multiple days, but calibrations are associate by individual dates (for now). To run
+this reduction, after sorting, you will have to go through by hand and make sure
+each calibrations directory contains the required calibrations and text files.
+
+Config file used:
+
+.. code-block:: text
+
+  # Nifty configuration file.
+  #
+  # Each section lists parameters required by a pipeline step.
+
+  manualMode = False
+  over = False
+  extractionXC = 15.0
+  extractionYC = 33.0
+  extractionRadius = 2.5
+  scienceOneDExtraction = True
+  scienceDirectoryList = ['/Users/nat/tests/blackHole/NGC4486/20080416/K/obs29', '/Users/nat/tests/blackHole/NGC4486/20080417/K/obs11', '/Users/nat/tests/blackHole/NGC4486/20080421/K/obs11', '/Users/nat/tests/blackHole/NGC4486/20080422/K/obs19', '/Users/nat/tests/blackHole/NGC4486/20080422/K/obs21', '/Users/nat/tests/blackHole/NGC4486/20080423/K/obs21', '/Users/nat/tests/blackHole/NGC4486/20080523/K/obs29']
+  telluricDirectoryList = ['/Users/nat/tests/blackHole/NGC4486/20080416/K/Tellurics/obs27', '/Users/nat/tests/blackHole/NGC4486/20080416/K/Tellurics/obs13', '/Users/nat/tests/blackHole/NGC4486/20080417/K/Tellurics/obs32', '/Users/nat/tests/blackHole/NGC4486/20080421/K/Tellurics/obs35', '/Users/nat/tests/blackHole/NGC4486/20080422/K/Tellurics/obs17', '/Users/nat/tests/blackHole/NGC4486/20080422/K/Tellurics/obs23', '/Users/nat/tests/blackHole/NGC4486/20080423/K/Tellurics/obs26', '/Users/nat/tests/blackHole/NGC4486/20080523/K/Tellurics/obs30']
+  calibrationDirectoryList = ['/Users/nat/tests/blackHole/NGC4486/20080416/Calibrations_K', '/Users/nat/tests/blackHole/NGC4486/20080417/Calibrations_K', '/Users/nat/tests/blackHole/NGC4486/20080421/Calibrations_K', '/Users/nat/tests/blackHole/NGC4486/20080422/Calibrations_K', '/Users/nat/tests/blackHole/NGC4486/20080423/Calibrations_K']
+
+  [nifsPipelineConfig]
+  sort = False
+  calibrationReduction = False
+  telluricReduction = False
+  scienceReduction = True
+  telluricCorrection = False
+  fluxCalibration = False
+  fluxCalibrationMethod = 'gnirs'
+  mergeMethod = ''
+  merge = True
+
+  [sortConfig]
+  rawPath = ''
+  program = 'GN-2008A-Q-12'
+  proprietaryCookie = ''
+  skyThreshold = 2.0
+  sortTellurics = True
+  telluricTimeThreshold = 5400
+
+  [calibrationReductionConfig]
+  baselineCalibrationStart = 1
+  baselineCalibrationStop = 4
+
+  [telluricReductionConfig]
+  telStart = 1
+  telStop = 5
+  telluricSkySubtraction = True
+
+  [scienceReductionConfig]
+  sciStart = 1
+  sciStop = 5
+  scienceSkySubtraction = True
+
+  [telluricCorrectionConfig]
+  telluricCorrectionStart = 1
+  telluricCorrectionStop = 9
+  hLineMethod = 'vega'
+  hLineInter = False
+  continuumInter = False
+  telluricInter = False
+  tempInter = False
+  standardStarSpecTemperature = ''
+  standardStarMagnitude = ''
+  standardStarRA = ''
+  standardStarDec = ''
+  standardStarBand = ''
+
+  [fluxCalbrationConfig]
+  fluxCalibrationStart = 1
+  fluxCalibrationStop = 6
+
+  [mergeConfig]
+  mergeStart = 1
+  mergeStop = 3
+  mergeType = 'median'
+  use_pq_offsets = True
+  im3dtran = True
+
+  # Good luck with your Science!
+
 
 Observations of a Moderate Redshift Galaxy
 ------------------------------------------
