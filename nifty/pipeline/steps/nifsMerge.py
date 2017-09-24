@@ -472,7 +472,7 @@ def resizeAndCenterCubes(cubelist, over):
 
         oldShape = cubeData.shape
         # Make a numpy zeros array as big as the largest cube.
-        newShape = (oldShape[0], maxXSize, maxYSize)
+        newShape = (oldShape[0], maxYSize, maxXSize)
         result = numpy.zeros(newShape)
 
         # Calculate X and Y offsets.

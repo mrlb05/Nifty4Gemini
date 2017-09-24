@@ -690,6 +690,10 @@ Data Reduction Examples
 Observations of Titan; GN-2014A-Q-85
 ------------------------------------
 
+*Note: v1.0.0 has some problems with the final cube merging.* I believe this is because
+the last step of cube merging does not take into account different RAs and Decs. I am hoping
+to implement a fix in a coming update.
+
 Once you raise the telluricTimeThreshold to 7200 seconds and turn off the telluric
 sky subtraction, this data reduction works very well in full-automatic mode.
 
@@ -1082,6 +1086,9 @@ nifsMerge.py
 
 - When overwrite is turned on, merging the final cubes from multiple directories redundantly repeats.
 This is a good quick fix for someone to implement.
+- *Note: v1.0.0 has some problems with the final cube merging.* I believe this is because
+the last step of cube merging does not take into account different RAs and Decs. I am hoping
+to implement a fix in a coming update.
 
 nifsTelluric.py
 ---------------
