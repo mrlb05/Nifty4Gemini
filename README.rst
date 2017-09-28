@@ -1,9 +1,9 @@
-Nifty
-=====
+Nifty4Gemini
+============
 .. image:: https://badge.fury.io/py/nifty4gemini.svg
    :target: https://badge.fury.io/py/nifty4gemini
 .. image:: https://readthedocs.org/projects/nifty4gemini/badge/?version=latest
-   :alt: Nifty's documentation, hosted on ReadtheDocs.
+   :alt: Nifty4Gemini's documentation, hosted on ReadtheDocs.
    :target: http://nifty4gemini.readthedocs.io/en/latest/
 .. image:: https://zenodo.org/badge/103719389.svg
    :alt: DOI
@@ -12,7 +12,7 @@ Nifty
    :alt: MIT license.
    :target: https://opensource.org/licenses/MIT
 .. image:: http://img.shields.io/badge/powered%20by-AstroPy-orange.svg?style=flat
-   :alt: Nifty uses Astropy! Here is a link to the project webpage:
+   :alt: Nifty4Gemini uses Astropy! Here is a link to the project webpage:
    :target: http://www.astropy.org/
 
 A Python Data Reduction Pipeline for the Gemini-North Near-Infrared Integral
@@ -76,7 +76,7 @@ to install Nifty in editable mode. Now you can edit your copy of the Nifty sourc
 Quick Start
 ===========
 
-To run Nifty, getting data reduction parameters from an interactive input session:
+To run Nifty4Gemini, getting data reduction parameters from an interactive input session:
 
 .. code-block:: text
 
