@@ -1,12 +1,12 @@
 Introduction
 ============
 
-Nifty, for now, uses Python 2.7. Please keep this in mind.
+Nifty4Gemini, for now, uses Python 2.7. Please keep this in mind.
 
 Running from the Command Line
 =============================
 
-Nifty is started with the runNifty command by specifying a pipeline or step with arguments and options.
+Nifty4Gemini is started with the runNifty command by specifying a pipeline or step with arguments and options.
 
 The syntax used to start Nifty is:
 
