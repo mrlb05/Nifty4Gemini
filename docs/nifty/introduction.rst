@@ -1124,15 +1124,15 @@ General Issues
 --------------
 
 - A longstanding bug (see `astropy <https://github.com/astropy/astropy/pull/960>`_ ) in astropy has made it
-  difficult to build Nifty as a binary executable.
+  difficult to build Nifty4Gemini as a binary executable.
 - The conversion of print statements to logging.info() statements was messy. Some of these
   may still not be properly converted and will throw nasty tracebacks. However these seem to
   have no effect on the functionioning of the code.
 - Logging is still not perfect. One or two iraf tasks are sending their log files to
   "nifs.log" instead of "Nifty.log".
 
-Maintaining Nifty
-=================
+Maintaining Nifty4Gemini
+========================
 
 Documentation
 -------------
@@ -1164,7 +1164,7 @@ This is a todo. Currently we do not have automated tests.
 Pipeline Structure
 ------------------
 
-See the Nifty paper for a high level overview. Nifty general runs with the following procedure:
+See the Nifty4Gemini paper for a high level overview. Nifty4Gemini general runs with the following procedure:
 
 - A script in the scripts/ directory is called from the command line.
 - This script imports the relevant pipeline and steps from the nifty/pipeline/ and nifty/pipeline/steps/directories.
@@ -1173,13 +1173,13 @@ See the Nifty paper for a high level overview. Nifty general runs with the follo
 - These steps launch the appropriate routines, and
 - These routines launch the appropriate sub-routines.
 
-Nifty is built at the lowest level from Python and IRAF subroutines. It is built so that it is relatively
+Nifty4Gemini is built at the lowest level from Python and IRAF subroutines. It is built so that it is relatively
 easy to change the implementation of the underlying tasks.
 
 Updates
 -------
 
-To update Nifty, do five things:
+To update Nifty4Gemini, do five things:
 
 - *Try to do your development in a new branch or fork, not the master branch of the repository*
 - Before uploading, do a few test data reductions.
