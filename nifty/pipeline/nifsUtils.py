@@ -361,7 +361,7 @@ def interactiveNIFSInput():
         )
         mergeStop = getParam(
         "Stop step of final cube merging? [3]:",
-        3,
+        6,
         "Choose a stop point for the final cube merging."
         )
         mergeType = getParam(

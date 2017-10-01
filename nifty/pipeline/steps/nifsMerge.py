@@ -23,7 +23,7 @@
 # STDLIB
 
 import getopt
-import os, glob, shutil, logging, pkg_resources
+import os, glob, shutil, logging, pkg_resources, json
 import pexpect as p
 import time
 from pyraf import iraf
@@ -97,25 +97,52 @@ def run():
             mergeCubes(scienceDirectoryList, "uncorrected", mergeType, use_pq_offsets, im3dtran, over)
             logging.info("\n##############################################################################")
             logging.info("")
-            logging.info("  STEP 1 - Merge Uncorrected Cubes - COMPLETED ")
+            logging.info("  STEP 1 - Merge Uncorrected Individual Observations - COMPLETED ")
             logging.info("")
             logging.info("##############################################################################\n")
 
         if valindex == 2:
-            # Merge telluric corrected cubes. These have the "actfbrsn" prefix.
-            mergeCubes(scienceDirectoryList, "telluricCorrected", mergeType, use_pq_offsets, im3dtran, over)
+            # Merge merged cubes from each observation.
+            finalMergeCubes(mergeType, over)
             logging.info("\n##############################################################################")
             logging.info("")
-            logging.info("  STEP 2 - Merge Telluric Corrected Cubes - COMPLETED ")
+            logging.info("  STEP 2 - Merge Uncorrected Merged Observation Cubes - COMPLETED ")
             logging.info("")
             logging.info("##############################################################################\n")
 
         if valindex == 3:
+            # Merge telluric corrected cubes. These have the "actfbrsn" prefix.
+            mergeCubes(scienceDirectoryList, "telluricCorrected", mergeType, use_pq_offsets, im3dtran, over)
+            logging.info("\n##############################################################################")
+            logging.info("")
+            logging.info("  STEP 3 - Merge Telluric Corrected Individual Observations - COMPLETED ")
+            logging.info("")
+            logging.info("##############################################################################\n")
+
+        if valindex == 4:
+            # Merge merged cubes from each observation.
+            finalMergeCubes(mergeType, over)
+            logging.info("\n##############################################################################")
+            logging.info("")
+            logging.info("  STEP 4 - Merge Telluric Corrected Merged Observation Cubes - COMPLETED ")
+            logging.info("")
+            logging.info("##############################################################################\n")
+
+        if valindex == 5:
             # Merge telluric corrected AND flux calibrated cubes. These have the "factfbrsn" prefix.
             mergeCubes(scienceDirectoryList, "telCorAndFluxCalibrated", mergeType, use_pq_offsets, im3dtran, over)
             logging.info("\n##############################################################################")
             logging.info("")
-            logging.info("  STEP 3 - Merge Telluric Corrected and Flux Calibrated Cubes - COMPLETED ")
+            logging.info("  STEP 5 - Merge Telluric Corrected and Flux Calibrated Cubes - COMPLETED ")
+            logging.info("")
+            logging.info("##############################################################################\n")
+
+        if valindex == 6:
+            # Merge merged cubes from each observation.
+            finalMergeCubes(mergeType, over)
+            logging.info("\n##############################################################################")
+            logging.info("")
+            logging.info("  STEP 6 - Merge Telluric Corrected AND Flux Calibrated Cubes - COMPLETED ")
             logging.info("")
             logging.info("##############################################################################\n")
 
@@ -179,6 +206,9 @@ def mergeCubes(obsDirList, cubeType, mergeType, use_pq_offsets, im3dtran, over="
     mergedCubes = []         # List of Merged cubes (one merged cube for each science observation directory).
     obsidlist = []           # List of science observation id s.
 
+    # Store the merged directory
+    targetDirectory = None
+
     # Pixel scale in arcseconds/pixel.
     pixScale = 0.05
 
@@ -205,6 +235,7 @@ def mergeCubes(obsDirList, cubeType, mergeType, use_pq_offsets, im3dtran, over="
         date = temp3[1]
         obsid = temp1[1]
         obsPath = temp3[0]
+        targetDirectory = temp4[0]
         os.chdir(obsDir + '/'+unmergedDirectory)
 
         obsidlist.append(obsPath+'/Merged'+suffix+'/'+date+'_'+obsid)
@@ -388,11 +419,25 @@ def mergeCubes(obsDirList, cubeType, mergeType, use_pq_offsets, im3dtran, over="
         n+=1
         os.chdir(Merged)
 
-    # Copy the merged observation sequence data cubes to the Merged directory.
-    #for i in range(len(mergedCubes)):
-    #    shutil.copy(mergedCubes[i], './')
+    os.chdir(path)
+    # Save the data with JSON so we can grab it in the next step.
+    mergedData = {}
+    mergedData['mergedCubes'] = mergedCubes
+    mergedData['Merged'] = Merged
+    with open(targetDirectory+"/mergedInfo.txt", "w") as outfile:
+        json.dump(mergedData, outfile)
 
-    # Merge all the individual merged observation sequence data cubes with the same grating.
+
+def finalMergeCubes(mergeType, over):
+    """
+    Merge final merged cubes from all observations.
+    """
+    # Load data from the previous step.
+    path = os.getcwd()
+    with open('mergedInfo.txt') as data_file:
+        mergedData = json.load(data_file)
+    mergedCubes = mergedData['mergedCubes']
+    Merged = mergedData['Merged']
 
     if len(mergedCubes)>1:
         os.chdir(Merged)
@@ -432,6 +477,8 @@ def mergeCubes(obsDirList, cubeType, mergeType, use_pq_offsets, im3dtran, over="
             else:
                 iraf.imcombine(inputstring, output = 'temp_merged'+gratlist[n][0]+'.fits', combine = mergeType, offsets = 'waveoffsets'+grat[0]+'.txt')
                 iraf.fxcopy(input=newcubelist[0]+'[0], temp_merged'+gratlist[n][0]+'.fits', output = 'TOTAL_merged'+gratlist[n][0]+'.fits')
+    os.chdir(path)
+
 #####################################################################################
 #                                        FUNCTIONS                                  #
 #####################################################################################
@@ -498,6 +545,10 @@ def makeWavelengthOffsets(cubelist, grat):
     """
     cubeheader0 = astropy.io.fits.open(cubelist[0])
     wstart0 = cubeheader0[1].header['CRVAL3']
+    # If a user provided a waveoffsetsGRATING.txt, skip the creation of it.
+    if os.path.exists('waveoffsets{0}.txt'.format(grat[0])):
+        logging.info("\nwaveoffsets file exists; skipping creation of it.")
+        return
     fwave = open('waveoffsets{0}.txt'.format(grat[0]), 'w')
     fwave.write('%d %d %d\n' % (0, 0, 0))
     for i in range(len(cubelist)):

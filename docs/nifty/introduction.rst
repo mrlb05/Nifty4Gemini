@@ -579,6 +579,9 @@ And run the nifsPipeline with:
 **nifsMerge Cube Merging:** To only merge final data cubes use a config.cfg file like this:
 *Make sure to populate scienceDirectoryList, telluricDirectoryList and calibrationDirectoryList before running!*
 
+*Note: You can start and stop at step 1,3, or 5, create your own waveoffsetsGRATING.txt file in the merged_MERGETYPE directory, and then start and stop from step
+2, 4, or 6 to specify your own offsets for the final cube merging step. This is useful for non-sidereal targets.*
+
 .. code-block:: text
 
   # Nifty configuration file.
@@ -1265,6 +1268,14 @@ Unreleased
 All in-development changes will be tracked here.
 
 - Adding unit tests for each step and integration test for pipeline.
+
+1.0.1 - 2017-10-01
+------------------
+Minor patches and small feature adding release.
+
+- Fixed bug in nifsFluxCalibration.py
+- Added ability to use your own waveoffsets+'GRATING'.txt file in nifsMerge.py
+- Updated documentation
 
 1.0.0 - 2017-09-12
 ------------------
