@@ -18,6 +18,8 @@ Nifty4Gemini
 A Python Data Reduction Pipeline for the Gemini-North Near-Infrared Integral
 Field Spectrometer (NIFS).
 
+Link to the referred paper of the pipeline: https://ui.adsabs.harvard.edu/abs/2019AJ....158..153L/abstract 
+
 Full documentation: `ReadTheDocs <http://nifty4gemini.readthedocs.io/en/latest/>`_.
 
 This is a new data reduction Python pipeline that uses Astroconda and the Gemini
@@ -26,6 +28,8 @@ sorting the data to producing a final flux calibrated and wavelength calibrated
 combined cube with the full S/N for a science target.
 
 This pipeline is open source and it is supported via the `Gemini Data Reduction User Forum <http://drforum.gemini.edu/>`_.
+
+
 
 Any feedback and comments (mbusserolle@gemini.edu) are welcome!
 
@@ -88,10 +92,15 @@ and a full local path to the raw data or a Gemini Program ID string (Eg: GN-2013
 .. code-block:: text
 
    runNifty nifsPipeline -f <data_location>
-
+   
+Acknowledgment
+==============
+Referred paper of the pipeline: https://ui.adsabs.harvard.edu/abs/2019AJ....158..153L/abstract 
 
 License
 =======
 
 See the LICENSE file in the current directory. Note that downloadFromGeminiPublicArchive does not use the MIT
 license. Refer to the LICENCE file in the downloadFromGeminiPublicArchive directory to view the appropriate license.
+
+
